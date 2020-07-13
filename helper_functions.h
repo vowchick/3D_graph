@@ -3,20 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <vector>
 struct point;
 struct polygon;
-int
-find_ABCD1_points (polygon *p);
-
-int
-read_polygon_from_file (char *file_name,
-                        polygon *Polygon);
-void
-print_polygon (polygon P);
-int
-find_inside_points (polygon *p);
-int
-find_middle (polygon *p, point *middle);
+struct input;
+int find_ABCD1_points (polygon *p);
 struct point
 {
     double x;
@@ -38,5 +29,14 @@ struct polygon
 //    point B1;  //bB1 || cC and is on BC
 //    point C1;  //cC1 || dD and is on CD
 //    point D1;  //dD1 || aD and is on DA
+};
+struct input
+{
+    int nx;
+    int ny;
+    int k;
+    int p;
+    double eps;
+    char *file_name;
 };
 #endif // HELPER_FUNCTIONS_H
