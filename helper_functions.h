@@ -7,11 +7,35 @@
 struct point;
 struct polygon;
 struct input;
+struct Js;
+struct us;
 int find_ABCD1_points (polygon *p);
 struct point
 {
     double x;
     double y;
+};
+struct us
+{
+    double BbC;
+    double AaB;
+    double Bab;
+    double Cbc;
+    double CcD;
+    double Dcd;
+    double DdA;
+    double Ada;
+};
+struct Js
+{
+    double AaB;
+    double Bab;
+    double BbC;
+    double Cbc;
+    double CcD;
+    double Dcd;
+    double DdA;
+    double Ada;
 };
 
 struct polygon
