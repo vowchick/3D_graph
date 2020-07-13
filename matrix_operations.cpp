@@ -27,7 +27,7 @@ fill_the_matrix_msr_format (double *matrix,     //pointer to the matrix
                             polygon p)
 {
 
-    matrix[0] = 0;
+    FIX_UNUSED (matrix);
     //Здесь n = nx + 1 - количество точек на ребре, не количество отрезков разбиения
     Js j;
     us u;

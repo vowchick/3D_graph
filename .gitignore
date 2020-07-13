@@ -33,3 +33,5 @@
 
 # project files
 *.user*
+# secret files
+defines.h

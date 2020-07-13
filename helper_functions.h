@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include "defines.h"
 struct point;
 struct polygon;
 struct input;
