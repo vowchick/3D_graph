@@ -19,6 +19,8 @@ double
 ultimate_scalar_counter (double J,
                          double f1, double f2, double f3,
                          double g1, double g2, double g3);
+int get_off_diag (int n, int k, double *a_diag, double *a,
+                  int *I, us u);
 void
 fill_js (Js &j, polygon p, int n);
 void

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include <iostream>
 #include "defines.h"
 struct point;
 struct polygon;
@@ -11,6 +12,7 @@ struct input;
 struct Js;
 struct us;
 int find_ABCD1_points (polygon *p);
+double get_u (int odd, int trapeze_num, us u);
 struct point
 {
     double x;

@@ -138,6 +138,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/yacc.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		3D.pro helper_functions.h \
+		defines.h \
 		io.h \
 		matrix_operations.h main.cpp \
 		helper_functions.cpp \
@@ -323,7 +324,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h io.h matrix_operations.h $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h io.h matrix_operations.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp helper_functions.cpp io.cpp matrix_operations.cpp trapfpe.cpp $(DISTDIR)/
 
 
@@ -374,18 +375,22 @@ compiler_clean: compiler_moc_predefs_clean
 
 main.o: main.cpp matrix_operations.h \
 		helper_functions.h \
+		defines.h \
 		io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-helper_functions.o: helper_functions.cpp helper_functions.h
+helper_functions.o: helper_functions.cpp helper_functions.h \
+		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o helper_functions.o helper_functions.cpp
 
 io.o: io.cpp io.h \
-		helper_functions.h
+		helper_functions.h \
+		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o io.o io.cpp
 
 matrix_operations.o: matrix_operations.cpp matrix_operations.h \
-		helper_functions.h
+		helper_functions.h \
+		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrix_operations.o matrix_operations.cpp
 
 trapfpe.o: trapfpe.cpp 

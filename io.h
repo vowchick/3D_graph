@@ -1,7 +1,6 @@
 #ifndef IO_H
 #define IO_H
 #include <strings.h>
-#include<iostream>
 #include <fstream>
 #include<string>
 #include "helper_functions.h"

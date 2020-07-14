@@ -96,8 +96,63 @@ allocation_size (int n)
     int al_size = 0;
     for (int i = 0; i < size; i++)
         al_size += get_num_of_diag (i, n);
-    printf ("%d\n", size + al_size + 1);
     return size + al_size + 1;
+}
+int get_off_diag (int n, int k, double *a_diag, double *a,
+                  int *I, us u)
+{
+    int i, j, trapeze_num;
+    get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+    //расписываем случаи
+    //полностью внутри
+    if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
+      {
+        double tr1, tr2;
+        if (i + j < n)
+          {
+            tr1 = tr2 = get_u (0, trapeze_num, u);
+          }
+        else if (i + j == n)
+          {
+            tr1 = get_u (0, trapeze_num, u);
+            tr2 = get_u (1, trapeze_num, u);
+          }
+        else
+          {
+            tr1 = tr2 = get_u (1, trapeze_num, u);
+          }
+        *a_diag  = 3 * (tr1 + tr2);
+        for (int i : range (3))
+
+        return 6;
+      }
+    //правая сторона трапеции
+    else if (i == 0 && j > 0 && j < n - 1)
+      {
+        return 6;
+      }
+    //нижняя сторона трапеции
+    else if (j == 0 && i > 0 && i < n - 1)
+      {
+        return 4;
+      }
+    //верхняя сторона трапеции
+    else if (j == n - 1 && i > 0 && i < n - 1)
+      {
+        return 4;
+      }
+    //правый нижний угол
+    else if (j == 0 && i == 0)
+      {
+        return 4;
+      }
+    //правый верхний угол
+    else if (j == n - 1 && i == 0)
+      {
+        return 4;
+      }
+    abort ();
+    return -1000;
 }
 void
 carcass (int n, int *I)
