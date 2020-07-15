@@ -160,6 +160,25 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
       {
+        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        double tr1 = get_u (0, trapeze_num, u),
+               tr2 = get_u (1, prev_trapeze, u);
+
+        *a_diag = 3 * (tr1 + tr2);
+
+        a[0] = tr1 + tr2;
+        a[1] = 2 * tr2;
+        a[2] = 2 * tr2;
+        a[3] = tr1 + tr2;;
+        a[4] = 2 * tr1;
+        a[5] = 2 * tr1;
+
+        I[0] = get_k (i, j + 1, trapeze_num, n);
+        I[1] = get_k (n - 2, j, prev_trapeze, n);
+        I[2] = get_k (n - 2, j - 1, prev_trapeze, n);
+        I[3] = get_k (i, j - 1, trapeze_num, n);
+        I[4] = get_k (i + 1, j - 1, trapeze_num, n);
+        I[5] = get_k (i + 1, j, trapeze_num, n);
 
         return 6;
       }
