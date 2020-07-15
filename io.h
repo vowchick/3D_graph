@@ -2,7 +2,7 @@
 #define IO_H
 #include <strings.h>
 #include <fstream>
-#include<string>
+#include <string>
 #include "helper_functions.h"
 
 template <typename func>

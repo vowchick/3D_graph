@@ -101,6 +101,7 @@ allocation_size (int n)
 int get_off_diag (int n, int k, double *a_diag, double *a,
                   int *I, us u)
 {
+	FIX_UNUSED(I);
     int i, j, trapeze_num;
     get_ijtrapeze (&i, &j, &trapeze_num, k, n);
     //расписываем случаи
@@ -111,18 +112,28 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
         if (i + j < n)
           {
             tr1 = tr2 = get_u (0, trapeze_num, u);
+			for (int i = 0; i < 6; i++)
+			  a[i] = 2 * tr1;
           }
         else if (i + j == n)
           {
             tr1 = get_u (0, trapeze_num, u);
             tr2 = get_u (1, trapeze_num, u);
+			a[0] = tr2;
+			a[1] = tr2;
+			a[2] = tr2;
+			a[3] = tr2;
+			a[4] = tr2;
+			a[5] = tr2;
           }
         else
           {
             tr1 = tr2 = get_u (1, trapeze_num, u);
+			for (int i = 0; i < 6; i++)
+			  a[i] = 2 * tr2;
           }
         *a_diag  = 3 * (tr1 + tr2);
-        for (int i : range (3))
+//        for (int i : range (3))
 
         return 6;
       }
