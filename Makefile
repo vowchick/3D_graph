@@ -118,7 +118,6 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -212,7 +211,6 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -289,7 +287,6 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 /../lib64/qt5/mkspecs/features/qt_config.prf:
 /../lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /../lib64/qt5/mkspecs/features/spec_post.prf:
-.qmake.stash:
 /../lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /../lib64/qt5/mkspecs/features/toolchain.prf:
 /../lib64/qt5/mkspecs/features/default_pre.prf:
