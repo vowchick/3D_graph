@@ -101,7 +101,6 @@ allocation_size (int n)
 int get_off_diag (int n, int k, double *a_diag, double *a,
                   int *I, us u)
 {
-	FIX_UNUSED(I);
     int i, j, trapeze_num;
     get_ijtrapeze (&i, &j, &trapeze_num, k, n);
     //расписываем случаи
@@ -119,12 +118,12 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
           {
             tr1 = get_u (0, trapeze_num, u);
             tr2 = get_u (1, trapeze_num, u);
-			a[0] = tr2;
-			a[1] = tr2;
-			a[2] = tr2;
-			a[3] = tr2;
-			a[4] = tr2;
-			a[5] = tr2;
+            a[0] = 2 * tr2;
+            a[1] = tr1 + tr2;
+            a[2] = 2 * tr1;
+            a[3] = 2 * tr1;
+            a[4] = tr1 + tr2;
+            a[5] = 2 * tr2;
           }
         else
           {
@@ -133,13 +132,35 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
 			  a[i] = 2 * tr2;
           }
         *a_diag  = 3 * (tr1 + tr2);
-//        for (int i : range (3))
+
+        if (i < n - 2)
+          {
+            I[0] = get_k (i, j + 1, trapeze_num, n);
+            I[1] = get_k (i - 1, j + 1, trapeze_num, n);
+            I[2] = get_k (i - 1, j, trapeze_num, n);
+            I[3] = get_k (i, j - 1, trapeze_num, n);
+            I[4] = get_k (i + 1, j - 1, trapeze_num, n);
+            I[5] = get_k (i + 1, j, trapeze_num, n);
+          }
+        else
+          {
+            I[0] = get_k (i, j + 1, trapeze_num, n);
+            I[1] = get_k (i - 1, j + 1, trapeze_num, n);
+            I[2] = get_k (i - 1, j, trapeze_num, n);
+            I[3] = get_k (i, j - 1, trapeze_num, n);
+
+            int next_trapeze = (trapeze_num + 1) % 8;
+
+            I[4] = get_k (0, j - 1, next_trapeze, n);
+            I[5] = get_k (0, j, next_trapeze, n);
+          }
 
         return 6;
       }
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
       {
+
         return 6;
       }
     //нижняя сторона трапеции
