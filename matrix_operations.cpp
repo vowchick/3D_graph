@@ -185,21 +185,81 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     //нижняя сторона трапеции
     else if (j == 0 && i > 0 && i < n - 1)
       {
+        double tr = get_u (0, trapeze_num, u);
+        *a_diag = 3 * tr;
+
+        a[0] = 2 * tr;
+        a[1] = 2 * tr;
+        a[2] = tr;
+        a[3] = tr;
+
+        I[0] = get_k (i, j + 1, trapeze_num, n);
+        I[1] = get_k (i - 1, j + 1, trapeze_num, n);
+        I[2] = get_k (i - 1, j, trapeze_num, n);
+        I[3] = get_k (i + 1, j, trapeze_num, n);
+
         return 4;
       }
     //верхняя сторона трапеции
     else if (j == n - 1 && i > 0 && i < n - 1)
       {
+        double tr = get_u (1, trapeze_num, u);
+        *a_diag = 3 * tr;
+
+        a[0] = tr;
+        a[1] = 2 * tr;
+        a[2] = 2 * tr;
+        a[3] = tr;
+
+        I[0] = get_k (i - 1, j, trapeze_num, n);
+        I[1] = get_k (i - 1, j - 1, trapeze_num, n);
+        I[2] = get_k (i + 1, j - 1, trapeze_num, n);
+        I[3] = get_k (i + 1, j, trapeze_num, n);
+
         return 4;
       }
     //правый нижний угол
     else if (j == 0 && i == 0)
       {
+        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        double tr1 = get_u (0, trapeze_num, u),
+               tr2 = get_u (1, prev_trapeze, u),
+               tr3 = get_u (0, prev_trapeze, u);
+
+        *a_diag  = tr1 + tr3 + tr3;
+
+        a[0] = tr1 + tr2;
+        a[1] =       tr2 + tr3;
+        a[2] =             tr3;
+        a[3] = tr1;
+
+        I[0] = get_k (i, j + 1, trapeze_num, n);
+        I[1] = get_k (n - 2, j + 1, prev_trapeze, n);
+        I[2] = get_k (n - 2, j, prev_trapeze, n);
+        I[3] = get_k (i + 1, j, trapeze_num, n);
+
         return 4;
       }
     //правый верхний угол
     else if (j == n - 1 && i == 0)
       {
+        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        double tr1 = get_u (1, trapeze_num, u),
+               tr2 = get_u (0, trapeze_num, u),
+               tr3 = get_u (1, prev_trapeze, u);
+
+        *a_diag  = tr1 + tr3 + tr3;
+
+        a[0] =             tr3;
+        a[1] =       tr2 + tr3;
+        a[2] = tr1 + tr2;
+        a[3] = tr1;
+
+        I[0] = get_k (n - 2, j, prev_trapeze, n);
+        I[1] = get_k (i, j - 1, trapeze_num, n);
+        I[2] = get_k (i + 1, j - 1, trapeze_num, n);
+        I[3] = get_k (i + 1, j, trapeze_num, n);
+
         return 4;
       }
     abort ();
