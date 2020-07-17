@@ -23,16 +23,19 @@ ultimate_scalar_counter (double J,
 }
 void
 fill_the_matrix_msr_format (double *matrix,     //pointer to the matrix
+                            int *I,
                             int n,              //number of points
                             polygon p)
 {
 
-    FIX_UNUSED (matrix);
+
     //Здесь n = nx + 1 - количество точек на ребре, не количество отрезков разбиения
     Js j;
     us u;
     fill_js (j, p, n);
     fill_us (j, u);
+    FIX_UNUSED(I, matrix);
+    //fill_MSR_matrix (n, matrix, I, 1, 0, u);
     //A->a и параллельно идем к B и от A к a
     // затем от B к a и так далее
 
@@ -42,18 +45,18 @@ get_k (int i, int j, int trapeze_num, int n)
 {
     if (i + j < n)
       {
-        return trapeze_num * (n * n - n + 1) + (2 * n - i + 1) * i / 2 + j;
+        return trapeze_num * (n * n - n) + (2 * n - i + 1) * i / 2 + j;
       }
     else
       {
-        return trapeze_num * (n * n - n + 1) + (n * (n + 1) / 2) + i * (i - 1) / 2 + (j - n + i);
+        return trapeze_num * (n * n - n) + (n * (n + 1) / 2) + i * (i - 1) / 2 + (j - n + i);
       }
 }
 void
 get_ijtrapeze (int *i, int *j, int *trapeze_num, int k, int n)
 {
-   *trapeze_num = k / (n * n - n + 1);
-   k %= (n * n - n + 1);
+   *trapeze_num = k / (n * n - n);
+   k %= (n * n - n);
    if (k < n * (n + 1) / 2)
      {
        int tmp = n, it = 0;
@@ -92,7 +95,7 @@ get_num_of_diag (int k, int n)
 int
 allocation_size (int n)
 {
-    int size = 4 * (n * n - n + 1);
+    int size = 4 * (n * n - n);
     int al_size = 0;
     for (int i = 0; i < size; i++)
         al_size += get_num_of_diag (i, n);
@@ -160,7 +163,7 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
       {
-        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
         double tr1 = get_u (0, trapeze_num, u),
                tr2 = get_u (1, prev_trapeze, u);
 
@@ -221,7 +224,7 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     //правый нижний угол
     else if (j == 0 && i == 0)
       {
-        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
         double tr1 = get_u (0, trapeze_num, u),
                tr2 = get_u (1, prev_trapeze, u),
                tr3 = get_u (0, prev_trapeze, u);
@@ -243,7 +246,7 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     //правый верхний угол
     else if (j == n - 1 && i == 0)
       {
-        int prev_trapeze = (trapeze_num == 0 ? 7 : trapeze_num - 1);
+        int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
         double tr1 = get_u (1, trapeze_num, u),
                tr2 = get_u (0, trapeze_num, u),
                tr3 = get_u (1, prev_trapeze, u);
@@ -266,10 +269,89 @@ int get_off_diag (int n, int k, double *a_diag, double *a,
     return -1000;
 }
 void
+fill_MSR_matrix (int n, double *a, int *I,
+                      int p, int k, us u)
+{
+  int k1, k2, l, s;
+  int N = 4 * (n * n - n);
+  int sum = 0;
+  k1 = k * N; k1 /= p;
+  k2 = (k + 1) * N; k2 = k2 / p - 1;
+  for (l = k1; l <= k2; l++)
+    {
+      s = get_off_diag (n, l,
+                        a + l,
+                        a + I[l],
+                        I + I[l],
+                        u);
+      sum += s;
+    }
+  reduce_sum (p, &sum, 1);
+  printf ("???%d %d\n", N + 1 + sum, I[N]);
+  assert (N + 1 +  sum == I[N]);
+}
+void reduce_sum (int p, int *a, int n)
+{
+  static pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+  static pthread_cond_t c_in = PTHREAD_COND_INITIALIZER;
+  static pthread_cond_t c_out = PTHREAD_COND_INITIALIZER;
+
+  static int t_in = 0;
+  static int t_out = 0;
+  static int *p_a;
+  int i = 0;
+
+  if (p <= 1)
+    return;
+  pthread_mutex_lock (&m);
+
+  if (!p_a) p_a = a;
+  else
+    if (a)
+      {
+        for (i = 0; i < n; i++)
+          p_a[i] += a[i];
+      }
+
+  t_in++;
+
+  if (t_in >= p)
+    {
+      t_out = 0;
+      pthread_cond_broadcast (&c_in);
+    }
+  else
+    while (t_in < p)
+      pthread_cond_wait (&c_in, &m);
+
+  if (p_a && p_a != a)
+    {
+      for (int i = 0; i < n; i++)
+        {
+          a[i] = p_a[i];
+        }
+    }
+  t_out++;
+
+
+  if (t_out >= p)
+    {
+      p_a = 0;
+      t_in = 0;
+      pthread_cond_broadcast (&c_out);
+    }
+  else
+    {
+      while (t_out < p)
+        pthread_cond_wait (&c_out, &m);
+    }
+  pthread_mutex_unlock (&m);
+}
+void
 carcass (int n, int *I)
 {
     int len = allocation_size(n);
-    int N = 4 * (n * n - n + 1);
+    int N = 4 * (n * n - n);
     int nz = len - N - 1;
     int l = 0, s = 0;
     I[0] = N + 1;

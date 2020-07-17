@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -Og -ggdb -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format -O2 -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
@@ -118,6 +118,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -211,6 +212,7 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 		/../lib64/qt5/mkspecs/features/qt_config.prf \
 		/../lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/../lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/../lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/../lib64/qt5/mkspecs/features/toolchain.prf \
 		/../lib64/qt5/mkspecs/features/default_pre.prf \
@@ -287,6 +289,7 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 /../lib64/qt5/mkspecs/features/qt_config.prf:
 /../lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /../lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /../lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /../lib64/qt5/mkspecs/features/toolchain.prf:
 /../lib64/qt5/mkspecs/features/default_pre.prf:
@@ -352,7 +355,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -O2 -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -Og -ggdb -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format -O2 -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all:
 compiler_moc_header_clean:

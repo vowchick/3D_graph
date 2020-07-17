@@ -7,6 +7,7 @@
 #include <stdlib.h>
 void
 fill_the_matrix_msr_format (double *matrix,     //pointer to the matrix
+                            int *I,
                             int n,              //number of points
                             polygon Polygon);
 double
@@ -35,4 +36,7 @@ int
 allocation_size (int n);
 void
 carcass (int n, int *I);
+void fill_MSR_matrix (int n, double *a, int *I,
+                      int p, int k, us u);
+void reduce_sum (int p, int *a, int n);
 #endif // MATRIX_OPERATIONS_H

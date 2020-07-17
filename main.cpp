@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
   std::unique_ptr<double[]> matrix = std::make_unique <double []> (len);
   std::unique_ptr<int[]> I = std::make_unique <int[]> (len);
   carcass (n, I.get());
-  fill_the_matrix_msr_format (matrix.get (), in.nx + 1,
+  fill_the_matrix_msr_format (matrix.get (), I.get (),in.nx + 1,
                               pol);
   return 0;
 }
