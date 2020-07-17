@@ -34,8 +34,8 @@ fill_the_matrix_msr_format (double *matrix,     //pointer to the matrix
     us u;
     fill_js (j, p, n);
     fill_us (j, u);
-    FIX_UNUSED(I, matrix);
-    //fill_MSR_matrix (n, matrix, I, 1, 0, u);
+//    FIX_UNUSED(I, matrix);
+    fill_MSR_matrix (n, matrix, I, 1, 0, u);
     //A->a и параллельно идем к B и от A к a
     // затем от B к a и так далее
 
@@ -43,6 +43,7 @@ fill_the_matrix_msr_format (double *matrix,     //pointer to the matrix
 int
 get_k (int i, int j, int trapeze_num, int n)
 {
+#if (0)
     if (i + j < n)
       {
         return trapeze_num * (n * n - n) + (2 * n - i + 1) * i / 2 + j;
@@ -51,11 +52,15 @@ get_k (int i, int j, int trapeze_num, int n)
       {
         return trapeze_num * (n * n - n) + (n * (n + 1) / 2) + i * (i - 1) / 2 + (j - n + i);
       }
+#else
+    return trapeze_num * (n * n - n) + i * n + j;
+#endif
 }
 void
 get_ijtrapeze (int *i, int *j, int *trapeze_num, int k, int n)
 {
-   *trapeze_num = k / (n * n - n);
+  /**trapeze_num = k / (n * n - n);
+    *
    k %= (n * n - n);
    if (k < n * (n + 1) / 2)
      {
@@ -79,7 +84,11 @@ get_ijtrapeze (int *i, int *j, int *trapeze_num, int k, int n)
        *i = it;
        tmp -= it;
        *j = (k - tmp + n - *i);
-     }
+     }*/
+  *trapeze_num = k / (n * n - n);
+  k %= (n * n - n);
+  *i = k / n;
+  *j = k % n;
 }
 int
 get_num_of_diag (int k, int n)
@@ -287,7 +296,7 @@ fill_MSR_matrix (int n, double *a, int *I,
       sum += s;
     }
   reduce_sum (p, &sum, 1);
-  printf ("???%d %d\n", N + 1 + sum, I[N]);
+  printf ("%d %d\n", N + 1 + sum, I[N]);
   assert (N + 1 +  sum == I[N]);
 }
 void reduce_sum (int p, int *a, int n)
