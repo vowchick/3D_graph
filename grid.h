@@ -14,6 +14,7 @@ public:
     us get_u () const {return u;}
     void fill_us ();
     double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze);
+    void fill_points (point &A, point &B, point &C, point &D, int trapeze);
 
 
 private:

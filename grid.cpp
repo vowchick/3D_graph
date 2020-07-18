@@ -28,6 +28,61 @@ grid::fill_us ()
 double
 grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze)
 {
-FIX_UNUSED (f, i, j, trapeze);
-    return 0;
+
+  point A, B, C, D;
+  point desired;
+
+  fill_points (A, B, C, D, trapeze);
+
+  if (i + j <= n)
+    {
+      desired.x = A.x + i * (B.x - A.x) / n;
+      desired.y = A.y + i * (B.y - A.y) / n;
+
+      desired.x += (j * (D.x - A.x) / n);
+      desired.y += (j * (D.y - A.y) / n);
+    }
+  else
+    {
+      desired.x = D.x + i * (B.x - D.x) / n;
+      desired.y = D.y + i * (B.y - D.y) / n;
+
+      desired.x += (j + i - n) * (C.x - D.x) / n;
+      desired.y += (j + i - n) * (C.y - D.y) / n;
+    }
+
+
+  return f (desired.x, desired.y);
+}
+void
+grid::fill_points (point &A, point &B, point &C, point &D, int trapeze)
+{
+  switch (trapeze)
+    {
+      case 0:
+        A = p->A;
+        B = p->B;
+        C = p->b;
+        D = p->a;
+      break;
+      case 1:
+        A = p->B;
+        B = p->C;
+        C = p->c;
+        D = p->b;
+      break;
+      case 2:
+        A = p->C;
+        B = p->D;
+        C = p->d;
+        D = p->c;
+      break;
+      case 3:
+        A = p->D;
+        B = p->A;
+        C = p->a;
+        D = p->d;
+      break;
+    }
+  abort ();
 }
