@@ -1,6 +1,8 @@
 #ifndef MSR_MATRIX_BUILDER_H
 #define MSR_MATRIX_BUILDER_H
 #include "helper_functions.h"
+
+#include "grid.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -11,7 +13,7 @@ class msr_matrix_builder
 
 public:
     msr_matrix_builder();
-    msr_matrix_builder (int n_, polygon *p_);
+    msr_matrix_builder (int n_, polygon *p_, std::function<double (double, double)> f);
     ~msr_matrix_builder();
 
     void fill_MSR_matrix (int p, int k);
@@ -21,7 +23,6 @@ private:
     int  get_num_of_diag (int k);
     int allocation_size ();
 
-    void fill_us ();
 
     void carcass ();
 
@@ -34,8 +35,8 @@ private:
     double *matrix = nullptr;
     int *I = nullptr;
     double *rhs = nullptr;
-    us u;
-    polygon *pol;
+    grid *gr;
+    std::function<double (double, double)> f;
 };
 
 #endif // MSR_MATRIX_BUILDER_H

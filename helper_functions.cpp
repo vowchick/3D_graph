@@ -1,23 +1,5 @@
 #include "helper_functions.h"
 double
-get_u (int odd, int trapeze_num, us u)
-{
-  int num = 2 * trapeze_num + odd;
-  switch (num)
-    {
-      case 0: return u.AaB;
-      case 1: return u.Bab;
-      case 2: return u.BbC;
-      case 3: return u.Cbc;
-      case 4: return u.CcD;
-      case 5: return u.Dcd;
-      case 6: return u.DdA;
-      case 7: return u.Ada;
-    }
-  abort ();
-  return -100;
-}
-double
 triangle_to_right_triangle_jacob (
         double x1, double y1,     // ->(0, 1)
         double x2, double y2,     // -> (0, 0)

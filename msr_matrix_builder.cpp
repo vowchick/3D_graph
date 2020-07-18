@@ -9,12 +9,14 @@ msr_matrix_builder::~msr_matrix_builder()
 {
   delete [] matrix;
   delete [] I;
+  delete [] gr;
 }
 
-msr_matrix_builder::msr_matrix_builder(int n_, polygon *p_)
+msr_matrix_builder::msr_matrix_builder(int n_, polygon *p_, std::function<double (double, double)> f_)
 {
   n = n_;
-  pol = p_;
+  f = f_;
+  gr = new grid (p_, n_);
 
   int alloc_size = allocation_size ();
 
@@ -23,7 +25,6 @@ msr_matrix_builder::msr_matrix_builder(int n_, polygon *p_)
 
   carcass();
 
-  fill_us();
 }
 int
 msr_matrix_builder::allocation_size ()
@@ -47,21 +48,6 @@ msr_matrix_builder::get_num_of_diag (int k)
   abort ();
 }
 
-void
-msr_matrix_builder::fill_us ()
-{
-    Js j;
-    fill_js (j, pol, n);
-
-    u.BbC = ultimate_scalar_counter (j.BbC, 1, 0, 0, 1, 0, 0);
-    u.AaB = ultimate_scalar_counter (j.AaB, 1, 0, 0, 1, 0, 0);
-    u.Bab = ultimate_scalar_counter (j.Bab, 1, 0, 0, 1, 0, 0);
-    u.Cbc = ultimate_scalar_counter (j.Cbc, 1, 0, 0, 1, 0, 0);
-    u.CcD = ultimate_scalar_counter (j.CcD, 1, 0, 0, 1, 0, 0);
-    u.Dcd = ultimate_scalar_counter (j.Dcd, 1, 0, 0, 1, 0, 0);
-    u.DdA = ultimate_scalar_counter (j.DdA, 1, 0, 0, 1, 0, 0);
-    u.Ada = ultimate_scalar_counter (j.Ada, 1, 0, 0, 1, 0, 0);
-}
 
 void
 msr_matrix_builder::carcass ()

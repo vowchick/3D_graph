@@ -5,6 +5,8 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
                   int *I)
 {
     int i, j, trapeze_num;
+    us u = gr->get_u();
+
     get_ijtrapeze (&i, &j, &trapeze_num, k, n);
     //расписываем случаи
     //полностью внутри
@@ -13,14 +15,14 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
         double tr1, tr2;
         if (i + j < n)
           {
-            tr1 = tr2 = get_u (0, trapeze_num, u);
+            tr1 = tr2 = u.get_u (0, trapeze_num);
             for (int i = 0; i < 6; i++)
               a[i] = 2 * tr1;
           }
         else if (i + j == n)
           {
-            tr1 = get_u (0, trapeze_num, u);
-            tr2 = get_u (1, trapeze_num, u);
+            tr1 = u.get_u (0, trapeze_num);
+            tr2 = u.get_u (1, trapeze_num);
             a[0] = 2 * tr2;
             a[1] = tr1 + tr2;
             a[2] = 2 * tr1;
@@ -30,7 +32,7 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
           }
         else
           {
-            tr1 = tr2 = get_u (1, trapeze_num, u);
+            tr1 = tr2 = u.get_u (1, trapeze_num);
             for (int i = 0; i < 6; i++)
               a[i] = 2 * tr2;
           }
@@ -64,8 +66,8 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
     else if (i == 0 && j > 0 && j < n - 1)
       {
         int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-        double tr1 = get_u (0, trapeze_num, u),
-               tr2 = get_u (1, prev_trapeze, u);
+        double tr1 = u.get_u (0, trapeze_num),
+               tr2 = u.get_u (1, prev_trapeze);
 
         *a_diag = 3 * (tr1 + tr2);
 
@@ -88,7 +90,7 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
     //нижняя сторона трапеции
     else if (j == 0 && i > 0 && i < n - 1)
       {
-        double tr = get_u (0, trapeze_num, u);
+        double tr = u.get_u (0, trapeze_num);
         *a_diag = 3 * tr;
 
         a[0] = 2 * tr;
@@ -106,7 +108,7 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
     //верхняя сторона трапеции
     else if (j == n - 1 && i > 0 && i < n - 1)
       {
-        double tr = get_u (1, trapeze_num, u);
+        double tr = u.get_u (1, trapeze_num);
         *a_diag = 3 * tr;
 
         a[0] = tr;
@@ -125,9 +127,9 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
     else if (j == 0 && i == 0)
       {
         int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-        double tr1 = get_u (0, trapeze_num, u),
-               tr2 = get_u (1, prev_trapeze, u),
-               tr3 = get_u (0, prev_trapeze, u);
+        double tr1 = u.get_u (0, trapeze_num),
+               tr2 = u.get_u (1, prev_trapeze),
+               tr3 = u.get_u (0, prev_trapeze);
 
         *a_diag  = tr1 + tr3 + tr3;
 
@@ -147,9 +149,9 @@ msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
     else if (j == n - 1 && i == 0)
       {
         int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-        double tr1 = get_u (1, trapeze_num, u),
-               tr2 = get_u (0, trapeze_num, u),
-               tr3 = get_u (1, prev_trapeze, u);
+        double tr1 = u.get_u (1, trapeze_num),
+               tr2 = u.get_u (0, trapeze_num),
+               tr3 = u.get_u (1, prev_trapeze);
 
         *a_diag  = tr1 + tr3 + tr3;
 

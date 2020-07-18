@@ -53,12 +53,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
+		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
 		msr_matrix_builder.cpp \
 		trapfpe.cpp 
 OBJECTS       = main.o \
+		grid.o \
 		helper_functions.o \
 		io.o \
 		long_member_functions.o \
@@ -141,8 +143,11 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		3D.pro helper_functions.h \
 		defines.h \
+		grid.h \
 		io.h \
-		msr_matrix_builder.h main.cpp \
+		msr_matrix_builder.h \
+		structs_and_stuff.h main.cpp \
+		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
@@ -327,8 +332,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h io.h msr_matrix_builder.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp helper_functions.cpp io.cpp long_member_functions.cpp msr_matrix_builder.cpp trapfpe.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h msr_matrix_builder.h structs_and_stuff.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp msr_matrix_builder.cpp trapfpe.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -378,27 +383,41 @@ compiler_clean: compiler_moc_predefs_clean
 
 main.o: main.cpp msr_matrix_builder.h \
 		helper_functions.h \
+		structs_and_stuff.h \
 		defines.h \
+		grid.h \
 		io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
+grid.o: grid.cpp grid.h \
+		structs_and_stuff.h \
+		defines.h \
+		helper_functions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grid.o grid.cpp
+
 helper_functions.o: helper_functions.cpp helper_functions.h \
+		structs_and_stuff.h \
 		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o helper_functions.o helper_functions.cpp
 
 io.o: io.cpp io.h \
 		helper_functions.h \
+		structs_and_stuff.h \
 		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o io.o io.cpp
 
 long_member_functions.o: long_member_functions.cpp msr_matrix_builder.h \
 		helper_functions.h \
-		defines.h
+		structs_and_stuff.h \
+		defines.h \
+		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o long_member_functions.o long_member_functions.cpp
 
 msr_matrix_builder.o: msr_matrix_builder.cpp msr_matrix_builder.h \
 		helper_functions.h \
-		defines.h
+		structs_and_stuff.h \
+		defines.h \
+		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o msr_matrix_builder.o msr_matrix_builder.cpp
 
 trapfpe.o: trapfpe.cpp 

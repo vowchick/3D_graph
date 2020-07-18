@@ -23,7 +23,12 @@ int main (int argc, char *argv[])
   print_polygon(pol);
 
   int n = in.nx + 1;
-  msr_matrix_builder builder (n, &pol);
+  auto func = [] (double x, double y)
+  {
+    return x + y;
+  };
+
+  msr_matrix_builder builder (n, &pol, func);
 
   builder.fill_MSR_matrix (1, 0);
 
