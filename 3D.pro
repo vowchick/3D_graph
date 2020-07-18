@@ -4,10 +4,11 @@ TARGET        = a.out
 HEADERS       = helper_functions.h \
                 defines.h \
                 io.h \
-                matrix_operations.h 
+                msr_matrix_builder.h
 SOURCES       = main.cpp \
                 helper_functions.cpp \
     io.cpp \
-                matrix_operations.cpp \
+    long_member_functions.cpp \
+    msr_matrix_builder.cpp \
                 trapfpe.cpp \
 

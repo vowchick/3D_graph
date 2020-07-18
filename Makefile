@@ -55,12 +55,14 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		helper_functions.cpp \
 		io.cpp \
-		matrix_operations.cpp \
+		long_member_functions.cpp \
+		msr_matrix_builder.cpp \
 		trapfpe.cpp 
 OBJECTS       = main.o \
 		helper_functions.o \
 		io.o \
-		matrix_operations.o \
+		long_member_functions.o \
+		msr_matrix_builder.o \
 		trapfpe.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -140,10 +142,11 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		3D.pro helper_functions.h \
 		defines.h \
 		io.h \
-		matrix_operations.h main.cpp \
+		msr_matrix_builder.h main.cpp \
 		helper_functions.cpp \
 		io.cpp \
-		matrix_operations.cpp \
+		long_member_functions.cpp \
+		msr_matrix_builder.cpp \
 		trapfpe.cpp
 QMAKE_TARGET  = a.out
 DESTDIR       = 
@@ -324,8 +327,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h io.h matrix_operations.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp helper_functions.cpp io.cpp matrix_operations.cpp trapfpe.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h io.h msr_matrix_builder.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp helper_functions.cpp io.cpp long_member_functions.cpp msr_matrix_builder.cpp trapfpe.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -373,7 +376,7 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-main.o: main.cpp matrix_operations.h \
+main.o: main.cpp msr_matrix_builder.h \
 		helper_functions.h \
 		defines.h \
 		io.h
@@ -388,10 +391,15 @@ io.o: io.cpp io.h \
 		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o io.o io.cpp
 
-matrix_operations.o: matrix_operations.cpp matrix_operations.h \
+long_member_functions.o: long_member_functions.cpp msr_matrix_builder.h \
 		helper_functions.h \
 		defines.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrix_operations.o matrix_operations.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o long_member_functions.o long_member_functions.cpp
+
+msr_matrix_builder.o: msr_matrix_builder.cpp msr_matrix_builder.h \
+		helper_functions.h \
+		defines.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o msr_matrix_builder.o msr_matrix_builder.cpp
 
 trapfpe.o: trapfpe.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trapfpe.o trapfpe.cpp

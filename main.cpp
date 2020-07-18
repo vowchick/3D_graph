@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory>
-#include "matrix_operations.h"
+#include "msr_matrix_builder.h"
 #include "helper_functions.h"
 #include "io.h"
 int main (int argc, char *argv[])
@@ -23,12 +23,9 @@ int main (int argc, char *argv[])
   print_polygon(pol);
 
   int n = in.nx + 1;
-  int len = allocation_size (n);
+  msr_matrix_builder builder (n, &pol);
 
-  std::unique_ptr<double[]> matrix = std::make_unique <double []> (len);
-  std::unique_ptr<int[]> I = std::make_unique <int[]> (len);
-  carcass (n, I.get());
-  fill_the_matrix_msr_format (matrix.get (), I.get (),in.nx + 1,
-                              pol);
+  builder.fill_MSR_matrix (1, 0);
+
   return 0;
 }
