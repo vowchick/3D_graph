@@ -8,8 +8,8 @@ grid::grid (polygon *p_, int n_)
 {
   p = p_;
   n = n_;
-  fill_us();
   fill_js (p, n);
+  fill_us();
 }
 void
 grid::fill_us ()
@@ -62,25 +62,25 @@ grid::fill_points (point &A, point &B, point &C, point &D, int trapeze)
         B = p->B;
         C = p->b;
         D = p->a;
-      break;
+      return;
       case 1:
         A = p->B;
         B = p->C;
         C = p->c;
         D = p->b;
-      break;
+      return;
       case 2:
         A = p->C;
         B = p->D;
         C = p->d;
         D = p->c;
-      break;
+      return;
       case 3:
         A = p->D;
         B = p->A;
         C = p->a;
         D = p->d;
-      break;
+      return;
     }
   abort ();
 }
@@ -95,7 +95,7 @@ grid::fill_js (polygon *p, int n)
     J.Bab = triangle_to_right_triangle_jacob(
                 p->B.x, p->B.y,
                 p->a.x, p->a.y,
-                p->a.x, p->a.y, n
+                p->b.x, p->b.y, n
                 );
     J.BbC = triangle_to_right_triangle_jacob(
                 p->b.x, p->b.y,

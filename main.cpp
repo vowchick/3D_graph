@@ -31,6 +31,7 @@ int main (int argc, char *argv[])
   system_builder builder (n, &pol, func);
 
   builder.fill_MSR_matrix (1, 0);
+  builder.fill_rhs ();
 
   return 0;
 }
