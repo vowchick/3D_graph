@@ -24,7 +24,7 @@ grid::fill_us ()
     u.Ada = ultimate_scalar_counter (J.Ada, 1, 0, 0, 1, 0, 0);
 }
 double
-grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze)
+grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n)
 {
 
   point A, B, C, D;
@@ -128,3 +128,34 @@ grid::fill_js (polygon *p, int n)
                 p->d.x, p->d.y, n
                 );
 }
+#if (0)
+double
+grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze)
+{
+
+  point A, B, C, D;
+  point desired;
+
+  fill_points (A, B, C, D, trapeze);
+
+  if (i + j <= n)
+    {
+      desired.x = A.x + i * (B.x - A.x) / n;
+      desired.y = A.y + i * (B.y - A.y) / n;
+
+      desired.x += (j * (D.x - A.x) / n);
+      desired.y += (j * (D.y - A.y) / n);
+    }
+  else
+    {
+      desired.x = D.x + i * (B.x - D.x) / n;
+      desired.y = D.y + i * (B.y - D.y) / n;
+
+      desired.x += (j + i - n) * (C.x - D.x) / n;
+      desired.y += (j + i - n) * (C.y - D.y) / n;
+    }
+
+
+  return f (desired.x, desired.y);
+}
+#endif

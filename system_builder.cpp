@@ -10,6 +10,7 @@ system_builder::~system_builder()
   delete [] matrix;
   delete [] I;
   delete [] gr;
+  delete [] rhs;
 }
 
 system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_)
@@ -22,6 +23,7 @@ system_builder::system_builder(int n_, polygon *p_, std::function<double (double
 
   matrix = new double[alloc_size];
   I = new int[alloc_size];
+  rhs = new double[4 * (n * n - n)];
 
   carcass();
 
@@ -96,6 +98,6 @@ system_builder::fill_rhs()
   int N = 4 * (n * n - n);
   for (int k = 0; k < N; k++)
     {
-      fill_rhs_at (k);
+      rhs[k] = fill_rhs_at (k);
     }
 }

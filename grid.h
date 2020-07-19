@@ -15,7 +15,8 @@ public:
     Js get_J () const {return J;}
     void fill_us ();
     void fill_js (polygon *p, int n);
-    double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze);
+//    double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze);
+    double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n);
     void fill_points (point &A, point &B, point &C, point &D, int trapeze);
 
 

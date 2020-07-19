@@ -18,7 +18,7 @@ public:
 
     void fill_MSR_matrix (int p, int k);
     void fill_rhs ();
-    void fill_rhs_at (int k);
+    double fill_rhs_at (int k);
 
 private:
 

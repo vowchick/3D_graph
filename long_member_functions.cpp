@@ -170,10 +170,10 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     abort ();
     return -1000;
 }
-void
+double
 system_builder::fill_rhs_at (int k)
 {
-    int i, j, trapeze_num;
+    int i, j, trapeze_num, n2 = 2 * n;
     Js J = gr->get_J ();
 
     get_ijtrapeze (&i, &j, &trapeze_num, k, n);
@@ -181,7 +181,29 @@ system_builder::fill_rhs_at (int k)
     //полностью внутри
     if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
       {
+        double tr1, tr2;
+        if (i + j < n)
+          {
+            tr1 = tr2 = J.get_J (0, trapeze_num);
 
+          }
+        else if (i + j == n)
+          {
+            tr1 = J.get_J (0, trapeze_num);
+            tr2 = J.get_J (1, trapeze_num);
+          }
+        else
+          {
+            tr1 = tr2 = J.get_J (1, trapeze_num);
+          }
+        double ans = 36 * gr->get_f_value_by_ijtr (f, 2 * i, 2 * j, trapeze_num, n2) +
+                     20 * gr->get_f_value_by_ijtr (f, 2 * i, 2 * j + 1, trapeze_num, n2) +
+                     2 *  gr->get_f_value_by_ijtr (f, 2 * i, 2 * j + 2, trapeze_num, n2) +
+                     4 *  gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 2, trapeze_num, n2) +
+                     2 *  gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 2, trapeze_num, n2) +
+                     20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 1, trapeze_num, n2) +
+
+                     4 * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 1, trapeze_num, n2);
       }
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
