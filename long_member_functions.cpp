@@ -196,18 +196,51 @@ system_builder::fill_rhs_at (int k)
           {
             tr1 = tr2 = J.get_J (1, trapeze_num);
           }
-        double ans = 36 * gr->get_f_value_by_ijtr (f, 2 * i, 2 * j, trapeze_num, n2) +
-                     20 * gr->get_f_value_by_ijtr (f, 2 * i, 2 * j + 1, trapeze_num, n2) +
-                     2 *  gr->get_f_value_by_ijtr (f, 2 * i, 2 * j + 2, trapeze_num, n2) +
-                     4 *  gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 2, trapeze_num, n2) +
-                     2 *  gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 2, trapeze_num, n2) +
-                     20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 1, trapeze_num, n2) +
+        double ans = 0;
+        ans = tr1 *
+                (
+                  4  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 1, trapeze_num, n2) +
+                  2  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 0, trapeze_num, n2) +
+                  20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 0, trapeze_num, n2) +
 
-                     4 * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 1, trapeze_num, n2);
+                  4  * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j - 1, trapeze_num, n2) +
+                  2  * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j - 2, trapeze_num, n2) +
+                  20 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j - 1, trapeze_num, n2) +
+
+                  4  * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j - 2, trapeze_num, n2)
+                );
+        ans += tr2 *
+                (
+                   4  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j - 1, trapeze_num, n2) +
+                   2  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
+                   20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
+
+                   4  * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 1, trapeze_num, n2) +
+                   2  * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 2, trapeze_num, n2) +
+                   20 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 1, trapeze_num, n2) +
+
+                   4  * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 2, trapeze_num, n2)
+                 );
+        ans += ((tr1 + tr2) / 2.) *
+                (
+                  2  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 2, trapeze_num, n2) +
+                  20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 1, trapeze_num, n2) +
+
+                  20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j - 1, trapeze_num, n2) +
+                  2  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j - 2, trapeze_num, n2) +
+
+                  36 * gr->get_f_value_by_ijtr (f, 2 * i, 2 * j, trapeze_num, n2)
+                );
+
+        return ans;
       }
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
       {
+        int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+        double tr1 = J.get_J (0, trapeze_num),
+               tr2 = J.get_J (1, trapeze_prev);
+        FIX_UNUSED (tr1, tr2);
 
       }
     //нижняя сторона трапеции
