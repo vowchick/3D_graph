@@ -170,3 +170,43 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     abort ();
     return -1000;
 }
+void
+system_builder::fill_rhs_at (int k)
+{
+    int i, j, trapeze_num;
+    Js J = gr->get_J ();
+
+    get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+    //расписываем случаи
+    //полностью внутри
+    if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
+      {
+
+      }
+    //правая сторона трапеции
+    else if (i == 0 && j > 0 && j < n - 1)
+      {
+
+      }
+    //нижняя сторона трапеции
+    else if (j == 0 && i > 0 && i < n - 1)
+      {
+
+      }
+    //верхняя сторона трапеции
+    else if (j == n - 1 && i > 0 && i < n - 1)
+      {
+
+      }
+    //правый нижний угол
+    else if (j == 0 && i == 0)
+      {
+
+      }
+    //правый верхний угол
+    else if (j == n - 1 && i == 0)
+      {
+
+      }
+    abort ();
+}

@@ -58,6 +58,23 @@ struct Js
     double Dcd;
     double DdA;
     double Ada;
+    double get_J (int odd, int trapeze_num)
+    {
+        int num = 2 * trapeze_num + odd;
+        switch (num)
+          {
+            case 0: return AaB;
+            case 1: return Bab;
+            case 2: return BbC;
+            case 3: return Cbc;
+            case 4: return CcD;
+            case 5: return Dcd;
+            case 6: return DdA;
+            case 7: return Ada;
+          }
+        abort ();
+        return -100;
+    }
 };
 
 struct polygon

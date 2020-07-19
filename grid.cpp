@@ -9,21 +9,19 @@ grid::grid (polygon *p_, int n_)
   p = p_;
   n = n_;
   fill_us();
+  fill_js (p, n);
 }
 void
 grid::fill_us ()
 {
-    Js j;
-    fill_js (j, p, n);
-
-    u.BbC = ultimate_scalar_counter (j.BbC, 1, 0, 0, 1, 0, 0);
-    u.AaB = ultimate_scalar_counter (j.AaB, 1, 0, 0, 1, 0, 0);
-    u.Bab = ultimate_scalar_counter (j.Bab, 1, 0, 0, 1, 0, 0);
-    u.Cbc = ultimate_scalar_counter (j.Cbc, 1, 0, 0, 1, 0, 0);
-    u.CcD = ultimate_scalar_counter (j.CcD, 1, 0, 0, 1, 0, 0);
-    u.Dcd = ultimate_scalar_counter (j.Dcd, 1, 0, 0, 1, 0, 0);
-    u.DdA = ultimate_scalar_counter (j.DdA, 1, 0, 0, 1, 0, 0);
-    u.Ada = ultimate_scalar_counter (j.Ada, 1, 0, 0, 1, 0, 0);
+    u.BbC = ultimate_scalar_counter (J.BbC, 1, 0, 0, 1, 0, 0);
+    u.AaB = ultimate_scalar_counter (J.AaB, 1, 0, 0, 1, 0, 0);
+    u.Bab = ultimate_scalar_counter (J.Bab, 1, 0, 0, 1, 0, 0);
+    u.Cbc = ultimate_scalar_counter (J.Cbc, 1, 0, 0, 1, 0, 0);
+    u.CcD = ultimate_scalar_counter (J.CcD, 1, 0, 0, 1, 0, 0);
+    u.Dcd = ultimate_scalar_counter (J.Dcd, 1, 0, 0, 1, 0, 0);
+    u.DdA = ultimate_scalar_counter (J.DdA, 1, 0, 0, 1, 0, 0);
+    u.Ada = ultimate_scalar_counter (J.Ada, 1, 0, 0, 1, 0, 0);
 }
 double
 grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze)
@@ -85,4 +83,48 @@ grid::fill_points (point &A, point &B, point &C, point &D, int trapeze)
       break;
     }
   abort ();
+}
+void
+grid::fill_js (polygon *p, int n)
+{
+    J.AaB = triangle_to_right_triangle_jacob(
+                p->A.x, p->A.y,
+                p->a.x, p->a.y,
+                p->B.x, p->B.y, n
+                );
+    J.Bab = triangle_to_right_triangle_jacob(
+                p->B.x, p->B.y,
+                p->a.x, p->a.y,
+                p->a.x, p->a.y, n
+                );
+    J.BbC = triangle_to_right_triangle_jacob(
+                p->b.x, p->b.y,
+                p->c.x, p->c.y,
+                p->B.x, p->B.y, n
+                );
+    J.Cbc = triangle_to_right_triangle_jacob(
+                p->C.x, p->C.y,
+                p->b.x, p->b.y,
+                p->c.x, p->c.y, n
+                );
+    J.CcD = triangle_to_right_triangle_jacob(
+                p->C.x, p->C.y,
+                p->c.x, p->c.y,
+                p->D.x, p->D.y, n
+                );
+    J.Dcd = triangle_to_right_triangle_jacob(
+                p->D.x, p->D.y,
+                p->c.x, p->c.y,
+                p->d.x, p->d.y, n
+                );
+    J.DdA = triangle_to_right_triangle_jacob(
+                p->D.x, p->D.y,
+                p->d.x, p->d.y,
+                p->A.x, p->A.y, n
+                );
+    J.Ada = triangle_to_right_triangle_jacob(
+                p->A.x, p->A.y,
+                p->a.x, p->a.y,
+                p->d.x, p->d.y, n
+                );
 }

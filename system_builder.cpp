@@ -99,8 +99,3 @@ system_builder::fill_rhs()
       fill_rhs_at (k);
     }
 }
-void
-system_builder::fill_rhs_at (int k)
-{
-  FIX_UNUSED (k);
-}
