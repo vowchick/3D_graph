@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory>
-#include "msr_matrix_builder.h"
+#include "system_builder.h"
 #include "helper_functions.h"
 #include "io.h"
 int main (int argc, char *argv[])
@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
     return x + y;
   };
 
-  msr_matrix_builder builder (n, &pol, func);
+  system_builder builder (n, &pol, func);
 
   builder.fill_MSR_matrix (1, 0);
 

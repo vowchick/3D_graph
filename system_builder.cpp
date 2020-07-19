@@ -1,18 +1,18 @@
-#include "msr_matrix_builder.h"
+#include "system_builder.h"
 
-msr_matrix_builder::msr_matrix_builder()
+system_builder::system_builder()
 {
 
 }
 
-msr_matrix_builder::~msr_matrix_builder()
+system_builder::~system_builder()
 {
   delete [] matrix;
   delete [] I;
   delete [] gr;
 }
 
-msr_matrix_builder::msr_matrix_builder(int n_, polygon *p_, std::function<double (double, double)> f_)
+system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_)
 {
   n = n_;
   f = f_;
@@ -27,7 +27,7 @@ msr_matrix_builder::msr_matrix_builder(int n_, polygon *p_, std::function<double
 
 }
 int
-msr_matrix_builder::allocation_size ()
+system_builder::allocation_size ()
 {
     int size = 4 * (n * n - n);
     int al_size = 0;
@@ -37,7 +37,7 @@ msr_matrix_builder::allocation_size ()
 }
 
 int
-msr_matrix_builder::get_num_of_diag (int k)
+system_builder::get_num_of_diag (int k)
 {
   int i, j, trapeze_num;
   get_ijtrapeze (&i, &j, &trapeze_num, k, n);
@@ -50,7 +50,7 @@ msr_matrix_builder::get_num_of_diag (int k)
 
 
 void
-msr_matrix_builder::carcass ()
+system_builder::carcass ()
 {
     int len = allocation_size();
     int N = 4 * (n * n - n);
@@ -70,7 +70,7 @@ msr_matrix_builder::carcass ()
 }
 
 void
-msr_matrix_builder::fill_MSR_matrix (int p, int k)
+system_builder::fill_MSR_matrix (int p, int k)
 {
   int k1, k2, l, s;
   int N = 4 * (n * n - n);
@@ -90,3 +90,17 @@ msr_matrix_builder::fill_MSR_matrix (int p, int k)
   assert (N + 1 +  sum == I[N]);
 }
 
+void
+system_builder::fill_rhs()
+{
+  int N = 4 * (n * n - n);
+  for (int k = 0; k < N; k++)
+    {
+      fill_rhs_at (k);
+    }
+}
+void
+system_builder::fill_rhs_at (int k)
+{
+  FIX_UNUSED (k);
+}

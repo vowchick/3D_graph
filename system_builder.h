@@ -8,15 +8,17 @@
 #include <assert.h>
 #include <stdlib.h>
 
-class msr_matrix_builder
+class system_builder
 {
 
 public:
-    msr_matrix_builder();
-    msr_matrix_builder (int n_, polygon *p_, std::function<double (double, double)> f);
-    ~msr_matrix_builder();
+    system_builder();
+    system_builder (int n_, polygon *p_, std::function<double (double, double)> f);
+    ~system_builder();
 
     void fill_MSR_matrix (int p, int k);
+    void fill_rhs ();
+    void fill_rhs_at (int k);
 
 private:
 

@@ -1,7 +1,7 @@
-#include "msr_matrix_builder.h"
+#include "system_builder.h"
 
 int
-msr_matrix_builder::get_off_diag (int k, double *a_diag, double *a,
+system_builder::get_off_diag (int k, double *a_diag, double *a,
                   int *I)
 {
     int i, j, trapeze_num;
