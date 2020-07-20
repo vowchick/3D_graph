@@ -6,13 +6,17 @@ HEADERS       = helper_functions.h \
                 defines.h \
                 grid.h \
                 io.h \
+                matrix_operations.h \
                 structs_and_stuff.h \
-                system_builder.h
+                system_builder.h \
+                system_solver.h
 SOURCES       = main.cpp \
     grid.cpp \
                 helper_functions.cpp \
     io.cpp \
     long_member_functions.cpp \
+    matrix_operations.cpp \
     system_builder.cpp \
+    system_solver.cpp \
                 trapfpe.cpp \
 

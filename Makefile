@@ -57,14 +57,18 @@ SOURCES       = main.cpp \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
+		matrix_operations.cpp \
 		system_builder.cpp \
+		system_solver.cpp \
 		trapfpe.cpp 
 OBJECTS       = main.o \
 		grid.o \
 		helper_functions.o \
 		io.o \
 		long_member_functions.o \
+		matrix_operations.o \
 		system_builder.o \
+		system_solver.o \
 		trapfpe.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -145,13 +149,17 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		defines.h \
 		grid.h \
 		io.h \
+		matrix_operations.h \
 		structs_and_stuff.h \
-		system_builder.h main.cpp \
+		system_builder.h \
+		system_solver.h main.cpp \
 		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
+		matrix_operations.cpp \
 		system_builder.cpp \
+		system_solver.cpp \
 		trapfpe.cpp
 QMAKE_TARGET  = a.out
 DESTDIR       = 
@@ -332,8 +340,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h structs_and_stuff.h system_builder.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp system_builder.cpp trapfpe.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp trapfpe.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -413,12 +421,25 @@ long_member_functions.o: long_member_functions.cpp system_builder.h \
 		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o long_member_functions.o long_member_functions.cpp
 
+matrix_operations.o: matrix_operations.cpp matrix_operations.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrix_operations.o matrix_operations.cpp
+
 system_builder.o: system_builder.cpp system_builder.h \
 		helper_functions.h \
 		structs_and_stuff.h \
 		defines.h \
 		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o system_builder.o system_builder.cpp
+
+system_solver.o: system_solver.cpp system_solver.h \
+		matrix_operations.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o system_solver.o system_solver.cpp
 
 trapfpe.o: trapfpe.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trapfpe.o trapfpe.cpp
