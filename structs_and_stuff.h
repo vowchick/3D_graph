@@ -6,7 +6,10 @@
 #include <vector>
 #include <iostream>
 #include <functional>
+#include <memory>
 #include "defines.h"
+#define MAX_IT 1000
+#define max_it 50
 struct point;
 struct input;
 struct Js;

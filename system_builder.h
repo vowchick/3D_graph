@@ -12,16 +12,18 @@ class system_builder
 {
 
 public:
-    system_builder();
-    system_builder (int n_, polygon *p_, std::function<double (double, double)> f);
+    system_builder() = default;
+    system_builder (int n_, polygon *p_, std::function<double (double, double)> f,
+                    double *matrix, double *rhs, int *I);
     ~system_builder();
 
     void fill_MSR_matrix (int p, int k);
     void fill_rhs ();
-    double fill_rhs_at (int k);
+
 
 private:
 
+    double fill_rhs_at (int k);
     int  get_num_of_diag (int k);
     int allocation_size ();
 

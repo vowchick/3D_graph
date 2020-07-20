@@ -1,10 +1,5 @@
 #include "system_builder.h"
 
-system_builder::system_builder()
-{
-
-}
-
 system_builder::~system_builder()
 {
   delete [] matrix;
@@ -13,7 +8,8 @@ system_builder::~system_builder()
   delete [] rhs;
 }
 
-system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_)
+system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_,
+                               double *matrix_, double *rhs_, int *I_)
 {
   n = n_;
   f = f_;
@@ -21,10 +17,13 @@ system_builder::system_builder(int n_, polygon *p_, std::function<double (double
 
   int alloc_size = allocation_size ();
 
-  matrix = new double[alloc_size];
-  I = new int[alloc_size];
-  rhs = new double[4 * (n * n - n)];
+  matrix_ = new double[alloc_size];
+  I_ = new int[alloc_size];
+  rhs_ = new double[4 * (n * n - n)];
 
+  matrix = matrix_;
+  I = I_;
+  rhs = rhs_;
   carcass();
 
 }

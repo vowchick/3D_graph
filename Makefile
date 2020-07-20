@@ -394,6 +394,8 @@ main.o: main.cpp system_builder.h \
 		structs_and_stuff.h \
 		defines.h \
 		grid.h \
+		system_solver.h \
+		matrix_operations.h \
 		io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
