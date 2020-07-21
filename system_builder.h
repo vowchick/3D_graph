@@ -14,11 +14,16 @@ class system_builder
 public:
     system_builder() = default;
     system_builder (int n_, polygon *p_, std::function<double (double, double)> f,
-                    double *matrix, double *rhs, int *I);
+                    double *matrix_, double *rhs_, int *I_);
     ~system_builder();
 
     void fill_MSR_matrix (int p, int k);
     void fill_rhs ();
+
+    void set_matrix (double *matrix_) {matrix = matrix_;}
+    void set_rhs (double *rhs_) {rhs = rhs_;}
+    void set_I (int *I_) {I = I_;}
+    void set_all (double *matrix_, int *I_, double *rhs_) {matrix = matrix_; rhs = rhs_; I = I_;}
 
 
 private:

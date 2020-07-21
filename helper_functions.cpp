@@ -174,6 +174,26 @@ void reduce_sum (int p, int *a, int n)
     }
   pthread_mutex_unlock (&m);
 }
+int
+allocation_size (int n)
+{
+    int size = 4 * (n * n - n);
+    int al_size = 0;
+    for (int i = 0; i < size; i++)
+        al_size += get_num_of_diag (i, n);
+    return size + al_size + 1;
+}
+int
+get_num_of_diag (int k, int n)
+{
+  int i, j, trapeze_num;
+  get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+  if (j > 0 && j < n - 1)
+      return 6;
+  else if (j == 0 || j == n - 1)
+      return 4;
+  abort ();
+}
 /*int
 find_ABCD1_points (polygon *p)
 {

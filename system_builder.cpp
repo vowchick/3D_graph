@@ -2,10 +2,7 @@
 
 system_builder::~system_builder()
 {
-  delete [] matrix;
-  delete [] I;
   delete [] gr;
-  delete [] rhs;
 }
 
 system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_,
@@ -15,15 +12,8 @@ system_builder::system_builder(int n_, polygon *p_, std::function<double (double
   f = f_;
   gr = new grid (p_, n_);
 
-  int alloc_size = allocation_size ();
+  set_all (matrix_, I_, rhs_);
 
-  matrix_ = new double[alloc_size];
-  I_ = new int[alloc_size];
-  rhs_ = new double[4 * (n * n - n)];
-
-  matrix = matrix_;
-  I = I_;
-  rhs = rhs_;
   carcass();
 
 }
@@ -88,7 +78,7 @@ system_builder::fill_MSR_matrix (int p, int k)
     }
   reduce_sum (p, &sum, 1);
   printf ("%d %d\n", N + 1 + sum, I[N]);
-  assert (N + 1 +  sum == I[N]);
+  assert (N + 1 + sum == I[N]);
 }
 
 void

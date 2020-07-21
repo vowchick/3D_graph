@@ -7,6 +7,8 @@ int get_k (int i, int j, int trapeze_num, int n);
 void get_ijtrapeze (int *i, int *j, int *trapeze_num, int k, int n);
 
 void reduce_sum (int p, int *a, int n);
+int allocation_size (int n);
+int get_num_of_diag (int k, int n);
 
 int find_ABCD1_points (polygon *p);
 double triangle_to_right_triangle_jacob (
