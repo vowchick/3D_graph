@@ -37,11 +37,6 @@ int main (int argc, char *argv[])
   system_builder *builder  = new system_builder (n, &pol, func, matrix, rhs, I);
 
   builder->fill_MSR_matrix (in.p, 0);
-  for (int i = 0; i < alloc_size;i++)
-  {
-      auto problem = I[i];
-      FIX_UNUSED(problem);
-  }
   builder->fill_rhs ();
 
   pthread_barrier_t barrier;
@@ -53,6 +48,10 @@ int main (int argc, char *argv[])
   system_solver solver (matrix, I, x, rhs, 4 * (n * n - n), &barrier, in.p, in.eps);
   solver.solve (MAX_IT, 0);
 
+  for (int i = 0; i < 4 * (n * n - n); i++)
+    {
+      printf ("%.2f\n", x[i]);
+    }
   delete builder;
   delete []x;
   delete []matrix;

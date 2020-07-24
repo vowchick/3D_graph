@@ -18,6 +18,7 @@ public:
     int solve (int MAXIT, int k);
 
 private:
+    void initialize ();
     int solve_stage (int k, int maxit);
 private:
     double *matrix = nullptr;

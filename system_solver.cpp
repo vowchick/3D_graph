@@ -24,6 +24,19 @@ system_solver::system_solver (double *matrix_, int *I_,
   u = new double[n];
   r = new double[n];
   buf = new double[p];
+  initialize ();
+}
+
+void
+system_solver::initialize ()
+{
+    for (int i = 0; i < n; i++)
+      {
+        u[i] = 0.;
+        r[i] = 0;
+      }
+    for (int i = 0; i < p; i++)
+        buf[i] = 0.;
 }
 int
 system_solver::solve_stage (int k, int maxit)

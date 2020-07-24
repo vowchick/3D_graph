@@ -54,7 +54,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
             I[2] = get_k (i - 1, j, trapeze_num, n);
             I[3] = get_k (i, j - 1, trapeze_num, n);
 
-            int next_trapeze = (trapeze_num + 1) % 8;
+            int next_trapeze = (trapeze_num + 1) % 4;
 
             I[4] = get_k (0, j - 1, next_trapeze, n);
             I[5] = get_k (0, j, next_trapeze, n);
@@ -79,8 +79,8 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         a[5] = 2 * tr1;
 
         I[0] = get_k (i, j + 1, trapeze_num, n);
-        I[1] = get_k (n - 2, j, prev_trapeze, n);
-        I[2] = get_k (n - 2, j - 1, prev_trapeze, n);
+        I[1] = get_k (n - 2, j + 1, prev_trapeze, n);
+        I[2] = get_k (n - 2, j, prev_trapeze, n);
         I[3] = get_k (i, j - 1, trapeze_num, n);
         I[4] = get_k (i + 1, j - 1, trapeze_num, n);
         I[5] = get_k (i + 1, j, trapeze_num, n);
@@ -101,8 +101,14 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         I[0] = get_k (i, j + 1, trapeze_num, n);
         I[1] = get_k (i - 1, j + 1, trapeze_num, n);
         I[2] = get_k (i - 1, j, trapeze_num, n);
-        I[3] = get_k (i + 1, j, trapeze_num, n);
 
+        if (i < n - 2)
+          I[3] = get_k (i + 1, j, trapeze_num, n);
+        else
+          {
+            int next_trapeze = (trapeze_num + 1) % 4;
+            I[3] = get_k (0, j, next_trapeze, n);
+          }
         return 4;
       }
     //верхняя сторона трапеции
@@ -118,8 +124,18 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
 
         I[0] = get_k (i - 1, j, trapeze_num, n);
         I[1] = get_k (i - 1, j - 1, trapeze_num, n);
-        I[2] = get_k (i + 1, j - 1, trapeze_num, n);
-        I[3] = get_k (i + 1, j, trapeze_num, n);
+
+        if (i < n - 2)
+          {
+            I[2] = get_k (i + 1, j - 1, trapeze_num, n);
+            I[3] = get_k (i + 1, j, trapeze_num, n);
+          }
+        else
+          {
+            int next_trapeze = (trapeze_num + 1) % 4;
+            I[2] = get_k (0, j - 1, next_trapeze, n);
+            I[3] = get_k (0, j, next_trapeze, n);
+          }
 
         return 4;
       }
