@@ -26,7 +26,8 @@ int main (int argc, char *argv[])
   int n = in.nx + 1;
   auto func = [] (double x, double y)
   {
-    return x + y;
+    FIX_UNUSED(x, y);
+    return 1;
   };
 
   int alloc_size = allocation_size (n);
@@ -48,10 +49,6 @@ int main (int argc, char *argv[])
   system_solver solver (matrix, I, x, rhs, 4 * (n * n - n), &barrier, in.p, in.eps);
   solver.solve (MAX_IT, 0);
 
-  for (int i = 0; i < 4 * (n * n - n); i++)
-    {
-      printf ("%.2f\n", x[i]);
-    }
   delete builder;
   delete []x;
   delete []matrix;

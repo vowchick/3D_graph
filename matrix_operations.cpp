@@ -23,6 +23,7 @@ scalar_product (double *x, double *y, int n,
   int i1 = k * n; i1 /= p;
   int i2 = (k + 1) * n; i2 = i2 / p - 1;
 
+  buf[k] = 0;
   for (int i = i1; i <= i2; i++)
     buf[k] += x[i] * y[i];
 

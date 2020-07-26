@@ -33,6 +33,7 @@ private:
     //additional memory
     double *u = nullptr;
     double *r = nullptr;
+    double *v = nullptr;
     double *buf = nullptr;
 };
 

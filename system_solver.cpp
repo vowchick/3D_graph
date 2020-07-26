@@ -5,6 +5,7 @@ system_solver::~system_solver ()
   delete []u;
   delete []r;
   delete []buf;
+  delete []v;
 }
 system_solver::system_solver (double *matrix_, int *I_,
                               double *x_, double *rhs_, int n_,
@@ -23,7 +24,9 @@ system_solver::system_solver (double *matrix_, int *I_,
 
   u = new double[n];
   r = new double[n];
+  v = new double[n];
   buf = new double[p];
+
   initialize ();
 }
 
@@ -33,7 +36,8 @@ system_solver::initialize ()
     for (int i = 0; i < n; i++)
       {
         u[i] = 0.;
-        r[i] = 0;
+        r[i] = 0.;
+        v[i] = 0.;
       }
     for (int i = 0; i < p; i++)
         buf[i] = 0.;
@@ -44,24 +48,24 @@ system_solver::solve_stage (int k, int maxit)
   double c1, c2, tau;
   int it;
   msr_matrix_mult_vector (matrix, I, n, x,
-                          rhs, k, p, barrier);
+                          r, k, p, barrier);
   linear_combination (r, rhs, n, 1, p, k, barrier);
 
   for (it = 0; it < maxit; it++)
     {
-      msr_apply_preconditioner (matrix, n, r, r, k, p, barrier); // точно в обоих метсах r?
-      msr_matrix_mult_vector (matrix, I, n, r, u, k, p, barrier);
+      msr_apply_preconditioner (matrix, n, u, r, k, p, barrier); // точно в обоих метсах r?
+      msr_matrix_mult_vector (matrix, I, n, u, v, k, p, barrier);
 
-      c1 = scalar_product (u, r, n, p, k, buf, barrier);
+      c1 = scalar_product (v, r, n, p, k, buf, barrier);
 
-      c2 = scalar_product (u, u, n, p, k, buf, barrier);
+      c2 = scalar_product (v, v, n, p, k, buf, barrier);
 
       if (c1 < eps * eps || c2 < eps * eps)
         break;
 
       tau = c1 / c2;
-      linear_combination (x, r, n, tau, p, k, barrier);
-      linear_combination (r, u, n, tau, p, k, barrier);
+      linear_combination (x, u, n, tau, p, k, barrier);
+      linear_combination (r, v, n, tau, p, k, barrier);
     }
   if (it >= max_it)
       return -1;
