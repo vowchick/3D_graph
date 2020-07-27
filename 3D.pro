@@ -4,6 +4,7 @@ CONFIG += c++17 += debug
 TARGET        = a.out
 HEADERS       = helper_functions.h \
                 defines.h \
+                delegator.h \
                 grid.h \
                 io.h \
                 matrix_operations.h \
@@ -11,6 +12,7 @@ HEADERS       = helper_functions.h \
                 system_builder.h \
                 system_solver.h
 SOURCES       = main.cpp \
+    delegator.cpp \
     grid.cpp \
                 helper_functions.cpp \
     io.cpp \

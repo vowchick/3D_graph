@@ -82,10 +82,12 @@ system_builder::fill_MSR_matrix (int p, int k)
 }
 
 void
-system_builder::fill_rhs()
+system_builder::fill_rhs(int p, int idx)
 {
-  int N = 4 * (n * n - n);
-  for (int k = 0; k < N; k++)
+  int N = 4 * (n * n - n), k1, k2;
+  k1 = idx * N; k1 /= p;
+  k2 = (idx + 1) * N; k2 = k2 / p - 1;
+  for (int k = k1; k <= k2; k++)
     {
       rhs[k] = fill_rhs_at (k);
     }

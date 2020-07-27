@@ -18,7 +18,7 @@ public:
     ~system_builder();
 
     void fill_MSR_matrix (int p, int k);
-    void fill_rhs ();
+    void fill_rhs (int p, int idx);
 
     void set_matrix (double *matrix_) {matrix = matrix_;}
     void set_rhs (double *rhs_) {rhs = rhs_;}

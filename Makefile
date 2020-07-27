@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
+		delegator.cpp \
 		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
@@ -62,6 +63,7 @@ SOURCES       = main.cpp \
 		system_solver.cpp \
 		trapfpe.cpp 
 OBJECTS       = main.o \
+		delegator.o \
 		grid.o \
 		helper_functions.o \
 		io.o \
@@ -147,12 +149,14 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/lex.prf \
 		3D.pro helper_functions.h \
 		defines.h \
+		delegator.h \
 		grid.h \
 		io.h \
 		matrix_operations.h \
 		structs_and_stuff.h \
 		system_builder.h \
 		system_solver.h main.cpp \
+		delegator.cpp \
 		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
@@ -340,8 +344,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp trapfpe.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h delegator.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp delegator.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp trapfpe.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -396,8 +400,19 @@ main.o: main.cpp system_builder.h \
 		grid.h \
 		system_solver.h \
 		matrix_operations.h \
-		io.h
+		io.h \
+		delegator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+delegator.o: delegator.cpp delegator.h \
+		system_builder.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h \
+		grid.h \
+		system_solver.h \
+		matrix_operations.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o delegator.o delegator.cpp
 
 grid.o: grid.cpp grid.h \
 		structs_and_stuff.h \
