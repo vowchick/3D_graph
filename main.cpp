@@ -6,7 +6,37 @@
 #include "helper_functions.h"
 #include "io.h"
 #include "delegator.h"
+struct thread_info
+{
+  delegator *delegate;
+  int n;
+  int idx;
+  std::function<double (double, double)> f;
+  double eps;
+  pthread_barrier_t *barrier;
+};
 
+void *
+pthread_func (void *arg)
+{
+    thread_info *info = static_cast<thread_info *> (arg);
+
+    if (info->idx == 0)
+      {
+        info->delegate->allocate (info->n, info->f, info->eps);
+      }
+
+    pthread_barrier_wait (info->barrier);
+      info->delegate->solve (info->idx);
+    pthread_barrier_wait (info->barrier);
+
+    if (info->idx == 0)
+      {
+        info->delegate->erase ();
+      }
+
+    return 0;
+}
 int main (int argc, char *argv[])
 {
   if (argc != 7)
@@ -32,38 +62,42 @@ int main (int argc, char *argv[])
     return 1;
   };
 
+
+
   pthread_barrier_t barrier;
+  pthread_t tid;
   pthread_barrier_init (&barrier, NULL, in.p);
-  /*int alloc_size = allocation_size (n);
-   *
-  double *matrix = new double [alloc_size];
-  double *rhs = new double [4 * (n * n - n)];
-  int *I = new int [alloc_size];
 
+  thread_info *info = new thread_info [in.p];
+  delegator delegate (&barrier, &pol, in.p);
+  for (int i = 0; i < in.p; i++)
+    {
+      info[i].n = n;
+      info[i].idx = i;
+      info[i].f = func;
+      info[i].eps = in.eps;
+      info[i].delegate = &delegate;
+      info[i].barrier = &barrier;
+    }
 
-  system_builder *builder  = new system_builder (n, &pol, func, matrix, rhs, I);
+  for (int i = 1; i < in.p; i++)
+    {
+      if (pthread_create (&tid, 0, pthread_func, info + i))
+        {
+          fprintf (stderr, "cannot create thread #%d!\n", i);
+          abort ();
+        }
+    }
+  pthread_func (info + 0);
+  pthread_barrier_destroy(&barrier);
 
-  builder->fill_MSR_matrix (in.p, 0);
-  builder->fill_rhs (in.p, 0);
+//  delegate.allocate (n, func, in.eps);
+//  delegate.solve(0);
 
-  double *x = new double [4 * (n * n - n)];
-  for (int i = 0; i < 4 * (n * n - n); i++)
-      x[i] = 0.;
-  system_solver solver (matrix, I, x, rhs, 4 * (n * n - n), &barrier, in.p, in.eps);
-  solver.solve (MAX_IT, 0);
+//  auto x = delegate.get_x ();
+//  FIX_UNUSED (x);
 
-  delete builder;
-  delete []x;
-  delete []matrix;
-  delete []rhs;
-  delete []I;*/
-  delegator delegate (&barrier, &pol, in.p, in.eps);
-  delegate.allocate (n, func);
-  delegate.solve(0);
-
-  auto x = delegate.get_x ();
-  FIX_UNUSED (x);
-
-  delegate.erase();
+//  delegate.erase();
+  delete []info;
   return 0;
 }

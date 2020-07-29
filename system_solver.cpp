@@ -61,7 +61,10 @@ system_solver::solve_stage (int k, int maxit)
       c2 = scalar_product (v, v, n, p, k, buf, barrier);
 
       if (c1 < eps * eps || c2 < eps * eps)
-        break;
+        {
+          FIX_UNUSED(c1);
+          break;
+        }
 
       tau = c1 / c2;
       linear_combination (x, u, n, tau, p, k, barrier);

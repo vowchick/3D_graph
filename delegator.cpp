@@ -4,12 +4,11 @@ delegator::delegator()
 {
 
 }
-delegator::delegator (pthread_barrier_t *barrier_, polygon *pol_, int p_, double eps_)
+delegator::delegator (pthread_barrier_t *barrier_, polygon *pol_, int p_)
 {
   barrier = barrier_;
   pol = pol_;
   p = p_;
-  eps = eps_;
 }
 void
 delegator::erase ()
@@ -22,10 +21,11 @@ delegator::erase ()
   delete builder;
 }
 int
-delegator::allocate (int n_, std::function<double (double, double)> f_)
+delegator::allocate (int n_, std::function<double (double, double)> f_, double eps_)
 {
   n = n_;
   f = f_;
+  eps = eps_;
   int alloc_size = allocation_size (n);
   matrix = new double [alloc_size];
   if (!matrix)
@@ -57,7 +57,11 @@ delegator::allocate (int n_, std::function<double (double, double)> f_)
 void
 delegator::solve (int k)
 {
-  builder = new system_builder (n, pol, f, matrix, rhs, I);
+  if (k == 0)
+    builder = new system_builder (n, pol, f, matrix, rhs, I);
+
+  pthread_barrier_wait (barrier);
+
   builder->fill_MSR_matrix(p, k);
   builder->fill_rhs (p, k);
 

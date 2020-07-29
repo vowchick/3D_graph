@@ -16,6 +16,7 @@ struct Js;
 struct us;
 struct polygon;
 class grid;
+struct thread_info;
 
 struct point
 {

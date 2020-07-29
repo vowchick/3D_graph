@@ -8,12 +8,12 @@ class delegator
 public:
     delegator();
 
-    delegator (pthread_barrier_t *barrier, polygon *pol, int p, double eps);
+    delegator (pthread_barrier_t *barrier, polygon *pol, int p);
 
     system_solver *get_solver () const {return solver;}
     system_builder *get_builder () const {return builder;}
 
-    int allocate (int n_, std::function<double (double, double)> f);
+    int allocate (int n_, std::function<double (double, double)> f, double eps);
     void solve (int k);
     void erase ();
     double *get_x () const {return x;}

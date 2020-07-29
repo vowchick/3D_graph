@@ -30,10 +30,7 @@ scalar_product (double *x, double *y, int n,
   pthread_barrier_wait (barrier);
 
   double s = 0;
-
-  for (int i = 0; i < p; i++)
-    s += buf[i];
-
+  //
   return s;
 }
 void
