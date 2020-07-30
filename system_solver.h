@@ -10,6 +10,8 @@ public:
     system_solver (double *matrix_, int *I_,
                    double *x_,
                    double *rhs_, int n_,
+                   double *u_, double *r_, double *v_,
+                   double *buf,
                    pthread_barrier_t *barrier_,
                    int p_,
                    double eps_);

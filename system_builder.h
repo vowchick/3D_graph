@@ -13,7 +13,7 @@ class system_builder
 
 public:
     system_builder() = default;
-    system_builder (int n_, polygon *p_, std::function<double (double, double)> f,
+    system_builder (grid *gr_, std::function<double (double, double)> f,
                     double *matrix_, double *rhs_, int *I_);
     ~system_builder();
 

@@ -2,13 +2,11 @@
 
 system_solver::~system_solver ()
 {
-  delete []u;
-  delete []r;
-  delete []buf;
-  delete []v;
 }
 system_solver::system_solver (double *matrix_, int *I_,
                               double *x_, double *rhs_, int n_,
+                              double *u_, double *r_, double *v_,
+                              double *buf_,
                               pthread_barrier_t *barrier_,
                               int p_,
                               double eps_)
@@ -22,12 +20,11 @@ system_solver::system_solver (double *matrix_, int *I_,
   p = p_;
   eps = eps_;
 
-  u = new double[n];
-  r = new double[n];
-  v = new double[n];
-  buf = new double[p];
+  u = u_;
+  r = r_;
+  v = v_;
+  buf = buf_;
 
-  initialize ();
 }
 
 void

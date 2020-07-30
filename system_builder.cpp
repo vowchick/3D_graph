@@ -2,15 +2,15 @@
 
 system_builder::~system_builder()
 {
-  delete [] gr;
+
 }
 
-system_builder::system_builder(int n_, polygon *p_, std::function<double (double, double)> f_,
+system_builder::system_builder(grid *gr_, std::function<double (double, double)> f_,
                                double *matrix_, double *rhs_, int *I_)
 {
-  n = n_;
+  n = gr_->get_n ();
   f = f_;
-  gr = new grid (p_, n_);
+  gr = gr_;
 
   set_all (matrix_, I_, rhs_);
 

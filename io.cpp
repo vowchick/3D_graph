@@ -5,8 +5,8 @@ int process_input (char *argv[], input &in, polygon &pol)
   in.nx = atoi (argv[2]);
   in.ny = atoi (argv[3]);
   in.k = atoi (argv[4]);
-  in.p = atoi (argv[5]);
-  in.eps = atof (argv[6]);
+  in.eps = atof (argv[5]);
+  in.p = atoi (argv[6]);
   if (in.nx <= 0 || in.ny <= 0. || in.k <= 0 || in.p <= 0 || in.eps <= 0)
     {
       printf ("nx, ny, k, p and eps should be greater than zero\n");
