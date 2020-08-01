@@ -9,7 +9,8 @@ HEADERS       = helper_functions.h \
                 matrix_operations.h \
                 structs_and_stuff.h \
                 system_builder.h \
-                system_solver.h
+                system_solver.h \
+                window.h
 SOURCES       = main.cpp \
     grid.cpp \
                 helper_functions.cpp \
@@ -19,4 +20,7 @@ SOURCES       = main.cpp \
     system_builder.cpp \
     system_solver.cpp \
                 trapfpe.cpp \
+    window.cpp
+
+QT += widgets
 

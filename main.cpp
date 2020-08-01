@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QMessageBox>
 #include "system_builder.h"
 #include "system_solver.h"
 #include "helper_functions.h"
 #include "io.h"
+#include "window.h"
 struct thread_info
 {
   system_solver *solver;
@@ -38,8 +45,12 @@ pthread_func (void *arg)
 }
 int main (int argc, char *argv[])
 {
+  QApplication app (argc, argv);
+
   if (argc != 7)
     {
+      QMessageBox::warning (0, "Wrong input arguments!",
+                                  "Wrong input arguments!");
       printf ("usage ./a.out a.txt nx ny k eps p\n");
       return -1;
     }
@@ -61,9 +72,24 @@ int main (int argc, char *argv[])
     return 1;
   };
 
+  QMainWindow *window = new QMainWindow;
+   QMenuBar *tool_bar = new QMenuBar (window);
+   Window *graph_area = new Window (&pol, n, in.p, in.eps, func, window);
+//   QAction *action;
 
+//   action = tool_bar->addAction ("&Change function", graph_area, SLOT (change_func ()));
+//   action->setShortcut (QString ("0"));
 
-  pthread_barrier_t barrier;
+   tool_bar->setMaximumHeight (30);
+
+   window->setMenuBar (tool_bar);
+   window->setCentralWidget (graph_area);
+   window->setWindowTitle ("Graph");
+   window->show ();
+   app.exec ();
+   delete window;
+
+  /*pthread_barrier_t barrier;
   pthread_t tid;
   pthread_barrier_init (&barrier, NULL, in.p);
 
@@ -125,6 +151,6 @@ int main (int argc, char *argv[])
   delete []u;
   delete []r;
   delete []v;
-  delete []buf;
+  delete []buf;*/
   return 0;
 }

@@ -17,6 +17,21 @@ struct us;
 struct polygon;
 class grid;
 struct thread_info;
+struct builder_solver_data;
+
+struct builder_solver_data
+{
+  double *matrix;
+  int *I;
+  double *rhs;
+  double *x;
+
+  //additional memory
+  double *u;
+  double *r;
+  double *v;
+  double *buf;
+};
 
 struct point
 {

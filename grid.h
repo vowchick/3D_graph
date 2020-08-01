@@ -11,6 +11,7 @@ public:
     grid (polygon *p_, int n_);
     polygon* get_polygon () const {return p;}
     int get_n () const {return n;}
+    void set_n (int n_) {n = n_;}
     us get_u () const {return u;}
     Js get_J () const {return J;}
     void fill_us ();

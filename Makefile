@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O0 -ggdb -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = a.out1.0.0
 DISTDIR = /home/vowchicke/programms/3D_graph/.tmp/a.out1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -60,7 +60,8 @@ SOURCES       = main.cpp \
 		matrix_operations.cpp \
 		system_builder.cpp \
 		system_solver.cpp \
-		trapfpe.cpp 
+		trapfpe.cpp \
+		window.cpp moc_window.cpp
 OBJECTS       = main.o \
 		grid.o \
 		helper_functions.o \
@@ -69,7 +70,9 @@ OBJECTS       = main.o \
 		matrix_operations.o \
 		system_builder.o \
 		system_solver.o \
-		trapfpe.o
+		trapfpe.o \
+		window.o \
+		moc_window.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
 		/usr/lib64/qt5/mkspecs/common/linux.conf \
@@ -138,6 +141,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/../lib64/qt5/mkspecs/features/resources.prf \
 		/../lib64/qt5/mkspecs/features/moc.prf \
 		/../lib64/qt5/mkspecs/features/unix/opengl.prf \
+		/../lib64/qt5/mkspecs/features/uic.prf \
 		/../lib64/qt5/mkspecs/features/unix/thread.prf \
 		/../lib64/qt5/mkspecs/features/qmake_use.prf \
 		/../lib64/qt5/mkspecs/features/file_copies.prf \
@@ -152,7 +156,8 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		matrix_operations.h \
 		structs_and_stuff.h \
 		system_builder.h \
-		system_solver.h main.cpp \
+		system_solver.h \
+		window.h main.cpp \
 		grid.cpp \
 		helper_functions.cpp \
 		io.cpp \
@@ -160,7 +165,8 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		matrix_operations.cpp \
 		system_builder.cpp \
 		system_solver.cpp \
-		trapfpe.cpp
+		trapfpe.cpp \
+		window.cpp
 QMAKE_TARGET  = a.out
 DESTDIR       = 
 TARGET        = a.out
@@ -240,6 +246,7 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 		/../lib64/qt5/mkspecs/features/resources.prf \
 		/../lib64/qt5/mkspecs/features/moc.prf \
 		/../lib64/qt5/mkspecs/features/unix/opengl.prf \
+		/../lib64/qt5/mkspecs/features/uic.prf \
 		/../lib64/qt5/mkspecs/features/unix/thread.prf \
 		/../lib64/qt5/mkspecs/features/qmake_use.prf \
 		/../lib64/qt5/mkspecs/features/file_copies.prf \
@@ -317,6 +324,7 @@ Makefile: 3D.pro /../lib64/qt5/mkspecs/linux-g++/qmake.conf /../lib64/qt5/mkspec
 /../lib64/qt5/mkspecs/features/resources.prf:
 /../lib64/qt5/mkspecs/features/moc.prf:
 /../lib64/qt5/mkspecs/features/unix/opengl.prf:
+/../lib64/qt5/mkspecs/features/uic.prf:
 /../lib64/qt5/mkspecs/features/unix/thread.prf:
 /../lib64/qt5/mkspecs/features/qmake_use.prf:
 /../lib64/qt5/mkspecs/features/file_copies.prf:
@@ -340,8 +348,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp trapfpe.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp trapfpe.cpp window.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -373,19 +381,30 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O0 -ggdb -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_window.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_window.cpp
+moc_window.cpp: window.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h \
+		moc_predefs.h \
+		/../lib64/qt5/bin/moc
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -396,7 +415,8 @@ main.o: main.cpp system_builder.h \
 		grid.h \
 		system_solver.h \
 		matrix_operations.h \
-		io.h
+		io.h \
+		window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 grid.o: grid.cpp grid.h \
@@ -445,6 +465,15 @@ system_solver.o: system_solver.cpp system_solver.h \
 
 trapfpe.o: trapfpe.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trapfpe.o trapfpe.cpp
+
+window.o: window.cpp window.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cpp
+
+moc_window.o: moc_window.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_window.o moc_window.cpp
 
 ####### Install
 
