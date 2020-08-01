@@ -7,8 +7,77 @@ Window::Window(polygon *pol_, int n_,
 {
   initialize (pol_, n_, p_, eps_, f_);
   allocate_memory ();
-  auto x = data.matrix;
-  FIX_UNUSED (x);
+  initialize_vectors ();
+  initialize_barrier ();
+  initialize_info ();
+  start_threads ();
+
+
+}
+
+Window::~Window ()
+{
+  pthread_barrier_destroy (barrier);
+}
+void
+Window::start_threads ()
+{
+  pthread_t tid;
+  for (int i = 0; i < threads_num; i++)
+    {
+      if (pthread_create (&tid, 0, pthread_func, info + i))
+        {
+          fprintf (stderr, "cannot create thread #%d!\n", i);
+          abort ();
+        }
+    }
+}
+
+void
+Window::initialize_vectors ()
+{
+  int diag_size = 4 * n * (n - 1);
+
+  for (int i = 0; i < diag_size; i++)
+    {
+      data.u[i] = 0.;
+      data.r[i] = 0.;
+      data.v[i] = 0.;
+      data.x[i] = 0.;
+    }
+}
+void
+Window::initialize_barrier ()
+{
+  pthread_barrier_t barrier_;
+  if (pthread_barrier_init (&barrier_, NULL, threads_num))
+    {
+      delete []info;
+      erase ();
+      abort ();
+    }
+  barrier = &barrier_;
+}
+void
+Window::initialize_info ()
+{
+  info = new thread_info[threads_num];
+  if (!info)
+    {
+      printf ("Not enough memory!\n");
+      erase ();
+      abort ();
+    }
+  for (int i = 0; i < threads_num; i++)
+    {
+      info->f = f;
+      info->n = n;
+      info->p = threads_num;
+      info->eps = eps;
+      info->idx = i;
+      info->barrier = barrier;
+      info->gr = gr;
+    }
 }
 void
 Window::initialize (polygon *pol_, int n_,
@@ -43,6 +112,7 @@ Window::allocate_memory ()
       printf ("Not enough memory!\n");
       abort ();
     }
+  gr = new grid (pol, n);
 
   data.rhs = data.matrix + alloc_size;
   data.x = data.rhs + diag_length;
@@ -58,4 +128,5 @@ Window::erase ()
 {
   delete []data.matrix;
   delete []data.I;
+  delete gr;
 }

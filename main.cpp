@@ -12,37 +12,7 @@
 #include "helper_functions.h"
 #include "io.h"
 #include "window.h"
-struct thread_info
-{
-  system_solver *solver;
-  system_builder *builder;
-  int n;
-  int p;
-  int idx;
-  std::function<double (double, double)> f;
-  double eps;
-  pthread_barrier_t *barrier;
-};
 
-void *
-pthread_func (void *arg)
-{
-    thread_info *info = static_cast<thread_info *> (arg);
-
-    auto builder = info->builder;
-    auto solver = info->solver;
-    auto barrier = info->barrier;
-    auto idx = info->idx;
-
-    builder->fill_MSR_matrix (info->p, idx);
-    builder->fill_rhs (info->p, idx);
-
-    pthread_barrier_wait (barrier);
-
-    solver->solve (MAX_IT, idx);
-
-    return 0;
-}
 int main (int argc, char *argv[])
 {
   QApplication app (argc, argv);

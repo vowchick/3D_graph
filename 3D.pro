@@ -10,6 +10,7 @@ HEADERS       = helper_functions.h \
                 structs_and_stuff.h \
                 system_builder.h \
                 system_solver.h \
+                thread_info.h \
                 window.h
 SOURCES       = main.cpp \
     grid.cpp \
@@ -19,6 +20,7 @@ SOURCES       = main.cpp \
     matrix_operations.cpp \
     system_builder.cpp \
     system_solver.cpp \
+    thread_info.cpp \
                 trapfpe.cpp \
     window.cpp
 
