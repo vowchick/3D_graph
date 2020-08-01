@@ -37,15 +37,12 @@ pthread_func (void *arg)
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
 
-        //before actually deleting, should set some vector in "window"
-        //to x.
-        if (idx == 0)
-          window->erase ();
         synchronize (p, window, *(info->cond), *(info->p_out));
       }
 
     return 0;
 }
+
 void synchronize (int p, Window *window, pthread_cond_t &c_out, int &t_out)
 {
   static pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;

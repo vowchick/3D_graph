@@ -9,12 +9,25 @@ Window::Window(polygon *pol_, int n_,
   allocate_memory ();
   initialize_vectors ();
   initialize_barrier_and_cond ();
+  allocate_info ();
   initialize_info ();
   start_threads ();
 
+  connect(this, SIGNAL (calculation_completed ()), this, SLOT (after_calculation ()));
 
 }
 
+void
+Window::allocate_info ()
+{
+  info = new thread_info[threads_num];
+  if (!info)
+    {
+      printf ("Not enough memory!\n");
+      erase ();
+      abort ();
+    }
+}
 Window::~Window ()
 {
   pthread_barrier_destroy (&barrier);
@@ -53,23 +66,33 @@ Window::double_n ()
   if (!calculating)
     {
       n *= 2;
-
       calculating = true;
+      before_calculation ();
       p_out++;
       pthread_cond_broadcast (&cond);
+    }
+
+}
+
+void
+Window::undouble_n ()
+{
+  if (!calculating)
+    {
+      if (n >= 1)
+        {
+          n /= 2;
+          calculating = true;
+          before_calculation ();
+          p_out++;
+          pthread_cond_broadcast (&cond);
+        }
     }
 
 }
 void
 Window::initialize_info ()
 {
-  info = new thread_info[threads_num];
-  if (!info)
-    {
-      printf ("Not enough memory!\n");
-      erase ();
-      abort ();
-    }
   for (int i = 0; i < threads_num; i++)
     {
       info->f = f;
@@ -132,7 +155,13 @@ Window::allocate_memory ()
       abort ();
     }
   gr = new grid (pol, n);
-
+  if (!gr)
+    {
+      delete []data.matrix;
+      delete []data.I;
+      printf ("Not enough memory!\n");
+      abort ();
+    }
   data.rhs = data.matrix + alloc_size;
   data.x = data.rhs + diag_length;
   data.u = data.x + diag_length;
@@ -142,6 +171,20 @@ Window::allocate_memory ()
 
 }
 
+void
+Window::after_calculation ()
+{
+  erase ();
+  calculating = false;
+}
+
+void
+Window::before_calculation ()
+{
+  allocate_memory ();
+  initialize_vectors ();
+  initialize_info ();
+}
 void
 Window::erase ()
 {

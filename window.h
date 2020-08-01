@@ -15,8 +15,6 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
-  void
-  erase ();
 
 private:
 void
@@ -24,11 +22,17 @@ initialize (polygon *pol_, int n_,
             int p_, double eps_,
             std::function<double (double, double)> f_);
 void
+erase ();
+void
+before_calculation ();
+void
 initialize_info ();
 void
 initialize_barrier_and_cond ();
 void
 allocate_memory ();
+void
+allocate_info ();
 void
 initialize_vectors ();
 void
@@ -50,7 +54,8 @@ private:
 
 public slots:
   void double_n ();
-  void undouble_n (){n /= 2; /*should be changed*/};
+  void undouble_n () ;
+  void after_calculation ();
 signals:
   void calculation_completed ();
 };
