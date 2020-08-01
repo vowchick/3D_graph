@@ -36,15 +36,10 @@ int main (int argc, char *argv[])
   print_polygon(pol);
 
   int n = in.nx + 1;
-  auto func = [] (double x, double y)
-  {
-    FIX_UNUSED(x, y);
-    return 1;
-  };
 
   QMainWindow *window = new QMainWindow;
    QMenuBar *tool_bar = new QMenuBar (window);
-   Window *graph_area = new Window (&pol, n, in.p, in.eps, func, window);
+   Window *graph_area = new Window (&pol, n, in.p, in.eps, in.k, window);
    QAction *action;
 
    action = tool_bar->addAction ("&Double n", graph_area, SLOT (double_n ()));

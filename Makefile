@@ -62,7 +62,8 @@ SOURCES       = main.cpp \
 		system_solver.cpp \
 		thread_info.cpp \
 		trapfpe.cpp \
-		window.cpp moc_window.cpp
+		window.cpp \
+		window_gui_stuff.cpp moc_window.cpp
 OBJECTS       = main.o \
 		grid.o \
 		helper_functions.o \
@@ -74,6 +75,7 @@ OBJECTS       = main.o \
 		thread_info.o \
 		trapfpe.o \
 		window.o \
+		window_gui_stuff.o \
 		moc_window.o
 DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -170,7 +172,8 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		system_solver.cpp \
 		thread_info.cpp \
 		trapfpe.cpp \
-		window.cpp
+		window.cpp \
+		window_gui_stuff.cpp
 QMAKE_TARGET  = a.out
 DESTDIR       = 
 TARGET        = a.out
@@ -353,7 +356,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -492,6 +495,14 @@ window.o: window.cpp window.h \
 		grid.h \
 		thread_info.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cpp
+
+window_gui_stuff.o: window_gui_stuff.cpp window.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h \
+		grid.h \
+		thread_info.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window_gui_stuff.o window_gui_stuff.cpp
 
 moc_window.o: moc_window.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_window.o moc_window.cpp

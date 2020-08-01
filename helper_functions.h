@@ -20,4 +20,6 @@ double triangle_to_right_triangle_jacob (
 double ultimate_scalar_counter (double J,
                          double f1, double f2, double f3,
                          double g1, double g2, double g3);
+std::function<double (double, double)>
+int_to_f (int f_);
 #endif // HELPER_FUNCTIONS_H

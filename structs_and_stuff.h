@@ -18,6 +18,17 @@ struct polygon;
 class grid;
 struct thread_info;
 struct builder_solver_data;
+enum func
+{
+  one,
+  x,
+  y,
+  x_plus_y,
+  x_2_plus_y_2__2,
+  x_2_plus_y_2,
+  exp_x_2_minus_y_2,
+  one_div_tw_five
+};
 
 struct builder_solver_data
 {

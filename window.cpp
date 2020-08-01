@@ -2,10 +2,12 @@
 std::atomic <bool> calculating (true);
 Window::Window(polygon *pol_, int n_,
                int p_, double eps_,
-               std::function<double (double, double)> f_,
+               int func_ind,
                QWidget *parent) : QWidget(parent)
 {
-  initialize (pol_, n_, p_, eps_, f_);
+  connect(this, SIGNAL (calculation_completed ()), this, SLOT (after_calculation ()));
+
+  initialize (pol_, n_, p_, eps_, func_ind);
   allocate_memory ();
   initialize_vectors ();
   initialize_barrier_and_cond ();
@@ -13,7 +15,6 @@ Window::Window(polygon *pol_, int n_,
   initialize_info ();
   start_threads ();
 
-  connect(this, SIGNAL (calculation_completed ()), this, SLOT (after_calculation ()));
 
 }
 
@@ -112,11 +113,12 @@ Window::initialize_info ()
 void
 Window::initialize (polygon *pol_, int n_,
                     int p_, double eps_,
-                    std::function<double (double, double)> f_)
+                    int func_ind_)
 {
     pol = pol_;
     n = n_;
-    f = f_;
+    func_ind = func_ind_;
+    f = int_to_f (func_ind);
     threads_num = p_;
     eps = eps_;
 }

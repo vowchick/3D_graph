@@ -10,7 +10,7 @@ QSize Window::sizeHint () const
     return QSize (1000, 1000);
 }
 std::string
-Window::enum_to_str (func f)
+Window::int_to_str (int f)
 {
   switch (f)
     {
@@ -34,7 +34,7 @@ Window::enum_to_str (func f)
   return "0";
 }
 std::function<double (double, double)>
-enum_to_f (func f_)
+get_f (int f_)
 {
   std::function<double (double, double)> f =
       [] (double x, double y)
