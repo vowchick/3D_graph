@@ -15,6 +15,8 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
+  void
+  erase ();
 
 private:
 void
@@ -29,8 +31,6 @@ void
 allocate_memory ();
 void
 initialize_vectors ();
-void
-erase ();
 void
 start_threads ();
 
@@ -48,7 +48,9 @@ private:
   int p_out;
 
 
-
+public slots:
+  void double_n ();
+  void undouble_n (){n /= 2; /*should be changed*/};
 signals:
   void calculation_completed ();
 };

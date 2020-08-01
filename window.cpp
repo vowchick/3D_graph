@@ -1,5 +1,5 @@
 #include "window.h"
-
+std::atomic <bool> calculating (true);
 Window::Window(polygon *pol_, int n_,
                int p_, double eps_,
                std::function<double (double, double)> f_,
@@ -46,16 +46,19 @@ Window::initialize_vectors ()
       data.x[i] = 0.;
     }
 }
+
 void
-Window::initialize_barrier_and_cond ()
+Window::double_n ()
 {
-  if (pthread_barrier_init (&barrier, NULL, threads_num))
+  if (!calculating)
     {
-      delete []info;
-      erase ();
-      abort ();
+      n *= 2;
+
+      calculating = true;
+      p_out++;
+      pthread_cond_broadcast (&cond);
     }
-  cond = PTHREAD_COND_INITIALIZER;
+
 }
 void
 Window::initialize_info ()
@@ -93,6 +96,18 @@ Window::initialize (polygon *pol_, int n_,
     f = f_;
     threads_num = p_;
     eps = eps_;
+}
+
+void
+Window::initialize_barrier_and_cond ()
+{
+  if (pthread_barrier_init (&barrier, NULL, threads_num))
+    {
+      delete []info;
+      erase ();
+      abort ();
+    }
+  cond = PTHREAD_COND_INITIALIZER;
 }
 
 void

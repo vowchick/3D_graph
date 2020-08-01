@@ -9,6 +9,9 @@ pthread_func (void *arg)
       {
         auto d  = info->data;
         int idx = info->idx, p = info->p;
+        int n = info->n;
+        int diag_length = 4 * n * (n - 1);
+        auto window = info->window;
         double *matrix = d->matrix,
                *rhs    = d->rhs,
                *x      = d->x,
@@ -30,12 +33,15 @@ pthread_func (void *arg)
           {
             delete builder;
           }
-        int n = info->n;
-        int diag_length = 4 * n * (n - 1);
 
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
-        synchronize (p, info->window, *(info->cond), *(info->p_out));
+
+        //before actually deleting, should set some vector in "window"
+        //to x.
+        if (idx == 0)
+          window->erase ();
+        synchronize (p, window, *(info->cond), *(info->p_out));
       }
 
     return 0;

@@ -45,10 +45,13 @@ int main (int argc, char *argv[])
   QMainWindow *window = new QMainWindow;
    QMenuBar *tool_bar = new QMenuBar (window);
    Window *graph_area = new Window (&pol, n, in.p, in.eps, func, window);
-//   QAction *action;
+   QAction *action;
 
-//   action = tool_bar->addAction ("&Change function", graph_area, SLOT (change_func ()));
-//   action->setShortcut (QString ("0"));
+   action = tool_bar->addAction ("&Double n", graph_area, SLOT (double_n ()));
+   action->setShortcut (QString ("0"));
+
+   action = tool_bar->addAction ("&Undouble n", graph_area, SLOT (undouble_n ()));
+   action->setShortcut (QString ("1"));
 
    tool_bar->setMaximumHeight (30);
 
