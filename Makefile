@@ -392,7 +392,9 @@ moc_window.cpp: window.h \
 		helper_functions.h \
 		structs_and_stuff.h \
 		defines.h \
+		grid.h \
 		thread_info.h \
+		window.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
 	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
@@ -472,7 +474,12 @@ system_solver.o: system_solver.cpp system_solver.h \
 thread_info.o: thread_info.cpp thread_info.h \
 		helper_functions.h \
 		structs_and_stuff.h \
-		defines.h
+		defines.h \
+		window.h \
+		grid.h \
+		system_builder.h \
+		system_solver.h \
+		matrix_operations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o thread_info.o thread_info.cpp
 
 trapfpe.o: trapfpe.cpp 
@@ -482,6 +489,7 @@ window.o: window.cpp window.h \
 		helper_functions.h \
 		structs_and_stuff.h \
 		defines.h \
+		grid.h \
 		thread_info.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cpp
 

@@ -14,8 +14,11 @@ system_builder::system_builder(grid *gr_, std::function<double (double, double)>
 
   set_all (matrix_, I_, rhs_);
 
+}
+void
+system_builder::init ()
+{
   carcass();
-
 }
 int
 system_builder::allocation_size ()

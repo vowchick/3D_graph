@@ -20,19 +20,17 @@ pthread_func (void *arg)
                *v      = d->v,
                *buf    = d->buf;
         int    *I      = d->I;
-        system_builder *builder = nullptr;
+        system_builder builder (info->gr, info->f, matrix, rhs, I);
         if (idx == 0)
           {
-            builder = new system_builder (info->gr, info->f, matrix, rhs, I);
+            builder.init ();
           }
-        builder->fill_MSR_matrix (p, idx);
-        builder->fill_rhs (p, idx);
 
         pthread_barrier_wait (info->barrier);
-        if (idx == 0)
-          {
-            delete builder;
-          }
+        builder.fill_MSR_matrix (p, idx);
+        builder.fill_rhs (p, idx);
+
+        pthread_barrier_wait (info->barrier);
 
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);

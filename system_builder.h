@@ -20,10 +20,13 @@ public:
     void fill_MSR_matrix (int p, int k);
     void fill_rhs (int p, int idx);
 
+    void init ();
+
     void set_matrix (double *matrix_) {matrix = matrix_;}
     void set_rhs (double *rhs_) {rhs = rhs_;}
     void set_I (int *I_) {I = I_;}
     void set_all (double *matrix_, int *I_, double *rhs_) {matrix = matrix_; rhs = rhs_; I = I_;}
+    void set_n (int n_) {n = n_;}
 
 
 private:
@@ -40,7 +43,7 @@ private:
 
 
 private:
-    int n = 0;
+    int n;
     double *matrix = nullptr;
     int *I = nullptr;
     double *rhs = nullptr;

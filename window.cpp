@@ -95,18 +95,18 @@ Window::initialize_info ()
 {
   for (int i = 0; i < threads_num; i++)
     {
-      info->f = f;
-      info->n = n;
-      info->p = threads_num;
-      info->eps = eps;
-      info->idx = i;
-      info->barrier = &barrier;
-      info->gr = gr;
-      info->proceed = true;
-      info->data = &data;
-      info->window = this;
-      info->cond = &cond;
-      info->p_out = &p_out;
+      info[i].f = f;
+      info[i].n = n;
+      info[i].p = threads_num;
+      info[i].eps = eps;
+      info[i].idx = i;
+      info[i].barrier = &barrier;
+      info[i].gr = gr;
+      info[i].proceed = true;
+      info[i].data = &data;
+      info[i].window = this;
+      info[i].cond = &cond;
+      info[i].p_out = &p_out;
     }
 }
 void
