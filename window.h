@@ -4,6 +4,17 @@
 #include "grid.h"
 #include <QWidget>
 #include "thread_info.h"
+enum func
+{
+  one,
+  x,
+  y,
+  x_plus_y,
+  x_2_plus_y_2__2,
+  x_2_plus_y_2,
+  exp_x_2_minus_y_2,
+  one_div_tw_five
+};
 
 class Window : public QWidget
 {
@@ -15,6 +26,8 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
+  QSize minimumSizeHint () const;
+  QSize sizeHint () const;
 
 private:
 void
@@ -37,6 +50,10 @@ void
 initialize_vectors ();
 void
 start_threads ();
+std::string
+enum_to_str (func f);
+std::function<double (double, double)>
+enum_to_f (func f);
 
 private:
   int n = 0;

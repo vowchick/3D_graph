@@ -22,7 +22,8 @@ SOURCES       = main.cpp \
     system_solver.cpp \
     thread_info.cpp \
                 trapfpe.cpp \
-    window.cpp
+    window.cpp \
+    window_gui_stuff.cpp
 
 QT += widgets
 

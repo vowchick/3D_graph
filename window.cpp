@@ -196,3 +196,4 @@ void Window::emit_calculation_completed ()
 {
   emit calculation_completed ();
 }
+
