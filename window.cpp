@@ -8,7 +8,7 @@ Window::Window(polygon *pol_, int n_,
   initialize (pol_, n_, p_, eps_, f_);
   allocate_memory ();
   initialize_vectors ();
-  initialize_barrier ();
+  initialize_barrier_and_cond ();
   initialize_info ();
   start_threads ();
 
@@ -17,7 +17,7 @@ Window::Window(polygon *pol_, int n_,
 
 Window::~Window ()
 {
-  pthread_barrier_destroy (barrier);
+  pthread_barrier_destroy (&barrier);
 }
 void
 Window::start_threads ()
@@ -47,16 +47,15 @@ Window::initialize_vectors ()
     }
 }
 void
-Window::initialize_barrier ()
+Window::initialize_barrier_and_cond ()
 {
-  pthread_barrier_t barrier_;
-  if (pthread_barrier_init (&barrier_, NULL, threads_num))
+  if (pthread_barrier_init (&barrier, NULL, threads_num))
     {
       delete []info;
       erase ();
       abort ();
     }
-  barrier = &barrier_;
+  cond = PTHREAD_COND_INITIALIZER;
 }
 void
 Window::initialize_info ()
@@ -75,8 +74,13 @@ Window::initialize_info ()
       info->p = threads_num;
       info->eps = eps;
       info->idx = i;
-      info->barrier = barrier;
+      info->barrier = &barrier;
       info->gr = gr;
+      info->proceed = true;
+      info->data = &data;
+      info->window = this;
+      info->cond = &cond;
+      info->p_out = &p_out;
     }
 }
 void
@@ -129,4 +133,8 @@ Window::erase ()
   delete []data.matrix;
   delete []data.I;
   delete gr;
+}
+void Window::emit_calculation_completed ()
+{
+  emit calculation_completed ();
 }

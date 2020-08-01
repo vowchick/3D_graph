@@ -14,6 +14,7 @@ public:
           std::function<double (double, double)> f_,
           QWidget *parent);
   ~Window ();
+  void emit_calculation_completed ();
 
 private:
 void
@@ -23,7 +24,7 @@ initialize (polygon *pol_, int n_,
 void
 initialize_info ();
 void
-initialize_barrier ();
+initialize_barrier_and_cond ();
 void
 allocate_memory ();
 void
@@ -42,12 +43,14 @@ private:
   std::function<double (double, double)> f;
   builder_solver_data data;
   thread_info *info;
-  pthread_barrier_t *barrier;
+  pthread_barrier_t barrier;
+  pthread_cond_t cond;
+  int p_out;
 
 
 
 signals:
-
+  void calculation_completed ();
 };
 
 #endif // WINDOW_H
