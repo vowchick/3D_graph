@@ -9,6 +9,7 @@ HEADERS       = helper_functions.h \
                 matrix_operations.h \
                 painter.h \
                 structs_and_stuff.h \
+                surface.h \
                 system_builder.h \
                 system_solver.h \
                 thread_info.h \
@@ -20,6 +21,7 @@ SOURCES       = main.cpp \
     long_member_functions.cpp \
     matrix_operations.cpp \
     painter.cpp \
+    surface.cpp \
     system_builder.cpp \
     system_solver.cpp \
     thread_info.cpp \

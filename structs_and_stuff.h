@@ -18,6 +18,14 @@ struct polygon;
 class grid;
 struct thread_info;
 struct builder_solver_data;
+struct ranges;
+
+struct ranges
+{
+  double max;
+  double min;
+};
+
 enum func
 {
   one,
