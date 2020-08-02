@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QGLWidget>
-#include "grid.h"
+#include "surface.h"
 
 class painter : public QGLWidget
 {
@@ -17,7 +17,17 @@ protected:
   void resizeGL(int width, int height) {FIX_UNUSED(width, height);};
 
 private:
+  std::unique_ptr<surface> surf;
 
+  int xRot = 0;
+  int yRot = 0;
+  int zRot = 0;
+
+  double width = 0.;
+  double height = 0.;
+  double depth = 0.;
+
+  double scale = 1.;
 };
 
 #endif // PAINTER_H
