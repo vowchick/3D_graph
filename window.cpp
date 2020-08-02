@@ -80,7 +80,7 @@ Window::undouble_n ()
 {
   if (!calculating)
     {
-      if (n >= 1)
+      if (n > 1)
         {
           n /= 2;
           calculating = true;
@@ -91,6 +91,24 @@ Window::undouble_n ()
     }
 
 }
+
+void
+Window::change_function ()
+{
+  if (!calculating)
+    {
+      func_ind++;
+      func_ind %= 8;
+      f = int_to_f (func_ind);
+      func_name = int_to_str (func_ind);
+      calculating = true;
+      before_calculation ();
+      p_out++;
+      pthread_cond_broadcast (&cond);
+    }
+
+}
+
 void
 Window::initialize_info ()
 {
@@ -119,6 +137,7 @@ Window::initialize (polygon *pol_, int n_,
     n = n_;
     func_ind = func_ind_;
     f = int_to_f (func_ind);
+    func_name = int_to_str (func_ind);
     threads_num = p_;
     eps = eps_;
 }

@@ -50,6 +50,7 @@ private:
   grid *gr;
   std::function<double (double, double)> f;
   int func_ind;
+  std::string func_name;
   builder_solver_data data;
   thread_info *info;
   pthread_barrier_t barrier;
@@ -60,6 +61,7 @@ private:
 public slots:
   void double_n ();
   void undouble_n () ;
+  void change_function ();
   void after_calculation ();
 signals:
   void calculation_completed ();

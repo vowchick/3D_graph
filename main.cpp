@@ -43,10 +43,13 @@ int main (int argc, char *argv[])
    QAction *action;
 
    action = tool_bar->addAction ("&Double n", graph_area, SLOT (double_n ()));
-   action->setShortcut (QString ("0"));
+   action->setShortcut (QString ("4"));
 
    action = tool_bar->addAction ("&Undouble n", graph_area, SLOT (undouble_n ()));
-   action->setShortcut (QString ("1"));
+   action->setShortcut (QString ("5"));
+
+   action = tool_bar->addAction ("&Change function", graph_area, SLOT (change_function ()));
+   action->setShortcut (QString ("0"));
 
    tool_bar->setMaximumHeight (30);
 
