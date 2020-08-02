@@ -31,3 +31,4 @@ SOURCES       = main.cpp \
 
 QT += widgets
 QT += opengl
+QT += gui

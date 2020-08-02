@@ -406,6 +406,8 @@ moc_window.cpp: window.h \
 		grid.h \
 		thread_info.h \
 		window.h \
+		painter.h \
+		surface.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
 	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
@@ -435,7 +437,9 @@ main.o: main.cpp system_builder.h \
 		matrix_operations.h \
 		io.h \
 		window.h \
-		thread_info.h
+		thread_info.h \
+		painter.h \
+		surface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 grid.o: grid.cpp grid.h \
@@ -503,6 +507,8 @@ thread_info.o: thread_info.cpp thread_info.h \
 		defines.h \
 		window.h \
 		grid.h \
+		painter.h \
+		surface.h \
 		system_builder.h \
 		system_solver.h \
 		matrix_operations.h
@@ -516,7 +522,9 @@ window.o: window.cpp window.h \
 		structs_and_stuff.h \
 		defines.h \
 		grid.h \
-		thread_info.h
+		thread_info.h \
+		painter.h \
+		surface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cpp
 
 window_gui_stuff.o: window_gui_stuff.cpp window.h \
@@ -524,7 +532,9 @@ window_gui_stuff.o: window_gui_stuff.cpp window.h \
 		structs_and_stuff.h \
 		defines.h \
 		grid.h \
-		thread_info.h
+		thread_info.h \
+		painter.h \
+		surface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window_gui_stuff.o window_gui_stuff.cpp
 
 moc_window.o: moc_window.cpp 

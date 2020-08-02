@@ -9,6 +9,7 @@ public:
   double get_max () const {return f_range.max;}
   double get_min () const {return f_range.min;}
   ranges get_range () const {return f_range;}
+  grid *get_grid () const {return gr;}
 
 private:
   void find_ranges ();

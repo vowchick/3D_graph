@@ -4,7 +4,8 @@
 #include "grid.h"
 #include <QWidget>
 #include "thread_info.h"
-
+#include "painter.h"
+#include <QHBoxLayout>
 class Window : public QWidget
 {
   Q_OBJECT
@@ -15,8 +16,8 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
-  QSize minimumSizeHint () const;
-  QSize sizeHint () const;
+//  QSize minimumSizeHint () const;
+//  QSize sizeHint () const;
 
 private:
 void
@@ -57,6 +58,7 @@ private:
   pthread_barrier_t barrier;
   pthread_cond_t cond;
   int p_out;
+  painter *drawer;
 
 
 public slots:

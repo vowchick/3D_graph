@@ -9,6 +9,9 @@ Window::Window(polygon *pol_, int n_,
 
   initialize (pol_, n_, p_, eps_, func_ind);
   allocate_memory ();
+  drawer = new painter (gr.get (), f, this);
+  QHBoxLayout *h_layout = new QHBoxLayout (this);
+  h_layout->addWidget (drawer);
   initialize_vectors ();
   initialize_barrier_and_cond ();
   allocate_info ();

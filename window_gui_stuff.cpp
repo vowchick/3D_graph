@@ -1,14 +1,14 @@
 #include "window.h"
 
-QSize Window::minimumSizeHint () const
-{
-    return QSize (100, 100);
-}
+//QSize Window::minimumSizeHint () const
+//{
+//    return QSize (100, 100);
+//}
 
-QSize Window::sizeHint () const
-{
-    return QSize (1000, 1000);
-}
+//QSize Window::sizeHint () const
+//{
+//    return QSize (1000, 1000);
+//}
 std::string
 Window::int_to_str (int f)
 {
