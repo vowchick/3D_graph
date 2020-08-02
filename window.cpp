@@ -21,13 +21,8 @@ Window::Window(polygon *pol_, int n_,
 void
 Window::allocate_info ()
 {
-  info = new thread_info[threads_num];
-  if (!info)
-    {
-      printf ("Not enough memory!\n");
-      erase ();
-      abort ();
-    }
+  info_ptr.reset (new thread_info[threads_num]);
+  info = info_ptr.get ();
 }
 Window::~Window ()
 {
@@ -37,6 +32,7 @@ void
 Window::start_threads ()
 {
   pthread_t tid;
+
   for (int i = 0; i < threads_num; i++)
     {
       if (pthread_create (&tid, 0, pthread_func, info + i))
@@ -120,7 +116,7 @@ Window::initialize_info ()
       info[i].eps = eps;
       info[i].idx = i;
       info[i].barrier = &barrier;
-      info[i].gr = gr;
+      info[i].gr = gr.get ();
       info[i].proceed = true;
       info[i].data = &data;
       info[i].window = this;
@@ -159,43 +155,24 @@ Window::allocate_memory ()
 {
   int alloc_size = allocation_size (n);
   int diag_length = 4 * n * (n - 1);
-  data.matrix = new double [alloc_size +
-                            5 * diag_length +
-                            threads_num];
-  if (!data.matrix)
-    {
-      printf ("Not enough memory!\n");
-      abort ();
-    }
+  data.matrix.reset (new double [alloc_size]);
+  data.I.reset (new int [alloc_size]);
 
-  data.I = new int [alloc_size];
-  if (!data.I)
-    {
-      delete []data.matrix;
-      printf ("Not enough memory!\n");
-      abort ();
-    }
-  gr = new grid (pol, n);
-  if (!gr)
-    {
-      delete []data.matrix;
-      delete []data.I;
-      printf ("Not enough memory!\n");
-      abort ();
-    }
-  data.rhs = data.matrix + alloc_size;
-  data.x = data.rhs + diag_length;
-  data.u = data.x + diag_length;
-  data.r = data.u + diag_length;
-  data.v = data.r + diag_length;
-  data.buf = data.v + diag_length;
+  data.rhs.reset (new double[diag_length]);
+  data.x.reset (new double[diag_length]);
+
+  gr.reset (new grid (pol, n));
+
+  data.u.reset (new double[diag_length]);
+  data.r.reset (new double[diag_length]);
+  data.v.reset (new double[diag_length]);
+  data.buf.reset (new double[threads_num]);
 
 }
 
 void
 Window::after_calculation ()
 {
-  erase ();
   calculating = false;
 }
 
@@ -209,9 +186,7 @@ Window::before_calculation ()
 void
 Window::erase ()
 {
-  delete []data.matrix;
-  delete []data.I;
-  delete gr;
+
 }
 void Window::emit_calculation_completed ()
 {

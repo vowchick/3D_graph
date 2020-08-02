@@ -40,16 +40,16 @@ enum func
 
 struct builder_solver_data
 {
-  double *matrix;
-  int *I;
-  double *rhs;
-  double *x;
+  std::unique_ptr<double[]> matrix;
+  std::unique_ptr<int[]> I;
+  std::unique_ptr<double[]> rhs;
+  std::unique_ptr<double[]> x;
 
   //additional memory
-  double *u;
-  double *r;
-  double *v;
-  double *buf;
+  std::unique_ptr<double[]> u;
+  std::unique_ptr<double[]> r;
+  std::unique_ptr<double[]> v;
+  std::unique_ptr<double[]> buf;
 };
 
 struct point

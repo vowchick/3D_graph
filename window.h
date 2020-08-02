@@ -47,11 +47,12 @@ private:
   int threads_num = 0;
   double eps = 0.;
   polygon *pol;
-  grid *gr;
+  std::unique_ptr<grid> gr;
   std::function<double (double, double)> f;
   int func_ind;
   std::string func_name;
   builder_solver_data data;
+  std::unique_ptr<thread_info []> info_ptr;
   thread_info *info;
   pthread_barrier_t barrier;
   pthread_cond_t cond;

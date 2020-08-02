@@ -39,7 +39,7 @@ int main (int argc, char *argv[])
 
   QMainWindow *window = new QMainWindow;
    QMenuBar *tool_bar = new QMenuBar (window);
-   Window *graph_area = new Window (&pol, n, in.p, in.eps, in.k, window);
+   Window *graph_area = new Window (&pol, n, in.p, in.eps, in.k - 1, window);
    QAction *action;
 
    action = tool_bar->addAction ("&Double n", graph_area, SLOT (double_n ()));

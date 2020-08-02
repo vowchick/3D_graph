@@ -12,14 +12,14 @@ pthread_func (void *arg)
         int n = info->n;
         int diag_length = 4 * n * (n - 1);
         auto window = info->window;
-        double *matrix = d->matrix,
-               *rhs    = d->rhs,
-               *x      = d->x,
-               *u      = d->u,
-               *r      = d->r,
-               *v      = d->v,
-               *buf    = d->buf;
-        int    *I      = d->I;
+        double *matrix = d->matrix.get (),
+               *rhs    = d->rhs.get (),
+               *x      = d->x.get (),
+               *u      = d->u.get (),
+               *r      = d->r.get (),
+               *v      = d->v.get (),
+               *buf    = d->buf.get ();
+        int    *I      = d->I.get ();
         system_builder builder (info->gr, info->f, matrix, rhs, I);
         if (idx == 0)
           {

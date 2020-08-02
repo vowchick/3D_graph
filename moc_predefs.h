@@ -341,6 +341,7 @@
 #define __cpp_namespace_attributes 201411L
 #define __FLT64X_MIN__ 3.36210314311209350626267781732175260e-4932F64x
 #define __GNUC_STDC_INLINE__ 1
+#define __SSP_ALL__ 2
 #define __FLT64_HAS_DENORM__ 1
 #define __FLT32_EPSILON__ 1.19209289550781250000000000000000000e-7F32
 #define __DBL_DECIMAL_DIG__ 17
@@ -351,7 +352,6 @@
 #define __DBL_NORM_MAX__ double(1.79769313486231570814527423731704357e+308L)
 #define __BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__
 #define __INTMAX_WIDTH__ 64
-#define __cpp_runtime_arrays 198712L
 #define __UINT64_TYPE__ long unsigned int
 #define __UINT32_C(c) c ## U
 #define __cpp_alias_templates 200704L
