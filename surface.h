@@ -16,7 +16,7 @@ private:
 private:
   grid *gr = nullptr;
   std::function<double (double, double)> f;
-  ranges f_range;
+  ranges f_range = {1, -1}; //temporarily
 };
 
 #endif // SURFACE_H

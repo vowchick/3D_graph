@@ -9,6 +9,7 @@ class grid
 public:
     grid();
     grid (polygon *p_, int n_);
+
     polygon* get_polygon () const {return p;}
     int get_n () const {return n;}
     void set_n (int n_) {n = n_;}
@@ -20,12 +21,20 @@ public:
     double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n);
     void fill_points (point &A, point &B, point &C, point &D, int trapeze);
 
+    double get_width () const { return width; }
+    double get_height () const { return height; }
+
+private:
+  void find_width ();
+  void find_height ();
 
 private:
     polygon *p;
     int n;
     us u;
     Js J;
+    double width = 0;
+    double height = 0;
 };
 
 #endif // GRID_H

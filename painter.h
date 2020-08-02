@@ -17,7 +17,8 @@ protected:
   void resizeGL(int width, int height) {FIX_UNUSED(width, height);};
 
 private:
-  std::unique_ptr<surface> surf;
+  std::unique_ptr<surface> surf_ptr;
+  surface *surf;
 
   int xRot = 0;
   int yRot = 0;

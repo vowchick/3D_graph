@@ -27,6 +27,7 @@ pthread_func (void *arg)
           }
 
         pthread_barrier_wait (info->barrier);
+
         builder.fill_MSR_matrix (p, idx);
         builder.fill_rhs (p, idx);
 

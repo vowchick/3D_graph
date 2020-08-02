@@ -10,6 +10,46 @@ grid::grid (polygon *p_, int n_)
   n = n_;
   fill_js (p, n);
   fill_us();
+  find_width ();
+  find_height ();
+}
+
+void
+grid::find_width ()
+{
+  double first  = fabs (p->A.x - p->B.x),
+         second = fabs (p->A.x - p->C.x),
+         third  = fabs (p->A.x - p->D.x),
+         fourth = fabs (p->B.x - p->C.x),
+         fivth  = fabs (p->B.x - p->D.x),
+         sixth  = fabs (p->C.x - p->D.x);
+
+  double max = std::max (first, second);
+  max = std::max (max, third);
+  max = std::max (max, fourth);
+  max = std::max (max, fivth);
+  max = std::max (max, sixth);
+
+  width = max;
+}
+
+void
+grid::find_height ()
+{
+  double first  = fabs (p->A.y - p->B.y),
+         second = fabs (p->A.y - p->C.y),
+         third  = fabs (p->A.y - p->D.y),
+         fourth = fabs (p->B.y - p->C.y),
+         fivth  = fabs (p->B.y - p->D.y),
+         sixth  = fabs (p->C.y - p->D.y);
+
+  double max = std::max (first, second);
+  max = std::max (max, third);
+  max = std::max (max, fourth);
+  max = std::max (max, fivth);
+  max = std::max (max, sixth);
+
+  height = max;
 }
 void
 grid::fill_us ()
