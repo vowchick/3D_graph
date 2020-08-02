@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O0 -ggdb -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtOpenGL -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = a.out1.0.0
 DISTDIR = /home/vowchicke/programms/3D_graph/.tmp/a.out1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib64/libQt5OpenGL.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -58,6 +58,7 @@ SOURCES       = main.cpp \
 		io.cpp \
 		long_member_functions.cpp \
 		matrix_operations.cpp \
+		painter.cpp \
 		system_builder.cpp \
 		system_solver.cpp \
 		thread_info.cpp \
@@ -70,6 +71,7 @@ OBJECTS       = main.o \
 		io.o \
 		long_member_functions.o \
 		matrix_operations.o \
+		painter.o \
 		system_builder.o \
 		system_solver.o \
 		thread_info.o \
@@ -158,6 +160,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		grid.h \
 		io.h \
 		matrix_operations.h \
+		painter.h \
 		structs_and_stuff.h \
 		system_builder.h \
 		system_solver.h \
@@ -168,6 +171,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		io.cpp \
 		long_member_functions.cpp \
 		matrix_operations.cpp \
+		painter.cpp \
 		system_builder.cpp \
 		system_solver.cpp \
 		thread_info.cpp \
@@ -355,8 +359,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h structs_and_stuff.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h painter.h structs_and_stuff.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp painter.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -400,7 +404,7 @@ moc_window.cpp: window.h \
 		window.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
-	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
+	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -459,6 +463,9 @@ matrix_operations.o: matrix_operations.cpp matrix_operations.h \
 		structs_and_stuff.h \
 		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrix_operations.o matrix_operations.cpp
+
+painter.o: painter.cpp painter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o painter.o painter.cpp
 
 system_builder.o: system_builder.cpp system_builder.h \
 		helper_functions.h \
