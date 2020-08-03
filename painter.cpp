@@ -1,9 +1,9 @@
 #include "painter.h"
 
-painter::painter(grid *gr, std::function <double (double, double)> f, QWidget *parent)
+painter::painter(grid *gr, double *f_coeffs, QWidget *parent)
   :QGLWidget (parent)
 {
-  surf_ptr.reset (new surface (gr, f));
+  surf_ptr.reset (new surface (gr, f_coeffs));
   surf = surf_ptr.get ();
   //might need to multiply by 1.5
   width = gr->get_width ();

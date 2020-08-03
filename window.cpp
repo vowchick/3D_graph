@@ -9,7 +9,7 @@ Window::Window(polygon *pol_, int n_,
 
   initialize (pol_, n_, p_, eps_, func_ind);
   allocate_memory ();
-  drawer = new painter (gr.get (), f, this);
+  drawer = new painter (gr.get (), f_coeffs.get (), this);
   QHBoxLayout *h_layout = new QHBoxLayout (this);
   h_layout->addWidget (drawer);
   initialize_vectors ();
@@ -171,6 +171,8 @@ Window::allocate_memory ()
   data.v.reset (new double[diag_length]);
   data.buf.reset (new double[threads_num]);
 
+  f_coeffs.reset (new double [diag_length]);
+
 }
 
 void
@@ -180,6 +182,15 @@ Window::after_calculation ()
   drawer->updateGL();
 }
 
+void
+Window::set_f_coeffs (double *f_coeffs)
+{
+  int diag_length = 4 * n * (n - 1);
+  for (int i = 0; i < diag_length; i++)
+    {
+      this->f_coeffs[i] = f_coeffs[i];
+    }
+}
 void
 Window::before_calculation ()
 {

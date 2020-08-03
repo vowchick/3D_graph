@@ -36,6 +36,12 @@ pthread_func (void *arg)
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
 
+        pthread_barrier_wait (info->barrier);
+        if (idx == 0)
+          {
+            window->set_f_coeffs (x);
+          }
+
         synchronize (p, window, *(info->cond), *(info->p_out));
       }
 

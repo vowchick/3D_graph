@@ -10,7 +10,7 @@
 class painter : public QGLWidget
 {
 public:
-  painter(grid *gr, std::function<double (double, double)> f, QWidget *parent = nullptr);
+  painter(grid *gr, double *f_coeffs, QWidget *parent = nullptr);
  ~painter ();
 
 public slots:

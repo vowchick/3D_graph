@@ -16,6 +16,7 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
+  void set_f_coeffs (double *f_coeffs);
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
 
@@ -50,6 +51,7 @@ private:
   polygon *pol;
   std::unique_ptr<grid> gr;
   std::function<double (double, double)> f;
+  std::unique_ptr <double []> f_coeffs;
   int func_ind;
   std::string func_name;
   builder_solver_data data;

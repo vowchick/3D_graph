@@ -5,7 +5,7 @@
 class surface
 {
 public:
-  surface(grid *gr, std::function<double (double, double)> f);
+  surface(grid *gr,  double *f_coeffs);
   double get_max () const {return f_range.max;}
   double get_min () const {return f_range.min;}
   ranges get_range () const {return f_range;}
@@ -16,7 +16,7 @@ private:
 
 private:
   grid *gr = nullptr;
-  std::function<double (double, double)> f;
+  double *f_coeffs;
   ranges f_range = {1, -1}; //temporarily
 };
 
