@@ -77,8 +77,19 @@ painter::paintGL()
     grid *gr;
     gr = surf->get_grid();
 
-    float max_w = gr->get_width ();
-    float max_h = gr->get_height ();
+    double max_w = gr->get_width ();
+    double max_h = gr->get_height ();
+
+    auto replace_max = [] (double &max)
+    {
+        if (fabs (max) < 1e-16)
+          {
+            max = 1;
+          }
+      };
+    replace_max (max_w);
+    replace_max (max_h);
+    replace_max (max_z);
 
     glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);

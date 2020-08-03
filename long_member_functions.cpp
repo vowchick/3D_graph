@@ -248,7 +248,7 @@ system_builder::fill_rhs_at (int k)
                   36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
 
-        return ans;
+        return ans / 192.;
       }
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
@@ -297,7 +297,7 @@ system_builder::fill_rhs_at (int k)
                   36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
 
-        return ans;
+        return ans / 192.;
       }
     //нижняя сторона трапеции
     else if (j == 0 && i > 0 && i < n - 1)
@@ -325,7 +325,7 @@ system_builder::fill_rhs_at (int k)
 
                  36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                );
-        return ans;
+        return ans / 192.;
       }
     //верхняя сторона трапеции
     else if (j == n - 1 && i > 0 && i < n - 1)
@@ -352,7 +352,7 @@ system_builder::fill_rhs_at (int k)
 
                   36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
-        return ans;
+        return ans / 192.;
       }
     //правый нижний угол
     else if (j == 0 && i == 0)
@@ -393,7 +393,7 @@ system_builder::fill_rhs_at (int k)
                 (
                   36 * gr->get_f_value_by_ijtr (f, 0, 0, trapeze_num, n2)
                 );
-        return ans;
+        return ans / 192.;
       }
     //правый верхний угол
     else if (j == n - 1 && i == 0)
@@ -435,7 +435,7 @@ system_builder::fill_rhs_at (int k)
                   36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
 
-        return ans;
+        return ans / 192.;
       }
     abort ();
 }

@@ -4,7 +4,6 @@ surface::surface(grid *gr, double *f_coeffs)
 {
   this->gr = gr;
   this->f_coeffs = f_coeffs;
-  find_ranges ();
 }
 
 void
