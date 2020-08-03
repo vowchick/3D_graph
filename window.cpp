@@ -177,6 +177,7 @@ void
 Window::after_calculation ()
 {
   calculating = false;
+  drawer->updateGL();
 }
 
 void
