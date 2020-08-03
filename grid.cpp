@@ -49,8 +49,8 @@ grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int 
       desired.y += (j + i - n) * (C.y - D.y) / n;
     }
 
-
-  return f (desired.x, desired.y);
+  double ans = f (desired.x, desired.y);
+  return ans;
 }
 void
 grid::fill_points (point &A, point &B, point &C, point &D, int trapeze)
