@@ -6,11 +6,6 @@ painter::painter(grid *gr, double *f_coeffs, QWidget *parent)
   surf_ptr.reset (new surface (gr, f_coeffs));
   surf = surf_ptr.get ();
   //might need to multiply by 1.5
-  width = gr->get_width ();
-  height = gr->get_height ();
-
-  depth = surf->get_max() - surf->get_min ();
-  depth *= 5;
 }
 painter::~painter ()
 {
@@ -106,7 +101,7 @@ painter::paintGL()
 void
 painter::draw_axes ()
 {
-  glLineWidth (3.0f);
+  glLineWidth (3.0);
 
 
   qglColor (Qt::green);
@@ -186,4 +181,10 @@ painter::mouseMoveEvent(QMouseEvent *event)
     }
 
     lastPos = event->pos();
+}
+
+void
+painter::set_f_coeffs (double *f_coeffs)
+{
+  surf->set_f_coeffs (f_coeffs);
 }

@@ -11,6 +11,8 @@ public:
   ranges get_range () const {return f_range;}
   grid *get_grid () const {return gr;}
 
+  void set_f_coeffs (double *f_coeffs);
+
 private:
   void find_ranges ();
 

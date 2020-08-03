@@ -185,11 +185,7 @@ Window::after_calculation ()
 void
 Window::set_f_coeffs (double *f_coeffs)
 {
-  int diag_length = 4 * n * (n - 1);
-  for (int i = 0; i < diag_length; i++)
-    {
-      this->f_coeffs[i] = f_coeffs[i];
-    }
+  drawer->set_f_coeffs (f_coeffs);
 }
 void
 Window::before_calculation ()

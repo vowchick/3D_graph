@@ -12,6 +12,7 @@ class painter : public QGLWidget
 public:
   painter(grid *gr, double *f_coeffs, QWidget *parent = nullptr);
  ~painter ();
+  void set_f_coeffs (double *f_coeffs);
 
 public slots:
   void setXRotation(int angle);
@@ -39,10 +40,6 @@ private:
   int xRot = 0;
   int yRot = 0;
   int zRot = 0;
-
-  double width = 0.;
-  double height = 0.;
-  double depth = 0.;
 
   double scale = 1.;
   QPoint lastPos;
