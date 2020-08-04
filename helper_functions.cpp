@@ -140,7 +140,7 @@ ultimate_scalar_counter (double J,
     double A = f1 - f3, B = f2 - f3, C = f3,
            D = g1 - g3, E = g2 - g3, F = g3;
     double integral = A * (2 * D + E + 4 * F) +
-                      B * (D  + 2 * E + 4 * F) +
+                      B * (D + 2 * E + 4 * F) +
                       4 * C * (D + E + 3 * F);
     return integral * J / 24.;
 }

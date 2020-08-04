@@ -1,11 +1,11 @@
 # point A
--1 -1
+-9 -0
 # point B 
--1 1
+8 8
 # point C
- 1 1 
+ 0 6 
 # point D
- 1 -1 
+ 4 0 
 
 # similarity coefficient
 3

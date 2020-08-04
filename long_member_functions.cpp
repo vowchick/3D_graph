@@ -12,29 +12,35 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     //полностью внутри
     if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
       {
-        double tr1, tr2;
+        double tr1, tr2, tr21, tr22;
         if (i + j < n)
           {
             tr1 = tr2 = u.get_u (0, trapeze_num);
+            tr21 = u.get_u2 (0, trapeze_num);
+
             for (int i = 0; i < 6; i++)
-              a[i] = 2 * tr1;
+              a[i] = 2 * tr21;
           }
         else if (i + j == n)
           {
             tr1 = u.get_u (0, trapeze_num);
             tr2 = u.get_u (1, trapeze_num);
-            a[0] = 2 * tr2;
-            a[1] = tr1 + tr2;
-            a[2] = 2 * tr1;
-            a[3] = 2 * tr1;
-            a[4] = tr1 + tr2;
-            a[5] = 2 * tr2;
+
+            tr21 = u.get_u2 (0, trapeze_num);
+            tr22 = u.get_u2 (1, trapeze_num);
+            a[0] = 2 * tr22;
+            a[1] = tr21 + tr22;
+            a[2] = 2 * tr21;
+            a[3] = 2 * tr21;
+            a[4] = tr21 + tr22;
+            a[5] = 2 * tr22;
           }
         else
           {
             tr1 = tr2 = u.get_u (1, trapeze_num);
+            tr22 = u.get_u2 (1, trapeze_num);
             for (int i = 0; i < 6; i++)
-              a[i] = 2 * tr2;
+              a[i] = 2 * tr22;
           }
         *a_diag  = 3 * (tr1 + tr2);
 
@@ -68,15 +74,17 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         int prev_trapeze = (trapeze_num == 0 ? 3 : trapeze_num - 1);
         double tr1 = u.get_u (0, trapeze_num),
                tr2 = u.get_u (1, prev_trapeze);
+        double tr21 = u.get_u2 (0, trapeze_num),
+               tr22 = u.get_u2 (1, prev_trapeze);
 
         *a_diag = 3 * (tr1 + tr2);
 
-        a[0] = tr1 + tr2;
-        a[1] = 2 * tr2;
-        a[2] = 2 * tr2;
-        a[3] = tr1 + tr2;;
-        a[4] = 2 * tr1;
-        a[5] = 2 * tr1;
+        a[0] = tr21 + tr22;
+        a[1] = 2 * tr22;
+        a[2] = 2 * tr22;
+        a[3] = tr21 + tr22;;
+        a[4] = 2 * tr21;
+        a[5] = 2 * tr21;
 
         I[0] = get_k (i, j + 1, trapeze_num, n);
         I[1] = get_k (n - 2, j + 1, prev_trapeze, n);
@@ -91,12 +99,13 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     else if (j == 0 && i > 0 && i < n - 1)
       {
         double tr = u.get_u (0, trapeze_num);
+        double tr2 = u.get_u2 (0, trapeze_num);
         *a_diag = 3 * tr;
 
-        a[0] = 2 * tr;
-        a[1] = 2 * tr;
-        a[2] = tr;
-        a[3] = tr;
+        a[0] = 2 * tr2;
+        a[1] = 2 * tr2;
+        a[2] = tr2;
+        a[3] = tr2;
 
         I[0] = get_k (i, j + 1, trapeze_num, n);
         I[1] = get_k (i - 1, j + 1, trapeze_num, n);
@@ -115,15 +124,16 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     else if (j == n - 1 && i > 0 && i < n - 1)
       {
         double tr = u.get_u (1, trapeze_num);
+        double tr2 = u.get_u2 (1, trapeze_num);
         *a_diag = 3 * tr;
 
-        a[0] = tr;
-        a[1] = 2 * tr;
-        a[2] = 2 * tr;
-        a[3] = tr;
+        a[0] = tr2;
+        a[1] = 2 * tr2;
+        a[2] = 2 * tr2;
+        a[3] = tr2;
 
         I[0] = get_k (i - 1, j, trapeze_num, n);
-        I[1] = get_k (i - 1, j - 1, trapeze_num, n);
+        I[1] = get_k (i, j - 1, trapeze_num, n);
 
         if (i < n - 2)
           {
@@ -146,13 +156,16 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         double tr1 = u.get_u (0, trapeze_num),
                tr2 = u.get_u (1, prev_trapeze),
                tr3 = u.get_u (0, prev_trapeze);
+        double tr21 = u.get_u2 (0, trapeze_num),
+               tr22 = u.get_u2 (1, prev_trapeze),
+               tr23 = u.get_u2 (0, prev_trapeze);
 
-        *a_diag  = tr1 + tr3 + tr3;
+        *a_diag  = tr1 + tr2 + tr3;
 
-        a[0] = tr1 + tr2;
-        a[1] =       tr2 + tr3;
-        a[2] =             tr3;
-        a[3] = tr1;
+        a[0] = tr21 + tr22;
+        a[1] =        tr22 + tr23;
+        a[2] =               tr23;
+        a[3] = tr21;
 
         I[0] = get_k (i, j + 1, trapeze_num, n);
         I[1] = get_k (n - 2, j + 1, prev_trapeze, n);
@@ -168,13 +181,16 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         double tr1 = u.get_u (1, trapeze_num),
                tr2 = u.get_u (0, trapeze_num),
                tr3 = u.get_u (1, prev_trapeze);
+        double tr21 = u.get_u2 (1, trapeze_num),
+               tr22 = u.get_u2 (0, trapeze_num),
+               tr23 = u.get_u2 (1, prev_trapeze);
 
-        *a_diag  = tr1 + tr3 + tr3;
+        *a_diag  = tr1 + tr2 + tr3;
 
-        a[0] =             tr3;
-        a[1] =       tr2 + tr3;
-        a[2] = tr1 + tr2;
-        a[3] = tr1;
+        a[0] =               tr23;
+        a[1] =        tr22 + tr23;
+        a[2] = tr21 + tr22;
+        a[3] = tr21;
 
         I[0] = get_k (n - 2, j, prev_trapeze, n);
         I[1] = get_k (i, j - 1, trapeze_num, n);
@@ -187,6 +203,154 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     return -1000;
 }
 double
+system_builder::fill_rhs_at (int k)
+{
+  int i, j, trapeze_num;
+  Js J = gr->get_J ();
+
+  get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+  //расписываем случаи
+  //полностью внутри
+  if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
+    {
+      double tr1, tr2;
+      if (i + j < n)
+        {
+          tr1 = tr2 = J.get_J (0, trapeze_num);
+
+        }
+      else if (i + j == n)
+        {
+          tr1 = J.get_J (0, trapeze_num);
+          tr2 = J.get_J (1, trapeze_num);
+        }
+      else
+        {
+          tr1 = tr2 = J.get_J (1, trapeze_num);
+        }
+      double ans = 0;
+      ans = tr1 *
+              (
+                2
+              );
+      ans += tr2 *
+              (
+                 2
+               );
+      ans += ((tr1 + tr2) / 2.) *
+              (
+                8
+              );
+
+      return ans / 12.;
+    }
+  //правая сторона трапеции
+  else if (i == 0 && j > 0 && j < n - 1)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (0, trapeze_num),
+             tr2 = J.get_J (1, trapeze_prev);
+
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               2
+             );
+      ans += tr2 *
+              (
+                 2
+              );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                  8
+              );
+
+      return ans / 12.;
+    }
+  //нижняя сторона трапеции
+  else if (j == 0 && i > 0 && i < n - 1)
+    {
+      double tr = J.get_J (0, trapeze_num);
+
+      double ans = 0;
+
+      ans = tr *
+             (
+               10
+             );
+      return ans / 192.;
+    }
+  //верхняя сторона трапеции
+  else if (j == n - 1 && i > 0 && i < n - 1)
+    {
+      double tr = J.get_J (1, trapeze_num);
+      double ans = 0;
+
+      ans = tr *
+              (
+                10
+              );
+      return ans / 192.;
+    }
+  //правый нижний угол
+  else if (j == 0 && i == 0)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (0, trapeze_num),
+             tr2 = J.get_J (1, trapeze_prev),
+             tr3 = J.get_J (0, trapeze_prev);
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               1
+             );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                1
+              );
+      ans += ((tr2 + tr3) / 2) *
+              (
+                1
+              );
+      ans += tr3 *
+              (
+                1
+              );
+      return ans / 12.;
+    }
+  //правый верхний угол
+  else if (j == n - 1 && i == 0)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (1, trapeze_num),
+             tr2 = J.get_J (0, trapeze_num),
+             tr3 = J.get_J (1, trapeze_prev);
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               1
+             );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                1
+              );
+      ans += ((tr2 + tr3) / 2) *
+              (
+                 1
+              );
+      ans += tr3 *
+              (
+                1
+              );
+
+      return ans / 12.;
+    }
+  abort ();
+}
+/*double
 system_builder::fill_rhs_at (int k)
 {
     int i, j, trapeze_num, n2 = 2 * n - 1;
@@ -439,3 +603,4 @@ system_builder::fill_rhs_at (int k)
       }
     abort ();
 }
+*/

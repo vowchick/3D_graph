@@ -67,6 +67,7 @@ struct us
     double Dcd;
     double DdA;
     double Ada;
+
     double
     get_u (int odd, int trapeze_num)
     {
@@ -81,6 +82,32 @@ struct us
             case 5: return Dcd;
             case 6: return DdA;
             case 7: return Ada;
+          }
+        abort ();
+        return -100;
+    }
+    double BbC2;
+    double AaB2;
+    double Bab2;
+    double Cbc2;
+    double CcD2;
+    double Dcd2;
+    double DdA2;
+    double Ada2;
+    double
+    get_u2 (int odd, int trapeze_num)
+    {
+        int num = 2 * trapeze_num + odd;
+        switch (num)
+          {
+            case 0: return AaB2;
+            case 1: return Bab2;
+            case 2: return BbC2;
+            case 3: return Cbc2;
+            case 4: return CcD2;
+            case 5: return Dcd2;
+            case 6: return DdA2;
+            case 7: return Ada2;
           }
         abort ();
         return -100;
