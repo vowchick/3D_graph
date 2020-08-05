@@ -67,14 +67,14 @@ grid::fill_us ()
 void
 grid::fill_u2s ()
 {
-    u.BbC2 = ultimate_scalar_counter (J.BbC, 1, 0, 0, 0, 1, 0);
-    u.AaB2 = ultimate_scalar_counter (J.AaB, 1, 0, 0, 0, 1, 0);
-    u.Bab2 = ultimate_scalar_counter (J.Bab, 1, 0, 0, 0, 1, 0);
-    u.Cbc2 = ultimate_scalar_counter (J.Cbc, 1, 0, 0, 0, 1, 0);
-    u.CcD2 = ultimate_scalar_counter (J.CcD, 1, 0, 0, 0, 1, 0);
-    u.Dcd2 = ultimate_scalar_counter (J.Dcd, 1, 0, 0, 0, 1, 0);
-    u.DdA2 = ultimate_scalar_counter (J.DdA, 1, 0, 0, 0, 1, 0);
-    u.Ada2 = ultimate_scalar_counter (J.Ada, 1, 0, 0, 0, 1, 0);
+    u.BbC2 = ultimate_scalar_counter (J.BbC, 1, 0, 0, 0, 0, 1);
+    u.AaB2 = ultimate_scalar_counter (J.AaB, 1, 0, 0, 0, 0, 1);
+    u.Bab2 = ultimate_scalar_counter (J.Bab, 1, 0, 0, 0, 0, 1);
+    u.Cbc2 = ultimate_scalar_counter (J.Cbc, 1, 0, 0, 0, 0, 1);
+    u.CcD2 = ultimate_scalar_counter (J.CcD, 1, 0, 0, 0, 0, 1);
+    u.Dcd2 = ultimate_scalar_counter (J.Dcd, 1, 0, 0, 0, 0, 1);
+    u.DdA2 = ultimate_scalar_counter (J.DdA, 1, 0, 0, 0, 0, 1);
+    u.Ada2 = ultimate_scalar_counter (J.Ada, 1, 0, 0, 0, 0, 1);
 }
 double
 grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n)

@@ -17,4 +17,6 @@ void linear_combination (double *x, double *y,
                          int n, double a,
                          int p, int k,
                          pthread_barrier_t *barrier);
+int check_matrix (double *a, int *I, int n, int p, int k);
+void print_matrix (int matrix_size, double *a, int *I);
 #endif // MATRIX_OPERATIONS_H

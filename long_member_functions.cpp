@@ -66,7 +66,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
             I[5] = get_k (0, j, next_trapeze, n);
           }
 
-        return 6;
+         return 6;
       }
     //правая сторона трапеции
     else if (i == 0 && j > 0 && j < n - 1)
@@ -167,10 +167,10 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         a[2] =               tr23;
         a[3] = tr21;
 
-        I[0] = get_k (i, j + 1, trapeze_num, n);
-        I[1] = get_k (n - 2, j + 1, prev_trapeze, n);
-        I[2] = get_k (n - 2, j, prev_trapeze, n);
-        I[3] = get_k (i + 1, j, trapeze_num, n);
+        I[0] = get_k (0, 1, trapeze_num, n);
+        I[1] = get_k (n - 2, 1, prev_trapeze, n);
+        I[2] = get_k (n - 2, 0, prev_trapeze, n);
+        I[3] = get_k (1, 0, trapeze_num, n);
 
         return 4;
       }
@@ -192,10 +192,10 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         a[2] = tr21 + tr22;
         a[3] = tr21;
 
-        I[0] = get_k (n - 2, j, prev_trapeze, n);
-        I[1] = get_k (i, j - 1, trapeze_num, n);
-        I[2] = get_k (i + 1, j - 1, trapeze_num, n);
-        I[3] = get_k (i + 1, j, trapeze_num, n);
+        I[0] = get_k (n - 2, n - 1, prev_trapeze, n);
+        I[1] = get_k (0, n - 2, trapeze_num, n);
+        I[2] = get_k (1, n - 2, trapeze_num, n);
+        I[3] = get_k (1,  n - 1, trapeze_num, n);
 
         return 4;
       }
@@ -279,7 +279,7 @@ system_builder::fill_rhs_at (int k)
              (
                10
              );
-      return ans / 192.;
+      return ans / 12.;
     }
   //верхняя сторона трапеции
   else if (j == n - 1 && i > 0 && i < n - 1)
@@ -291,7 +291,7 @@ system_builder::fill_rhs_at (int k)
               (
                 10
               );
-      return ans / 192.;
+      return ans / 12.;
     }
   //правый нижний угол
   else if (j == 0 && i == 0)
@@ -317,6 +317,10 @@ system_builder::fill_rhs_at (int k)
       ans += tr3 *
               (
                 1
+              );
+      ans += ((tr1 + tr2 + tr3) / 3.) *
+              (
+                6
               );
       return ans / 12.;
     }
@@ -345,7 +349,10 @@ system_builder::fill_rhs_at (int k)
               (
                 1
               );
-
+      ans += ((tr1 + tr2 + tr3) / 3.) *
+              (
+                6
+              );
       return ans / 12.;
     }
   abort ();

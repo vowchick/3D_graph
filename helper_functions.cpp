@@ -7,7 +7,8 @@ triangle_to_right_triangle_jacob (
         int n)     // -> (1, 0)
 {
     double J = (x3 - x2) * (y1 - y2) - (x1 - x2) * (y3 - y2);
-    return fabs (J) / (n * n);
+    FIX_UNUSED(n);
+    return fabs (J);
 }
 
 int
