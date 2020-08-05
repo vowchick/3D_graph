@@ -152,7 +152,7 @@ grid::fill_js (polygon *p, int n)
                 );
     J.BbC = triangle_to_right_triangle_jacob(
                 p->b.x, p->b.y,
-                p->c.x, p->c.y,
+                p->C.x, p->C.y,
                 p->B.x, p->B.y, n
                 );
     J.Cbc = triangle_to_right_triangle_jacob(

@@ -59,7 +59,6 @@ system_solver::solve_stage (int k, int maxit)
 
       if (c1 < eps * eps || c2 < eps * eps)
         {
-          FIX_UNUSED(c1);
           break;
         }
 
