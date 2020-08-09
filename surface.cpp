@@ -1,9 +1,12 @@
 #include "surface.h"
 
-surface::surface(grid *gr, double *f_coeffs)
+surface::surface(grid *gr, std::function<double (double, double)> f)
 {
   this->gr = gr;
-  this->f_coeffs = f_coeffs;
+  this->f = f;
+  fill_f ();
+  f_coeffs = given_func;
+  find_ranges ();
 }
 
 void
@@ -24,19 +27,61 @@ surface::find_ranges ()
   f_range.min = min;
 }
 void
-surface::update (grid *gr, double *f_coeffs)
+surface::update (grid *gr)
 {
   this->gr = gr;
-  this->f_coeffs = f_coeffs;
+  int n = gr->get_n ();
+  f_coeffs.resize (4 * n * (n - 1));
 }
 void
-surface::set_f_coeffs (double *f_coeffs)
+surface::set_approx (std::vector<double> approx)
 {
   int n = gr->get_n ();
   int diag_length = 4 * n * (n - 1);
+  this->approx.resize (diag_length);
   for (int i = 0; i < diag_length; i++)
     {
-      this->f_coeffs[i] = f_coeffs[i];
+      this->approx[i] = approx[i];
     }
-  find_ranges ();
+}
+void
+surface::fill_f ()
+{
+  int n = gr->get_n ();
+  int diag_lenght = 4 * n * (n - 1);
+  given_func.resize (diag_lenght);
+  //needs to be finished
+}
+void
+surface::set_f(std::function <double (double, double)> f)
+{
+  this->f = f;
+}
+void
+surface::change_state ()
+{
+  st = static_cast<state> ((st + 1) % 3);
+  switch (st)
+    {
+    case given_function:
+      fill_f ();
+      f_coeffs = given_func;
+      break;
+    case approximation:
+      f_coeffs = approx;
+      break;
+    case error:
+      fill_f ();
+      set_error ();
+      break;
+    }
+}
+void
+surface::set_error ()
+{
+  int size = given_func.size ();
+  for (int i = 0; i < size; i++)
+    {
+      f_coeffs[i] = fabs (given_func[i] - approx[i]);
+    }
 }

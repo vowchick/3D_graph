@@ -113,6 +113,12 @@ struct us
         return -100;
     }
 };
+enum state
+{
+  given_function,
+  approximation,
+  error,
+};
 struct Js
 {
     double AaB;

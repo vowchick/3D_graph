@@ -9,7 +9,7 @@ Window::Window(polygon *pol_, int n_,
 
   initialize (pol_, n_, p_, eps_, func_ind);
   allocate_memory ();
-  drawer = new painter (gr.get (), f_coeffs.get (), this);
+  drawer = new painter (gr.get (), f, this);
   QHBoxLayout *h_layout = new QHBoxLayout (this);
   h_layout->addWidget (drawer);
   initialize_vectors ();
@@ -100,6 +100,7 @@ Window::change_function ()
       func_ind %= 8;
       f = int_to_f (func_ind);
       func_name = int_to_str (func_ind);
+      set_f();
       calculating = true;
       before_calculation ();
       p_out++;
@@ -111,7 +112,27 @@ Window::change_function ()
 void
 Window::change_state ()
 {
-
+  if (!calculating)
+    {
+      st = static_cast<state> ((st + 1) % 3);
+      switch (st)
+        {
+        case given_function:
+        case error:
+          break;
+        case approximation:
+          if (!calculating)
+            {
+              calculating = true;
+              before_calculation ();
+              p_out++;
+              pthread_cond_broadcast (&cond);
+            }
+          break;
+        }
+      drawer->change_state ();
+      drawer->updateGL ();
+    }
 }
 void
 Window::initialize_info ()
@@ -176,8 +197,6 @@ Window::allocate_memory ()
   data.v.reset (new double[diag_length]);
   data.buf.reset (new double[threads_num]);
 
-  f_coeffs.reset (new double [diag_length]);
-
 }
 
 void
@@ -188,15 +207,21 @@ Window::after_calculation ()
 }
 
 void
-Window::set_f_coeffs (double *f_coeffs)
+Window::set_approx (double *approx)
 {
-  drawer->set_f_coeffs (f_coeffs);
+  int diag_length = 4 * n * (n - 1);
+  std::vector<double> approxim (diag_length);
+
+  for (int i = 0; i < diag_length; i++)
+    approxim[i] = approx[i];
+
+  drawer->set_approx (approxim);
 }
 
 void
 Window::update_surface ()
 {
-  drawer->update_surface (gr.get (), f_coeffs.get ());
+  drawer->update_surface (gr.get ());
 }
 
 void
@@ -206,6 +231,11 @@ Window::before_calculation ()
   update_surface ();
   initialize_vectors ();
   initialize_info ();
+}
+void
+Window::set_f ()
+{
+  drawer->set_f (f);
 }
 void
 Window::erase ()

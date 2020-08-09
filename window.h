@@ -6,6 +6,8 @@
 #include "thread_info.h"
 #include "painter.h"
 #include <QHBoxLayout>
+
+
 class Window : public QWidget
 {
   Q_OBJECT
@@ -16,7 +18,7 @@ public:
           QWidget *parent);
   ~Window ();
   void emit_calculation_completed ();
-  void set_f_coeffs (double *f_coeffs);
+  void set_approx (double *approx);
   void update_surface ();
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
@@ -26,6 +28,8 @@ void
 initialize (polygon *pol_, int n_,
             int p_, double eps_,
             int func_ind);
+void
+set_f ();
 void
 erase ();
 void
@@ -52,7 +56,6 @@ private:
   polygon *pol;
   std::unique_ptr<grid> gr;
   std::function<double (double, double)> f;
-  std::unique_ptr <double []> f_coeffs;
   int func_ind;
   std::string func_name;
   builder_solver_data data;
@@ -62,6 +65,8 @@ private:
   pthread_cond_t cond;
   int p_out;
   painter *drawer;
+  state st = given_function;
+
 
 
 public slots:

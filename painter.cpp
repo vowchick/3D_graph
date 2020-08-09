@@ -1,15 +1,23 @@
 #include "painter.h"
 
-painter::painter(grid *gr, double *f_coeffs, QWidget *parent)
+painter::painter(grid *gr, std::function<double (double, double)> f, QWidget *parent)
   :QGLWidget (parent)
 {
-  surf_ptr.reset (new surface (gr, f_coeffs));
+  surf_ptr.reset (new surface (gr, f));
   surf = surf_ptr.get ();
-  //might need to multiply by 1.5
 }
 painter::~painter ()
 {
 
+}
+
+void painter::draw_surface ()
+{
+  grid *gr = surf->get_grid ();
+  int n = gr->get_n ();
+  int diag_lenght = 4 * n * (n - 1);
+  FIX_UNUSED (diag_lenght);
+  //needs to be finished
 }
 
 QSize
@@ -132,13 +140,6 @@ painter::draw_axes ()
   glEnd ();
 
 }
-void painter::draw_surface ()
-{
-  grid *gr = surf->get_grid ();
-  int n = gr->get_n ();
-  int diag_lenght = 4 * n * (n - 1);
-  FIX_UNUSED (diag_lenght);
-}
 
 static void qNormalizeAngle(int &angle)
 {
@@ -202,12 +203,23 @@ painter::mouseMoveEvent(QMouseEvent *event)
 }
 
 void
-painter::set_f_coeffs (double *f_coeffs)
+painter::set_approx (std::vector<double> approx)
 {
-  surf->set_f_coeffs (f_coeffs);
+  surf->set_approx (approx);
+}
+
+void
+painter::update_surface (grid *gr)
+{
+  surf->update (gr);
 }
 void
-painter::update_surface (grid *gr, double *f_coeffs)
+painter::set_f (std::function<double (double, double)> f)
 {
-  surf->update (gr, f_coeffs);
+  surf->set_f (f);
+}
+void
+painter::change_state ()
+{
+  surf->change_state ();
 }

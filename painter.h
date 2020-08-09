@@ -6,20 +6,16 @@
 #include <QGLWidget>
 #include "surface.h"
 #include "QMouseEvent"
-enum state
-{
-  the_func,
-  the_approx,
-  the_error,
-};
 
 class painter : public QGLWidget
 {
 public:
-  painter(grid *gr, double *f_coeffs, QWidget *parent = nullptr);
+  painter(grid *gr, std::function<double (double, double)> f, QWidget *parent = nullptr);
  ~painter ();
-  void set_f_coeffs (double *f_coeffs);
-  void update_surface (grid *gr, double *f_coeffs);
+  void set_approx (std::vector<double> f_coeffs);
+  void update_surface (grid *gr);
+  void set_f (std::function<double (double, double)> f);
+  void change_state ();
 
 public slots:
   void setXRotation(int angle);
@@ -51,7 +47,6 @@ private:
 
   double scale = 1.;
   QPoint lastPos;
-  state st = the_func;
 };
 
 #endif // PAINTER_H
