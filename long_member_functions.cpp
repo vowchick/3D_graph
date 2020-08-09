@@ -82,7 +82,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
         a[0] = tr21 + tr22;
         a[1] = 2 * tr22;
         a[2] = 2 * tr22;
-        a[3] = tr21 + tr22;;
+        a[3] = tr21 + tr22;
         a[4] = 2 * tr21;
         a[5] = 2 * tr21;
 
@@ -160,7 +160,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
                tr22 = u.get_u2 (1, prev_trapeze),
                tr23 = u.get_u2 (0, prev_trapeze);
 
-        *a_diag  = tr1 + tr2 + tr3;
+        *a_diag = tr1 + tr2 + tr3;
 
         a[0] = tr21 + tr22;
         a[1] =        tr22 + tr23;
@@ -185,7 +185,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
                tr22 = u.get_u2 (0, trapeze_num),
                tr23 = u.get_u2 (1, prev_trapeze);
 
-        *a_diag  = tr1 + tr2 + tr3;
+        *a_diag = tr1 + tr2 + tr3;
 
         a[0] =               tr23;
         a[1] =        tr22 + tr23;
