@@ -187,10 +187,18 @@ Window::set_f_coeffs (double *f_coeffs)
 {
   drawer->set_f_coeffs (f_coeffs);
 }
+
+void
+Window::update_surface ()
+{
+  drawer->update_surface (gr.get (), f_coeffs.get ());
+}
+
 void
 Window::before_calculation ()
 {
   allocate_memory ();
+  update_surface ();
   initialize_vectors ();
   initialize_info ();
 }

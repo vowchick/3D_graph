@@ -17,6 +17,7 @@ public:
   ~Window ();
   void emit_calculation_completed ();
   void set_f_coeffs (double *f_coeffs);
+  void update_surface ();
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
 

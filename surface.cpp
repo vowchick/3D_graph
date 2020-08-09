@@ -23,7 +23,12 @@ surface::find_ranges ()
   f_range.max = max;
   f_range.min = min;
 }
-
+void
+surface::update (grid *gr, double *f_coeffs)
+{
+  this->gr = gr;
+  this->f_coeffs = f_coeffs;
+}
 void
 surface::set_f_coeffs (double *f_coeffs)
 {

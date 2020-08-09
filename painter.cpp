@@ -199,3 +199,8 @@ painter::set_f_coeffs (double *f_coeffs)
 {
   surf->set_f_coeffs (f_coeffs);
 }
+void
+painter::update_surface (grid *gr, double *f_coeffs)
+{
+  surf->update (gr, f_coeffs);
+}

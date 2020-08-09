@@ -13,6 +13,7 @@ public:
   painter(grid *gr, double *f_coeffs, QWidget *parent = nullptr);
  ~painter ();
   void set_f_coeffs (double *f_coeffs);
+  void update_surface (grid *gr, double *f_coeffs);
 
 public slots:
   void setXRotation(int angle);

@@ -12,6 +12,7 @@ public:
   grid *get_grid () const {return gr;}
 
   void set_f_coeffs (double *f_coeffs);
+  void update (grid *gr_, double *f_coeffs);
 
 private:
   void find_ranges ();
