@@ -6,6 +6,12 @@
 #include <QGLWidget>
 #include "surface.h"
 #include "QMouseEvent"
+enum state
+{
+  the_func,
+  the_approx,
+  the_error,
+};
 
 class painter : public QGLWidget
 {
@@ -33,6 +39,7 @@ protected:
 private:
   void set_gl();
   void draw_axes();
+  void draw_surface ();
 
 private:
   std::unique_ptr<surface> surf_ptr;
@@ -44,6 +51,7 @@ private:
 
   double scale = 1.;
   QPoint lastPos;
+  state st = the_func;
 };
 
 #endif // PAINTER_H

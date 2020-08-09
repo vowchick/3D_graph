@@ -69,6 +69,7 @@ public slots:
   void undouble_n () ;
   void change_function ();
   void after_calculation ();
+  void change_state ();
 signals:
   void calculation_completed ();
 };

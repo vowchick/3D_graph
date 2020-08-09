@@ -109,6 +109,11 @@ Window::change_function ()
 }
 
 void
+Window::change_state ()
+{
+
+}
+void
 Window::initialize_info ()
 {
   for (int i = 0; i < threads_num; i++)

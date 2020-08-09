@@ -103,7 +103,7 @@ painter::paintGL()
     glDisable (GL_CULL_FACE);
     draw_axes ();
     qglColor (Qt::red);
-//    current_surface->draw ();
+    draw_surface ();
 
     glDisableClientState (GL_VERTEX_ARRAY);
     glDisableClientState (GL_NORMAL_ARRAY);
@@ -131,6 +131,13 @@ painter::draw_axes ()
   glVertex3d ( 0.0,  0.0, -20.0);
   glEnd ();
 
+}
+void painter::draw_surface ()
+{
+  grid *gr = surf->get_grid ();
+  int n = gr->get_n ();
+  int diag_lenght = 4 * n * (n - 1);
+  FIX_UNUSED (diag_lenght);
 }
 
 static void qNormalizeAngle(int &angle)
