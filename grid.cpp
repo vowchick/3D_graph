@@ -77,6 +77,64 @@ grid::fill_u2s ()
     u.Ada2 = ultimate_scalar_counter (J.Ada, 1, 0, 0, 0, 0, 1);
 }
 double
+grid::get_value (std::vector <double> f, double x, double y, int trapeze_num, int odd)
+{
+  //needs to be finished
+  point A, B, C, D;
+  point xy (x, y);
+  fill_points (A, B, C, D, trapeze_num);
+  int i = 0, j = 0;
+  if (odd)
+    {
+      //needs to be finished
+    }
+  else
+    {
+      point a = A, b = B, d = D;
+      point moveAD (D.x - A.x, D.y - A.y),
+            moveBD (D.x - B.x, D.y - B.y);
+      i = find_index (a, b, moveAD, moveBD, xy);
+
+      b = B;
+      point moveBA (A.x - B.x, A.y - B.y),
+            moveDA (A.x - D.x, A.y - D.y);
+      j = n - find_index (b, d, moveBA, moveDA, xy);
+
+      printf ("smth\n");
+      FIX_UNUSED(i, j);
+    }
+  FIX_UNUSED(f, x, y, trapeze_num, odd);
+  return 0;
+}
+int
+grid::find_index (point a, point b, point moveac, point movebc, point xy)
+{
+  double start = which_side (xy, a, b);
+  point e, f;
+  int i = 0;
+   if (fabs (start) > 1e-16)
+     {
+       e.x = a.x + moveac.x / n;
+       e.y = a.y + moveac.y / n;
+       f.x = b.x + movebc.x / n;
+       f.y = b.y + movebc.y / n;
+       i = 1;
+       double cont = which_side (xy, e, f);
+       while (cont * start > 1e-16)
+         {
+           i++;
+           e.x = a.x + i * moveac.x / n;
+           e.y = a.y + i * moveac.y / n;
+           f.x = b.x + i * movebc.x / n;
+           f.y = b.y + i * movebc.y / n;
+           cont = which_side (xy, e, f);
+         }
+       i--;
+     }
+   return i;
+}
+
+double
 grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n)
 {
 

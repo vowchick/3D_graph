@@ -56,7 +56,42 @@ struct point
 {
     double x;
     double y;
+    point ()
+    {
+      x = 0, y = 0;
+    }
+    point (double x, double y)
+    {
+      this->x = x;
+      this->y = y;
+    }
+    point &operator + (point &a)
+    {
+      x += a.x;
+      y += a.y;
+
+      return *this;
+    }
+    point &operator - (point &a)
+    {
+      x -= a.x;
+      y -= a.y;
+
+      return *this;
+    }
+    point &operator / (double div)
+    {
+      x /= div;
+      y /= div;
+      return *this;
+    }
+    point operator * (double div)
+    {
+      return point (x * div, y * div);
+    }
 };
+
+
 struct us
 {
     double BbC;

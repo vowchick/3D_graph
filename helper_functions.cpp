@@ -11,6 +11,27 @@ triangle_to_right_triangle_jacob (
     return fabs (J);
 }
 
+double which_side (point a, point b, point c)
+{
+    return (a.x - c.x) * (b.y - c.y) -
+           (b.x - c.x) * (a.y - c.y);
+}
+
+bool is_in_triangle (point pt, point a, point b, point c)
+{
+    double d1, d2, d3;
+    bool neg, pos;
+
+    d1 = which_side (pt, a, b);
+    d2 = which_side (pt, b, c);
+    d3 = which_side (pt, c, a);
+
+    neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+    pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+    return !(neg && pos);
+}
+
 int
 get_k (int i, int j, int trapeze_num, int n)
 {

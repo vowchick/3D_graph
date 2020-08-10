@@ -21,6 +21,7 @@ public:
     void fill_js (polygon *p, int n);
 //    double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze);
     double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n);
+    double get_value (std::vector<double> f, double x, double y, int trapeze_num, int odd);
     void fill_points (point &A, point &B, point &C, point &D, int trapeze);
 
     double get_width () const { return width; }
@@ -29,6 +30,7 @@ public:
 private:
   void find_width ();
   void find_height ();
+  int find_index (point a, point b, point moveac, point movebc, point xy);
 
 private:
     polygon *p;

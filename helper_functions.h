@@ -20,6 +20,9 @@ double triangle_to_right_triangle_jacob (
 double ultimate_scalar_counter (double J,
                          double f1, double f2, double f3,
                          double g1, double g2, double g3);
+double which_side (point a, point b, point c);
+
+bool is_in_triangle (point pt, point a, point b, point c);
 std::function<double (double, double)>
 int_to_f (int f_);
 #endif // HELPER_FUNCTIONS_H

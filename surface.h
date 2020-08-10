@@ -15,6 +15,7 @@ public:
   void set_f (std::function <double (double, double)> f);
   void update (grid *gr_);
   void change_state ();
+  double get_value (double x, double y, int trapeze_num, int odd);
 
 private:
   void find_ranges ();

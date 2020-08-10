@@ -44,6 +44,7 @@ surface::set_approx (std::vector<double> approx)
       this->approx[i] = approx[i];
     }
 }
+
 void
 surface::fill_f ()
 {
@@ -51,6 +52,12 @@ surface::fill_f ()
   int diag_lenght = 4 * n * (n - 1);
   given_func.resize (diag_lenght);
   //needs to be finished
+}
+
+double
+surface::get_value (double x, double y, int trapeze_num, int odd)
+{
+  return gr->get_value (f_coeffs, x, y, trapeze_num, odd);
 }
 void
 surface::set_f(std::function <double (double, double)> f)
