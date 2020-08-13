@@ -19,6 +19,14 @@ class grid;
 struct thread_info;
 struct builder_solver_data;
 struct ranges;
+struct triangle;
+
+struct triangle
+{
+  std::pair <int , int> a;
+  std::pair <int , int> b;
+  std::pair <int , int> c;
+};
 
 struct ranges
 {

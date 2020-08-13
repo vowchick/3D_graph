@@ -86,30 +86,62 @@ grid::get_value (std::vector <double> f, double x, double y, int trapeze_num, in
   int i = 0, j = 0;
   if (odd)
     {
-      //needs to be finished
+      point c = C, b = B;
+      point moveBC (C.x - B.x, C.y - B.y),
+            moveBD (D.x - B.x, D.y - B.y),
+            moveCD (D.x - C.x, D.y - C.y);
+      point b_ = b;
+      b_.x += moveCD.x / n;
+      b_.y += moveCD.y / n;
+      i = find_index (b, b, moveBC, moveBD, xy, b_);
+
+      b = B;
+      j = n - find_index (b, c, moveBD, moveCD, xy, c);
     }
   else
     {
       point a = A, b = B, d = D;
       point moveAD (D.x - A.x, D.y - A.y),
             moveBD (D.x - B.x, D.y - B.y);
-      i = find_index (a, b, moveAD, moveBD, xy);
+      i = find_index (a, b, moveAD, moveBD, xy, b);
 
       b = B;
       point moveBA (A.x - B.x, A.y - B.y),
             moveDA (A.x - D.x, A.y - D.y);
-      j = n - find_index (b, d, moveBA, moveDA, xy);
+      j = n - find_index (b, d, moveBA, moveDA, xy, d);
 
-      printf ("smth\n");
-      FIX_UNUSED(i, j);
     }
-  FIX_UNUSED(f, x, y, trapeze_num, odd);
+  triangle tri = find_triangle (xy, i, j);
+
+  return interpolate (f, tri, xy);
+}
+
+triangle
+grid::find_triangle (point xy, int i, int j)
+{
+  //needs to be finished
+  triangle tri;
+
+  tri.a = std::make_pair (i, j);
+
+
+  FIX_UNUSED (xy);
+  return tri;
+}
+
+double
+grid::interpolate (std::vector<double> f, triangle tri, point xy)
+{
+
+  //needs to be finished
+  FIX_UNUSED (f, tri, xy);
   return 0;
 }
+
 int
-grid::find_index (point a, point b, point moveac, point movebc, point xy)
+grid::find_index (point a, point b, point moveac, point movebc, point xy, point second_point_for_line)
 {
-  double start = which_side (xy, a, b);
+  double start = which_side (xy, a, second_point_for_line);
   point e, f;
   int i = 0;
    if (fabs (start) > 1e-16)

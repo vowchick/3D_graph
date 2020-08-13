@@ -30,7 +30,9 @@ public:
 private:
   void find_width ();
   void find_height ();
-  int find_index (point a, point b, point moveac, point movebc, point xy);
+  int find_index (point a, point b, point moveac, point movebc, point xy, point second_point_for_line);
+  triangle find_triangle (point xy, int i, int j);
+  double interpolate (std::vector<double> f, triangle tri, point xy);
 
 private:
     polygon *p;
