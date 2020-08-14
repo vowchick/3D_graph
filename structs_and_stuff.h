@@ -21,13 +21,6 @@ struct builder_solver_data;
 struct ranges;
 struct triangle;
 
-struct triangle
-{
-  std::pair <int , int> a;
-  std::pair <int , int> b;
-  std::pair <int , int> c;
-};
-
 struct ranges
 {
   double max;
@@ -99,6 +92,12 @@ struct point
     }
 };
 
+struct triangle
+{
+  std::pair <point, int> a;
+  std::pair <point, int> b;
+  std::pair <point, int> c;
+};
 
 struct us
 {

@@ -17,7 +17,7 @@ void painter::draw_surface ()
   int n = gr->get_n ();
   int diag_lenght = 4 * n * (n - 1);
   FIX_UNUSED (diag_lenght);
-  double ans = surf->get_value (-1, 1, 0, 1);
+  double ans = surf->get_value (-1, -1, 0, 0);
   FIX_UNUSED (ans);
   //needs to be finished
 }

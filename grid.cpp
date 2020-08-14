@@ -86,47 +86,52 @@ grid::get_value (std::vector <double> f, double x, double y, int trapeze_num, in
   int i = 0, j = 0;
   if (odd)
     {
-      point c = C, b = B;
-      point moveBC (C.x - B.x, C.y - B.y),
-            moveBD (D.x - B.x, D.y - B.y),
-            moveCD (D.x - C.x, D.y - C.y);
-      point b_ = b;
-      b_.x += moveCD.x / n;
-      b_.y += moveCD.y / n;
-      i = find_index (b, b, moveBC, moveBD, xy, b_);
+      point c = C, d = D;
+      point moveDC (C.x - D.x, C.y - D.y),
+            moveDB (B.x - D.x, B.y - D.y),
+            moveCB (B.x - C.x, B.y - C.y);
+      point d_ = d;
+      d_.x += moveCB.x / n;
+      d_.y += moveCB.y / n;
+      i = find_index (d, d, moveDC, moveDB, xy, d_);
 
-      b = B;
-      j = n - find_index (b, c, moveBD, moveCD, xy, c);
+      d = D;
+      j = n - 1 - find_index (d, c, moveDB, moveCB, xy, c);
     }
   else
     {
       point a = A, b = B, d = D;
       point moveAD (D.x - A.x, D.y - A.y),
-            moveBD (D.x - B.x, D.y - B.y);
-      i = find_index (a, b, moveAD, moveBD, xy, b);
+            moveDB (B.x - D.x, B.y - D.y);
+      i = find_index (a, d, moveAD, moveDB, xy, d);
 
       b = B;
-      point moveBA (A.x - B.x, A.y - B.y),
-            moveDA (A.x - D.x, A.y - D.y);
-      j = n - find_index (b, d, moveBA, moveDA, xy, d);
+      point moveDA (A.x - D.x, A.y - D.y),
+            moveBA (A.x - B.x, A.y - B.y);
+      j = n - i - 1 - find_index (d, b, moveDA, moveBA, xy, b);
 
     }
-  triangle tri = find_triangle (xy, i, j);
+  if (i >= n - 1 || j > n - 1)
+     abort ();
+
+  triangle one, two;
+  fill_triangles (one, two, i, j);
+  triangle tri = which_triangle (xy, one, two);
 
   return interpolate (f, tri, xy);
 }
 
-triangle
-grid::find_triangle (point xy, int i, int j)
+void
+grid::fill_triangles (triangle &one, triangle &two, int i, int j)
 {
-  //needs to be finished
-  triangle tri;
+  FIX_UNUSED(one, two, i, j);
+}
 
-  tri.a = std::make_pair (i, j);
-
-
-  FIX_UNUSED (xy);
-  return tri;
+triangle
+grid::which_triangle (point xy, triangle one, triangle two)
+{
+  FIX_UNUSED (one, two, xy);
+  return one;
 }
 
 double
