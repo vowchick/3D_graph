@@ -20,6 +20,7 @@ struct thread_info;
 struct builder_solver_data;
 struct ranges;
 struct triangle;
+struct Trapeze;
 
 struct ranges
 {
@@ -97,6 +98,21 @@ struct triangle
   std::pair <point, int> a;
   std::pair <point, int> b;
   std::pair <point, int> c;
+};
+
+struct Trapeze
+{
+  point A;
+  point B;
+  point C;
+  point D;
+  Trapeze (point A_, point B_, point C_, point D_)
+  {
+    A = A_;
+    B = B_;
+    C = C_;
+    D = D_;
+  }
 };
 
 struct us

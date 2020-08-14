@@ -77,7 +77,7 @@ grid::fill_u2s ()
     u.Ada2 = ultimate_scalar_counter (J.Ada, 1, 0, 0, 0, 0, 1);
 }
 double
-grid::get_value (std::vector <double> f, double x, double y, int trapeze_num, int odd)
+grid::get_value (std::vector <double> &f, double x, double y, int trapeze_num, int odd)
 {
   //needs to be finished
   point A, B, C, D;
@@ -115,16 +115,61 @@ grid::get_value (std::vector <double> f, double x, double y, int trapeze_num, in
      abort ();
 
   triangle one, two;
-  fill_triangles (one, two, i, j);
+  Trapeze trap (A, B, C, D);
+  fill_triangles (one, two, i, j, trapeze_num, trap);
   triangle tri = which_triangle (xy, one, two);
 
   return interpolate (f, tri, xy);
 }
 
 void
-grid::fill_triangles (triangle &one, triangle &two, int i, int j)
+grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_num, Trapeze &tr)
 {
-  FIX_UNUSED(one, two, i, j);
+  one.a.second = two.a.second = get_k (i, j, trapeze_num, n);
+
+  point moveW, moveSW, moveS;
+  if (i + j <= n)
+    {
+      point moveAB (tr.B.x - tr.A.x, tr.B.y - tr.A.y),
+            moveAD (tr.D.x - tr.A.x, tr.D.y - tr.A.y);
+
+      one.a.first.x = tr.A.x + i * moveAB.x / n;
+      one.a.first.y = tr.A.y + i * moveAB.y / n;
+
+      one.a.first.x += j * moveAD.x / n;
+      one.a.first.y += j * moveAD.y / n;
+
+      moveW.x = moveAB.x;
+      moveW.y = moveAB.y;
+
+      moveSW.x = tr.D.x - tr.B.x;
+      moveSW.y = tr.D.y - tr.B.y;
+
+      moveS.x = -moveAD.x;
+      moveS.y = -moveAD.y;
+}
+  else
+    {
+      point moveCB (tr.B.x - tr.C.x, tr.B.y - tr.C.y),
+            moveDC (tr.C.x - tr.D.x, tr.C.y - tr.D.y);
+
+      one.a.first.x = tr.D.x + i * moveDC.x / n;
+      one.a.first.y = tr.D.y + i * moveDC.y / n;
+
+      one.a.first.x += (n - 1 - j) * moveCB.x / n;
+      one.a.first.y += (n - 1 - j) * moveCB.y / n;
+
+      moveW.x = moveDC.x;
+      moveW.y = moveDC.y;
+
+      moveSW.x = tr.D.x - tr.B.x;
+      moveSW.y = tr.D.y - tr.B.y;
+
+      moveS.x = moveCB.x;
+      moveS.y = moveCB.y;
+    }
+  two.a.first.x = one.a.first.x;
+  two.a.first.y = one.a.first.y;
 }
 
 triangle
@@ -135,7 +180,7 @@ grid::which_triangle (point xy, triangle one, triangle two)
 }
 
 double
-grid::interpolate (std::vector<double> f, triangle tri, point xy)
+grid::interpolate (std::vector<double> &f, triangle tri, point xy)
 {
 
   //needs to be finished
