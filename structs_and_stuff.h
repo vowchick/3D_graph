@@ -98,6 +98,8 @@ struct triangle
   std::pair <point, int> a;
   std::pair <point, int> b;
   std::pair <point, int> c;
+  bool filled = true;
+  bool singular = false;
 };
 
 struct Trapeze

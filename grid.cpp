@@ -125,8 +125,10 @@ grid::get_value (std::vector <double> &f, double x, double y, int trapeze_num, i
 void
 grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_num, Trapeze &tr)
 {
+  //needs to be thouroughly checked. but probably works
   one.a.second = two.a.second = get_k (i, j, trapeze_num, n);
 
+  int n = this->n - 1;
   point moveW, moveSW, moveS;
   if (i + j <= n)
     {
@@ -142,8 +144,8 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       moveW.x = moveAB.x;
       moveW.y = moveAB.y;
 
-      moveSW.x = tr.D.x - tr.B.x;
-      moveSW.y = tr.D.y - tr.B.y;
+      moveSW.x = tr.B.x - tr.D.x;
+      moveSW.y = tr.B.y - tr.D.y;
 
       moveS.x = -moveAD.x;
       moveS.y = -moveAD.y;
@@ -162,14 +164,68 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       moveW.x = moveDC.x;
       moveW.y = moveDC.y;
 
-      moveSW.x = tr.D.x - tr.B.x;
-      moveSW.y = tr.D.y - tr.B.y;
+      moveSW.x = tr.B.x - tr.D.x;
+      moveSW.y = tr.B.y - tr.D.y;
 
       moveS.x = moveCB.x;
       moveS.y = moveCB.y;
     }
   two.a.first.x = one.a.first.x;
   two.a.first.y = one.a.first.y;
+
+  if (j == 0)
+    {
+      one.filled = true;
+      two.filled = false;
+
+      one.singular = true;
+
+      one.b.first.x = one.a.first.x + moveW.x / n;
+      one.b.first.y = one.a.first.y + moveW.y / n;
+
+      one.c.first.x = one.b.first.x;
+      one.c.first.y = one.b.first.y;
+
+      if (i < n - 2)
+        one.b.second = one.c.second = get_k (i + 1, 0, trapeze_num, n);
+      else
+        {
+          int next_trapeze = (trapeze_num + 1) % 4;
+          one.b.second = one.c.second = get_k (0, 0, next_trapeze, n);
+        }
+      return;
+    }
+  else
+    {
+      one.filled = two.filled = true;
+
+      one.b.first.x = one.a.first.x + moveW.x / n;
+      one.b.first.y = one.a.first.y + moveW.y / n;
+
+      one.c.first.x = one.a.first.x + moveSW.x / n;
+      one.c.first.y = one.a.first.y + moveSW.y / n;
+
+      two.b.first.x = one.a.first.x + moveSW.x / n;
+      two.b.first.y = one.a.first.y + moveSW.y / n;
+
+      two.c.first.x = one.a.first.x + moveS.x / n;
+      two.c.first.y = one.a.first.y + moveS.y / n;
+
+      if (i < n - 2)
+        {
+          one.b.second = get_k (i + 1, j, trapeze_num, n);
+          one.c.second  = two.b.second = get_k (i + 1, j - 1, trapeze_num, n);
+        }
+      else
+        {
+          int next_trapeze = (trapeze_num + 1) % 4;
+          one.b.second = get_k (0, j, next_trapeze, n);
+          one.c.second = two.b.second = get_k (0, j - 1, next_trapeze, n);
+        }
+      two.c.second = get_k (i, j - 1, trapeze_num, n);
+      return;
+    }
+  abort ();
 }
 
 triangle
