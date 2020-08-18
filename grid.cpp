@@ -231,7 +231,22 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
 triangle
 grid::which_triangle (point xy, triangle one, triangle two)
 {
-  FIX_UNUSED (one, two, xy);
+  //probably works, isn't that hard
+  if (!one.filled && two.filled)
+    return two;
+  if (!two.filled && one.filled)
+    return one;
+
+  if (!two.filled && ! one.filled)
+    abort ();
+
+  if (is_in_triangle (xy, one.a.first, one.b.first, one.c.first))
+    return one;
+
+  if (is_in_triangle (xy, two.a.first, two.b.first, two.c.first))
+    return two;
+
+  abort ();
   return one;
 }
 
@@ -239,9 +254,37 @@ double
 grid::interpolate (std::vector<double> &f, triangle tri, point xy)
 {
 
-  //needs to be finished
-  FIX_UNUSED (f, tri, xy);
-  return 0;
+  if (tri.singular)
+    {
+      double len_axy, len_ab;
+      len_axy = sqrt ((xy.x - tri.a.first.x) * (xy.x - tri.a.first.x) +
+                      (xy.y - tri.a.first.x) * (xy.y - tri.a.first.y));
+      len_ab = sqrt ((tri.b.first.x - tri.a.first.x) * (tri.b.first.x - tri.a.first.x) +
+                     (tri.b.first.y - tri.a.first.y) * (tri.b.first.y - tri.a.first.y));
+      return f[tri.a.second] + len_axy / len_ab * (f[tri.b.second] - f[tri.a.second]);
+    }
+
+  double a1 = tri.a.first.x, a2 = tri.a.first.y,
+         b1 = tri.b.first.x, b2 = tri.b.first.y,
+         c1 = tri.c.first.x, c2 = tri.c.first.y;
+
+  double fa = f[tri.a.second], fb = f[tri.b.second], fc = f[tri.c.second];
+
+  double div = a1 * b2 + a2 * c1 + b1 * c2 - b2 * c1 - a1 * c2 - a2 * b1;
+
+  double a = 0., b = 0., c = 0.;
+
+  a = fa * b2 + a2 * fc + fb * c2 - fc * b2 - fa * c2 - fb * a2;
+  a /= div;
+
+  b = a1 * fb + fa * c1 + fc * b1 - fb * c1 - fa * b1 - fc * a1;
+  b /= div;
+
+  c = a1 * b2 * fc + a2 * c1 * fb + b1 * c2 * fa - c1 * b2 * fa - a1 * c2 * fb - a2 * b1 * fc;
+  c /= div;
+
+
+  return a * xy.x;
 }
 
 int
