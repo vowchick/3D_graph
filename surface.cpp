@@ -48,14 +48,16 @@ surface::set_approx (std::vector<double> approx)
 void
 surface::fill_f ()
 {
+  //probably works
   int n = gr->get_n ();
   int diag_lenght = 4 * n * (n - 1);
   given_func.resize (diag_lenght);
-  for (int i = 0; i < diag_lenght; i++)
+  for (int k = 0; k < diag_lenght; k++)
     {
-      given_func[i] = 1.;
+      int trapeze_num, i, j;
+      get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+      given_func [k] = gr->get_f_value_by_ijtr (f, i, j, trapeze_num, n);
     }
-  //needs to be finished
 }
 
 double
