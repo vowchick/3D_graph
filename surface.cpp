@@ -51,6 +51,10 @@ surface::fill_f ()
   int n = gr->get_n ();
   int diag_lenght = 4 * n * (n - 1);
   given_func.resize (diag_lenght);
+  for (int i = 0; i < diag_lenght; i++)
+    {
+      given_func[i] = 1.;
+    }
   //needs to be finished
 }
 

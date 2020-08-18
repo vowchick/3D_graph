@@ -284,7 +284,7 @@ grid::interpolate (std::vector<double> &f, triangle tri, point xy)
   c /= div;
 
 
-  return a * xy.x;
+  return a * xy.x + b * xy.y + c;
 }
 
 int
