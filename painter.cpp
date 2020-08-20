@@ -13,13 +13,34 @@ painter::~painter ()
 
 void painter::draw_surface ()
 {
-  grid *gr = surf->get_grid ();
-  int n = gr->get_n ();
-  int diag_lenght = 4 * n * (n - 1);
-  FIX_UNUSED (diag_lenght);
-  double ans = surf->get_value (-1, -1, 0, 0);
-  FIX_UNUSED (ans);
   //needs to be finished
+  grid *gr = surf->get_grid ();
+  int size = PAINT_SIZE;
+  FIX_UNUSED (size, gr);
+  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+  for (int k = 0; k < 4; k++)
+    {
+      point A, B, C, D;
+      gr->fill_points (A, B, C ,D, k);
+
+      point xy(A);
+      FIX_UNUSED (xy);
+      for (int i = 0; i < size; i++)
+        {
+          for (int j = 0; j < size - i - 1; j++)
+            {
+
+            }
+        }
+    }
+
+  glBegin(GL_TRIANGLES);
+  qglColor (Qt::darkMagenta);
+      glVertex3d(0, 0, 1);
+      glVertex3d(0, 1, 0);
+      glVertex3d(1, 0, 0);
+  glEnd();
 }
 
 QSize
@@ -125,18 +146,14 @@ painter::draw_axes ()
   glLineWidth (3.0);
 
 
-  qglColor (Qt::green);
+  qglColor (Qt::black);
   glBegin (GL_LINES);
   glVertex3d ( 20.0,  0.0,  0.0);
   glVertex3d (-20.0,  0.0,  0.0);
-  glEnd ();
-  qglColor (Qt::yellow);
-  glBegin (GL_LINES);
-  glVertex3d (0.0,   20.0,  0.0);
+
+  glVertex3d (0.0,  20.0,  0.0);
   glVertex3d (0.0, -20.0,  0.0);
-  glEnd ();
-  qglColor (Qt::blue);
-  glBegin (GL_LINES);
+
   glVertex3d ( 0.0,  0.0,  20.0);
   glVertex3d ( 0.0,  0.0, -20.0);
   glEnd ();
