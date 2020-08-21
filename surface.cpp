@@ -63,7 +63,7 @@ surface::fill_f ()
 void
 surface::draw ()
 {
-  int size = PAINT_SIZE;
+  int size = PAINT_SIZE, size_ = size - 1;
   FIX_UNUSED (size, gr);
   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
@@ -75,12 +75,12 @@ surface::draw ()
       point moveAB (B.x - A.x, B.y - A.y),
             moveAD (D.x - A.x, D.y - A.y);
       point xy(A);
-      for (int i = 0; i < size; i++)
+      for (int i = 0; i < size - 1; i++)
         {
-          for (int j = 0; j < size - i - 1; j++)
+          for (int j = 0; j < size - i; j++)
             {
-              xy.x = A.x + j * moveAD.x / size + i * moveAB.x / size;
-              xy.y = A.y + j * moveAD.y / size + i * moveAB.y / size;
+              xy.x = A.x + j * moveAD.x / size_ + i * moveAB.x / size_;
+              xy.y = A.y + j * moveAD.y / size_ + i * moveAB.y / size_;
               double val = gr->get_value (f_coeffs, xy.x, xy.y, k, 0);
               FIX_UNUSED (val);
             }
