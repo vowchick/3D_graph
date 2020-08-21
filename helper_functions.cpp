@@ -26,6 +26,10 @@ bool is_in_triangle (point pt, point a, point b, point c)
     d2 = which_side (pt, b, c);
     d3 = which_side (pt, c, a);
 
+    if (fabs (d1) < 1e-16 ||
+        fabs (d2) < 1e-16 ||
+        fabs (d3) < 1e-16)
+      return true;
     neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
     pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
 

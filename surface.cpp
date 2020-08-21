@@ -60,6 +60,39 @@ surface::fill_f ()
     }
 }
 
+void
+surface::draw ()
+{
+  int size = PAINT_SIZE;
+  FIX_UNUSED (size, gr);
+  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+  for (int k = 0; k < 4; k++)
+    {
+      point A, B, C, D;
+      gr->fill_points (A, B, C ,D, k);
+
+      point moveAB (B.x - A.x, B.y - A.y),
+            moveAD (D.x - A.x, D.y - A.y);
+      point xy(A);
+      for (int i = 0; i < size; i++)
+        {
+          for (int j = 0; j < size - i - 1; j++)
+            {
+              xy.x = A.x + j * moveAD.x / size + i * moveAB.x / size;
+              xy.y = A.y + j * moveAD.y / size + i * moveAB.y / size;
+              double val = gr->get_value (f_coeffs, xy.x, xy.y, k, 0);
+              FIX_UNUSED (val);
+            }
+        }
+    }
+
+  glBegin(GL_TRIANGLES);
+      glVertex3d(0, 0, 1);
+      glVertex3d(0, 1, 0);
+      glVertex3d(1, 0, 0);
+  glEnd();
+}
 double
 surface::get_value (double x, double y, int trapeze_num, int odd)
 {

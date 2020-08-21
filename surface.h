@@ -1,7 +1,11 @@
 #ifndef SURFACE_H
 #define SURFACE_H
 
+#include <QObject>
+#include <QWidget>
+#include <QGLWidget>
 #include "grid.h"
+
 class surface
 {
 public:
@@ -16,6 +20,7 @@ public:
   void update (grid *gr_);
   void change_state ();
   double get_value (double x, double y, int trapeze_num, int odd);
+  void draw ();
 
 private:
   void find_ranges ();

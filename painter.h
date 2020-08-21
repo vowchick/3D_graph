@@ -1,9 +1,6 @@
 #ifndef PAINTER_H
 #define PAINTER_H
 
-#include <QObject>
-#include <QWidget>
-#include <QGLWidget>
 #include "surface.h"
 #include "QMouseEvent"
 

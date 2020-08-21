@@ -101,14 +101,16 @@ grid::get_value (std::vector <double> &f, double x, double y, int trapeze_num, i
   else
     {
       point a = A, b = B, d = D;
-      point moveAD (D.x - A.x, D.y - A.y),
+      point moveAB (B.x - A.x, B.y - A.y),
             moveDB (B.x - D.x, B.y - D.y);
-      i = find_index (a, d, moveAD, moveDB, xy, d);
+      i = find_index (a, d, moveAB, moveDB, xy, d);
 
       b = B;
-      point moveDA (A.x - D.x, A.y - D.y),
-            moveBA (A.x - B.x, A.y - B.y);
-      j = n - i - 1 - find_index (d, b, moveDA, moveBA, xy, b);
+      point moveDA (A.x - D.x, A.y - D.y);
+      point d_ (d);
+      d_.x += moveAB.x / n;
+      d_.y += moveAB.y / n;
+      j = n - i - 1 - find_index (d, d, moveDA, moveDB, xy, d_);
 
     }
   if (i >= n - 1 || j > n - 1)

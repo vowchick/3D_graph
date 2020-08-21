@@ -13,34 +13,8 @@ painter::~painter ()
 
 void painter::draw_surface ()
 {
-  //needs to be finished
-  grid *gr = surf->get_grid ();
-  int size = PAINT_SIZE;
-  FIX_UNUSED (size, gr);
-  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-
-  for (int k = 0; k < 4; k++)
-    {
-      point A, B, C, D;
-      gr->fill_points (A, B, C ,D, k);
-
-      point xy(A);
-      FIX_UNUSED (xy);
-      for (int i = 0; i < size; i++)
-        {
-          for (int j = 0; j < size - i - 1; j++)
-            {
-
-            }
-        }
-    }
-
-  glBegin(GL_TRIANGLES);
   qglColor (Qt::darkMagenta);
-      glVertex3d(0, 0, 1);
-      glVertex3d(0, 1, 0);
-      glVertex3d(1, 0, 0);
-  glEnd();
+  surf->draw ();
 }
 
 QSize
