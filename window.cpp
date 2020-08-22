@@ -236,6 +236,7 @@ void
 Window::set_f ()
 {
   drawer->set_f (f);
+
 }
 void
 Window::erase ()

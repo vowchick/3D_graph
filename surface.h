@@ -21,6 +21,7 @@ public:
   void change_state ();
   double get_value (double x, double y, int trapeze_num, int odd);
   void draw ();
+  void update_f_coeffs ();
 
 private:
   void find_ranges ();

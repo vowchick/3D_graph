@@ -32,6 +32,25 @@ surface::update (grid *gr)
   this->gr = gr;
   int n = gr->get_n ();
   f_coeffs.resize (4 * n * (n - 1));
+
+}
+void
+surface::update_f_coeffs ()
+{
+  switch (st)
+    {
+    case given_function:
+      fill_f ();
+      f_coeffs = given_func;
+      break;
+    case approximation:
+      f_coeffs = approx;
+      break;
+    case error:
+      fill_f ();
+      set_error ();
+      break;
+    }
 }
 void
 surface::set_approx (std::vector<double> approx)
@@ -70,7 +89,7 @@ surface::draw ()
   for (int k = 0; k < 4; k++)
     {
       point A, B, C, D;
-      gr->fill_points (A, B, C ,D, k);
+      gr->fill_points (A, B, C, D, k);
 
       point moveAB (B.x - A.x, B.y - A.y),
             moveAD (D.x - A.x, D.y - A.y);
@@ -117,6 +136,7 @@ void
 surface::set_f(std::function <double (double, double)> f)
 {
   this->f = f;
+  update_f_coeffs ();
 }
 void
 surface::change_state ()

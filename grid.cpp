@@ -320,6 +320,8 @@ double
 grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n)
 {
 
+  int n_ = n - 1;
+
   point A, B, C, D;
   point desired;
 
@@ -327,19 +329,19 @@ grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int 
 
   if (i + j <= n)
     {
-      desired.x = A.x + i * (B.x - A.x) / n;
-      desired.y = A.y + i * (B.y - A.y) / n;
+      desired.x = A.x + i * (B.x - A.x) / n_;
+      desired.y = A.y + i * (B.y - A.y) / n_;
 
-      desired.x += (j * (D.x - A.x) / n);
-      desired.y += (j * (D.y - A.y) / n);
+      desired.x += (j * (D.x - A.x) / n_);
+      desired.y += (j * (D.y - A.y) / n_);
     }
   else
     {
-      desired.x = D.x + i * (B.x - D.x) / n;
-      desired.y = D.y + i * (B.y - D.y) / n;
+      point moveDC (C.x - D.x, C.y - D.y),
+            moveCB (B.x - C.x, B.y - C.y);
 
-      desired.x += (j + i - n) * (C.x - D.x) / n;
-      desired.y += (j + i - n) * (C.y - D.y) / n;
+      desired.x = D.x + i * moveDC.x / n_ + (n - 1 - j) * moveCB.x / n_;
+      desired.y = D.y + i * moveDC.x / n_ + (n - 1 - j) * moveCB.y / n_;
     }
 
 
