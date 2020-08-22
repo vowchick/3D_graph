@@ -74,16 +74,31 @@ surface::draw ()
 
       point moveAB (B.x - A.x, B.y - A.y),
             moveAD (D.x - A.x, D.y - A.y);
-      point xy(A);
-      for (int i = 0; i < size - 1; i++)
+      point xy(A), second, third;
+      for (int i = 0; i < size - 2; i++)
         {
-          for (int j = 0; j < size - i; j++)
+          for (int j = 0; j < size - i - 1; j++)
             {
               xy.x = A.x + j * moveAD.x / size_ + i * moveAB.x / size_;
               xy.y = A.y + j * moveAD.y / size_ + i * moveAB.y / size_;
-              double val = gr->get_value (f_coeffs, xy.x, xy.y, k, 0);
-              FIX_UNUSED (val);
-            }
+
+              second.x = xy.x + moveAB.x / size_;
+              second.y = xy.y + moveAB.y / size_;
+
+              third.x = xy.x + moveAD.x / size_;
+              third.y = xy.y + moveAD.y / size_;
+
+              double val1, val2, val3;
+              val1 = gr->get_value (f_coeffs, xy.x, xy.y, k, 0);
+              val2 = gr->get_value (f_coeffs, second.x, second.y, k, 0);
+              val3 = gr->get_value (f_coeffs, third.x, third.y, k, 0);
+
+              glBegin(GL_TRIANGLES);
+                  glVertex3d(xy.x, xy.y, val1);
+                  glVertex3d(second.x, second.y, val2);
+                  glVertex3d(third.x, third.y, val3);
+              glEnd();
+            }  
         }
     }
 
