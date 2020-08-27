@@ -90,9 +90,9 @@ grid::get_value (std::vector <double> &f, double x, double y, int trapeze_num, i
       point moveDC (C.x - D.x, C.y - D.y),
             moveDB (B.x - D.x, B.y - D.y),
             moveCB (B.x - C.x, B.y - C.y);
-      point d_ = d;
-      d_.x += moveCB.x / n;
-      d_.y += moveCB.y / n;
+      point d_ (d);
+      d_.x += moveCB.x;
+      d_.y += moveCB.y;
       i = find_index (d, d, moveDC, moveDB, xy, d_);
 
       d = D;

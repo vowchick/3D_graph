@@ -151,22 +151,22 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
 void
 surface::draw_top_triangle (Trapeze trap, int k)
 {
-  point A = trap.A, B = trap.B, C = trap.C, D = trap.D;
+  point B = trap.B, C = trap.C, D = trap.D;
   int size = PAINT_SIZE, size_ = size - 1;
 
-  point moveAB (B.x - A.x, B.y - A.y),
+  point moveDC (C.x - D.x, C.y - D.y),
         moveCB (B.x - C.x, B.y - C.y);
-  point xy(A), second, third;
+  point xy(D), second, third;
 
   for (int i = 0; i < size - 2; i++)
     {
       for (int j = 0; j < i + 1; j++)
         {
-          xy.x = D.x + i * moveAB.x / size_ + j * moveCB.x / size_;
-          xy.y = D.y + i * moveAB.y / size_ + j * moveCB.y / size_;
+          xy.x = D.x + i * moveDC.x / size_ + j * moveCB.x / size_;
+          xy.y = D.y + i * moveDC.y / size_ + j * moveCB.y / size_;
 
-          second.x = xy.x + moveAB.x / size_;
-          second.y = xy.y + moveAB.y / size_;
+          second.x = xy.x + moveDC.x / size_;
+          second.y = xy.y + moveDC.y / size_;
 
           third.x = second.x + moveCB.x / size_;
           third.y = second.y + moveCB.y / size_;
