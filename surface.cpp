@@ -155,7 +155,8 @@ surface::draw_top_triangle (Trapeze trap, int k)
   int size = PAINT_SIZE, size_ = size - 1;
 
   point moveDC (C.x - D.x, C.y - D.y),
-        moveCB (B.x - C.x, B.y - C.y);
+        moveCB (B.x - C.x, B.y - C.y),
+        moveDB (B.x - D.x, B.y - D.y);
   point xy(D), second, third;
 
   for (int i = 0; i < size - 2; i++)
@@ -168,8 +169,21 @@ surface::draw_top_triangle (Trapeze trap, int k)
           second.x = xy.x + moveDC.x / size_;
           second.y = xy.y + moveDC.y / size_;
 
-          third.x = second.x + moveCB.x / size_;
-          third.y = second.y + moveCB.y / size_;
+          third.x = xy.x + moveDB.x / size_;
+          third.y = xy.y + moveDB.y / size_;
+
+          draw_triangle (xy, second, third, k, k, k, 1);
+        }
+      for (int j = 0; j < i; j++)
+        {
+          xy.x = D.x + i * moveDC.x / size_ + j * moveCB.x / size_;
+          xy.y = D.y + i * moveDC.y / size_ + j * moveCB.y / size_;
+
+          second.x = xy.x + moveCB.x / size_;
+          second.y = xy.y + moveCB.y / size_;
+
+          third.x = second.x + moveDC.x / size_;
+          third.y = second.y + moveDC.y / size_;
 
           draw_triangle (xy, second, third, k, k, k, 1);
         }

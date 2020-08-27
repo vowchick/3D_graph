@@ -131,7 +131,7 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
 
   int n = this->n - 1;
   point moveW, moveSW, moveS;
-  if (i + j <= n)
+  if (i + j <= this->n)
     {
       point moveAB (tr.B.x - tr.A.x, tr.B.y - tr.A.y),
             moveAD (tr.D.x - tr.A.x, tr.D.y - tr.A.y);
@@ -159,8 +159,8 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       one.a.first.x = tr.D.x + i * moveDC.x / n;
       one.a.first.y = tr.D.y + i * moveDC.y / n;
 
-      one.a.first.x += (n - 1 - j) * moveCB.x / n;
-      one.a.first.y += (n - 1 - j) * moveCB.y / n;
+      one.a.first.x += (this->n - 1 - j) * moveCB.x / n;
+      one.a.first.y += (this->n - 1 - j) * moveCB.y / n;
 
       moveW.x = moveDC.x;
       moveW.y = moveDC.y;
@@ -187,12 +187,12 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       one.c.first.x = one.b.first.x;
       one.c.first.y = one.b.first.y;
 
-      if (i < n - 2)
-        one.b.second = one.c.second = get_k (i + 1, 0, trapeze_num, n);
+      if (i < this->n - 2)
+        one.b.second = one.c.second = get_k (i + 1, 0, trapeze_num, this->n);
       else
         {
           int next_trapeze = (trapeze_num + 1) % 4;
-          one.b.second = one.c.second = get_k (0, 0, next_trapeze, n);
+          one.b.second = one.c.second = get_k (0, 0, next_trapeze, this->n);
         }
       return;
     }
@@ -212,18 +212,18 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       two.c.first.x = one.a.first.x + moveS.x / n;
       two.c.first.y = one.a.first.y + moveS.y / n;
 
-      if (i < n - 2)
+      if (i < this->n - 2)
         {
-          one.b.second = get_k (i + 1, j, trapeze_num, n);
-          one.c.second  = two.b.second = get_k (i + 1, j - 1, trapeze_num, n);
+          one.b.second = get_k (i + 1, j, trapeze_num, this->n);
+          one.c.second  = two.b.second = get_k (i + 1, j - 1, trapeze_num, this->n);
         }
       else
         {
           int next_trapeze = (trapeze_num + 1) % 4;
-          one.b.second = get_k (0, j, next_trapeze, n);
-          one.c.second = two.b.second = get_k (0, j - 1, next_trapeze, n);
+          one.b.second = get_k (0, j, next_trapeze, this->n);
+          one.c.second = two.b.second = get_k (0, j - 1, next_trapeze, this->n);
         }
-      two.c.second = get_k (i, j - 1, trapeze_num, n);
+      two.c.second = get_k (i, j - 1, trapeze_num, this->n);
       return;
     }
   abort ();
