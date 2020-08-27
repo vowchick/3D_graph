@@ -131,7 +131,7 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
 
   int n = this->n - 1;
   point moveW, moveSW, moveS;
-  if (i + j <= this->n)
+  if (i + j < this->n)
     {
       point moveAB (tr.B.x - tr.A.x, tr.B.y - tr.A.y),
             moveAD (tr.D.x - tr.A.x, tr.D.y - tr.A.y);
@@ -142,8 +142,17 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       one.a.first.x += j * moveAD.x / n;
       one.a.first.y += j * moveAD.y / n;
 
-      moveW.x = moveAB.x;
-      moveW.y = moveAB.y;
+      if (i + j < n)
+        {
+          moveW.x = moveAB.x;
+          moveW.y = moveAB.y;
+        }
+      else
+        {
+          point moveDC (tr.C.x - tr.D.x, tr.C.y - tr.D.y);
+          moveW.x = moveDC.x;
+          moveW.y = moveDC.y;
+        }
 
       moveSW.x = tr.B.x - tr.D.x;
       moveSW.y = tr.B.y - tr.D.y;
@@ -159,8 +168,8 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       one.a.first.x = tr.D.x + i * moveDC.x / n;
       one.a.first.y = tr.D.y + i * moveDC.y / n;
 
-      one.a.first.x += (this->n - 1 - j) * moveCB.x / n;
-      one.a.first.y += (this->n - 1 - j) * moveCB.y / n;
+      one.a.first.x += (n - j) * moveCB.x / n;
+      one.a.first.y += (n - j) * moveCB.y / n;
 
       moveW.x = moveDC.x;
       moveW.y = moveDC.y;
@@ -327,7 +336,7 @@ grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int 
 
   fill_points (A, B, C, D, trapeze);
 
-  if (i + j <= n)
+  if (i + j < n)
     {
       desired.x = A.x + i * (B.x - A.x) / n_;
       desired.y = A.y + i * (B.y - A.y) / n_;

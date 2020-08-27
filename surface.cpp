@@ -33,7 +33,7 @@ surface::update (grid *gr)
   int n = gr->get_n ();
   f_coeffs.resize (4 * n * (n - 1));
   update_f_coeffs ();
-
+  find_ranges ();
 }
 void
 surface::update_f_coeffs ()
@@ -92,7 +92,7 @@ surface::draw ()
 
       Trapeze trap (A, B, C, D);
       draw_bottom_triangle (trap, k);
-      draw_top_triangle (trap, k);
+      //draw_top_triangle (trap, k);
     }
 }
 

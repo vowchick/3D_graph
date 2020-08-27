@@ -13,7 +13,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
       {
         double tr1, tr2, tr21, tr22;
-        if (i + j < n)
+        if (i + j < n - 1)
           {
             tr1 = tr2 = u.get_u (0, trapeze_num);
             tr21 = u.get_u2 (0, trapeze_num);
@@ -21,7 +21,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
             for (int i = 0; i < 6; i++)
               a[i] = 2 * tr21;
           }
-        else if (i + j == n)
+        else if (i + j == n - 1)
           {
             tr1 = u.get_u (0, trapeze_num);
             tr2 = u.get_u (1, trapeze_num);
@@ -214,12 +214,12 @@ system_builder::fill_rhs_at (int k)
   if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
     {
       double tr1, tr2;
-      if (i + j < n)
+      if (i + j < n - 1)
         {
           tr1 = tr2 = J.get_J (0, trapeze_num);
 
         }
-      else if (i + j == n)
+      else if (i + j == n - 1)
         {
           tr1 = J.get_J (0, trapeze_num);
           tr2 = J.get_J (1, trapeze_num);
