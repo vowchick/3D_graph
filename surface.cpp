@@ -151,53 +151,29 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
 void
 surface::draw_top_triangle (Trapeze trap, int k)
 {
-  point A = trap.A, B = trap.B, D = trap.D;
+  point A = trap.A, B = trap.B, C = trap.C, D = trap.D;
   int size = PAINT_SIZE, size_ = size - 1;
 
   point moveAB (B.x - A.x, B.y - A.y),
-        moveAD (D.x - A.x, D.y - A.y);
+        moveCB (B.x - C.x, B.y - C.y);
   point xy(A), second, third;
+
   for (int i = 0; i < size - 2; i++)
     {
-      for (int j = 0; j < size - i - 1; j++)
+      for (int j = 0; j < i + 1; j++)
         {
-          xy.x = A.x + j * moveAD.x / size_ + i * moveAB.x / size_;
-          xy.y = A.y + j * moveAD.y / size_ + i * moveAB.y / size_;
+          xy.x = D.x + i * moveAB.x / size_ + j * moveCB.x / size_;
+          xy.y = D.y + i * moveAB.y / size_ + j * moveCB.y / size_;
 
           second.x = xy.x + moveAB.x / size_;
           second.y = xy.y + moveAB.y / size_;
 
-          third.x = xy.x + moveAD.x / size_;
-          third.y = xy.y + moveAD.y / size_;
+          third.x = second.x + moveCB.x / size_;
+          third.y = second.y + moveCB.y / size_;
 
-          draw_triangle (xy, second, third, k, k, k, 0);
-        }
-      point moveDB (B.x - D.x, B.y - D.y);
-      for (int j = 1; j < size - i - 1; j++)
-        {
-          xy.x = A.x + j * moveAD.x / size_ + i * moveAB.x / size_;
-          xy.y = A.y + j * moveAD.y / size_ + i * moveAB.y / size_;
-
-          second.x = xy.x + moveDB.x / size_;
-          second.y = xy.y + moveDB.y / size_;
-
-          third.x = second.x + moveAD.x / size_;
-          third.y = second.y + moveAD.y / size_;
-
-          draw_triangle (xy, second, third, k, k, k, 0);
+          draw_triangle (xy, second, third, k, k, k, 1);
         }
     }
-
-  xy.x = A.x + (size - 2) * moveAB.x / size_;
-  xy.y = A.y + (size - 2) * moveAB.y / size_;
-
-  second.x = xy.x + moveAB.x / size_;
-  second.y = xy.y + moveAB.y / size_;
-
-  third.x = xy.x + moveAD.x / size_;
-  third.y = xy.y + moveAD.y / size_;
-
-  draw_triangle (xy, second, third, k, (k + 1) % 4, k, 0);
 }
 
 void
