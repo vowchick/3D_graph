@@ -27,6 +27,9 @@ private:
   void find_ranges ();
   void fill_f ();
   void set_error ();
+  void draw_triangle (point xy, point second, point third, int k1, int k2, int k3, int odd);
+  void draw_bottom_triangle (Trapeze trap, int k);
+  void draw_top_triangle (Trapeze trap, int k);
 
 private:
   grid *gr = nullptr;
