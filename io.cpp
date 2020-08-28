@@ -57,6 +57,14 @@ read_polygon_from_file (char *file_name,
             inp[it++] = std::stod (x);
           }
       }
+    for (int i = 0; i < 8; i++)
+      {
+        if (fabs (inp[i]) > 2)
+          {
+            printf ("Input is too big\n");
+            return -1;
+          }
+      }
     Polygon.A.x = inp[0];
     Polygon.A.y = inp[1];
     Polygon.B.x = inp[2];
