@@ -350,7 +350,7 @@ grid::find_index (point a, point b, point moveac, point movebc, point xy, point 
        f.y = b.y + movebc.y / n;
        i = 1;
        double cont = which_side (xy, e, f);
-       while (cont * start > 1e-16)
+       while (cont * start > 1e-15)
          {
            i++;
            e.x = a.x + i * moveac.x / n;
