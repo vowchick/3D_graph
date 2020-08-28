@@ -92,7 +92,7 @@ surface::draw ()
 
       Trapeze trap (A, B, C, D);
       draw_bottom_triangle (trap, k);
-      //draw_top_triangle (trap, k);
+      draw_top_triangle (trap, k);
     }
 }
 

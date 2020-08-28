@@ -224,7 +224,7 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
       if (i < this->n - 2)
         {
           one.b.second = get_k (i + 1, j, trapeze_num, this->n);
-          one.c.second  = two.b.second = get_k (i + 1, j - 1, trapeze_num, this->n);
+          one.c.second = two.b.second = get_k (i + 1, j - 1, trapeze_num, this->n);
         }
       else
         {
@@ -247,7 +247,7 @@ grid::which_triangle (point xy, triangle one, triangle two)
   if (!two.filled && one.filled)
     return one;
 
-  if (!two.filled && ! one.filled)
+  if (!two.filled && !one.filled)
     abort ();
 
   if (is_in_triangle (xy, one.a.first, one.b.first, one.c.first))
@@ -261,6 +261,36 @@ grid::which_triangle (point xy, triangle one, triangle two)
 }
 
 double
+grid::interpolate (std::vector<double> &f, triangle tri, point xy)
+{
+  double alpha1 = f[tri.a.second], alpha2 = f[tri.b.second],
+         alpha3 = f[tri.c.second];
+  double x1 = tri.a.first.x, y1 = tri.a.first.y,
+         x2 = tri.b.first.x, y2 = tri.b.first.y,
+         x3 = tri.c.first.x, y3 = tri.c.first.y;
+  double x = xy.x, y = xy.y;
+  auto psi1 = [&] (double x_, double y_)
+  {
+     return (x_ - x2) * (y3 - y2) - (y_ - y2) * (x3 - x2);
+
+  };
+  auto psi2 = [&] (double x_, double y_)
+  {
+      return (x_ - x1) * (y3 - y1) - (y_ - y1) * (x3 - x1);
+  };
+  auto psi3 = [&] (double x_, double y_)
+  {
+     return (x_ - x1) * (y2 - y1) - (y_ - y1) * (x2 - x1);
+  };
+
+  double phi1 = psi1 (x, y) / psi1 (x1, y1),
+         phi2 = psi2 (x, y) / psi2 (x2, y2),
+         phi3 = psi3 (x, y) / psi3 (x3, y3);
+
+  return alpha1 * phi1 + alpha2 * phi2 + alpha3 * phi3;
+}
+
+/*double
 grid::interpolate (std::vector<double> &f, triangle tri, point xy)
 {
 
@@ -293,9 +323,8 @@ grid::interpolate (std::vector<double> &f, triangle tri, point xy)
   c = a1 * b2 * fc + a2 * c1 * fb + b1 * c2 * fa - c1 * b2 * fa - a1 * c2 * fb - a2 * b1 * fc;
   c /= div;
 
-
   return a * xy.x + b * xy.y + c;
-}
+}*/
 
 int
 grid::find_index (point a, point b, point moveac, point movebc, point xy, point second_point_for_line)
