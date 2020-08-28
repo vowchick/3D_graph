@@ -79,7 +79,7 @@ Window::undouble_n ()
 {
   if (!calculating)
     {
-      if (n > 1)
+      if (n > 6)
         {
           n /= 2;
           calculating = true;

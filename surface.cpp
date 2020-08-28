@@ -118,7 +118,7 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
           third.x = xy.x + moveAD.x / size_;
           third.y = xy.y + moveAD.y / size_;
 
-          draw_triangle (xy, second, third, k, k, k, 0);
+          draw_triangle (xy, second, third, k, k, k, 0, 0, 0);
         }
       point moveDB (B.x - D.x, B.y - D.y);
       for (int j = 1; j < size - i - 1; j++)
@@ -132,7 +132,7 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
           third.x = second.x + moveAD.x / size_;
           third.y = second.y + moveAD.y / size_;
 
-          draw_triangle (xy, second, third, k, k, k, 0);
+          draw_triangle (xy, second, third, k, k, k, 0, 0, 0);
         }
     }
 
@@ -145,7 +145,7 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
   third.x = xy.x + moveAD.x / size_;
   third.y = xy.y + moveAD.y / size_;
 
-  draw_triangle (xy, second, third, k, (k + 1) % 4, k, 0);
+  draw_triangle (xy, second, third, k, (k + 1) % 4, k, 0, 0, 0);
 }
 
 void
@@ -172,7 +172,7 @@ surface::draw_top_triangle (Trapeze trap, int k)
           third.x = xy.x + moveDB.x / size_;
           third.y = xy.y + moveDB.y / size_;
 
-          draw_triangle (xy, second, third, k, k, k, 1);
+          draw_triangle (xy, second, third, k, k, k, 1, 1, 1);
         }
       for (int j = 0; j < i; j++)
         {
@@ -185,18 +185,46 @@ surface::draw_top_triangle (Trapeze trap, int k)
           third.x = second.x + moveDC.x / size_;
           third.y = second.y + moveDC.y / size_;
 
-          draw_triangle (xy, second, third, k, k, k, 1);
+          draw_triangle (xy, second, third, k, k, k, 1, 1, 1);
         }
+    }
+  int i = size - 2;
+  for (int j = 0; j < i + 1; j++)
+    {
+      xy.x = D.x + i * moveDC.x / size_ + j * moveCB.x / size_;
+      xy.y = D.y + i * moveDC.y / size_ + j * moveCB.y / size_;
+
+      second.x = xy.x + moveDC.x / size_;
+      second.y = xy.y + moveDC.y / size_;
+
+      third.x = xy.x + moveDB.x / size_;
+      third.y = xy.y + moveDB.y / size_;
+
+      draw_triangle (xy, second, third, k, (k + 1) % 4, (k + 1) % 4, 1, 0, 0);
+    }
+  for (int j = 0; j < i; j++)
+    {
+      xy.x = D.x + i * moveDC.x / size_ + j * moveCB.x / size_;
+      xy.y = D.y + i * moveDC.y / size_ + j * moveCB.y / size_;
+
+      second.x = xy.x + moveCB.x / size_;
+      second.y = xy.y + moveCB.y / size_;
+
+      third.x = second.x + moveDC.x / size_;
+      third.y = second.y + moveDC.y / size_;
+
+      draw_triangle (xy, second, third, k, k, (k + 1) % 4, 1, 1, 0);
     }
 }
 
 void
-surface::draw_triangle (point xy, point second, point third, int k1, int k2, int k3, int odd)
+surface::draw_triangle (point xy, point second, point third, int k1, int k2, int k3,
+                        int odd1, int odd2, int odd3)
 {
   double val1, val2, val3;
-  val1 = gr->get_value (f_coeffs, xy.x, xy.y, k1, odd);
-  val2 = gr->get_value (f_coeffs, second.x, second.y, k2, odd);
-  val3 = gr->get_value (f_coeffs, third.x, third.y, k3, odd);
+  val1 = gr->get_value (f_coeffs, xy.x, xy.y, k1, odd1);
+  val2 = gr->get_value (f_coeffs, second.x, second.y, k2, odd2);
+  val3 = gr->get_value (f_coeffs, third.x, third.y, k3, odd3);
 
   glBegin(GL_TRIANGLES);
       glVertex3d(xy.x, xy.y, val1);
