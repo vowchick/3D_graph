@@ -263,6 +263,16 @@ grid::which_triangle (point xy, triangle one, triangle two)
 double
 grid::interpolate (std::vector<double> &f, triangle tri, point xy)
 {
+  if (tri.singular)
+    {
+      double len_axy, len_ab;
+      len_axy = sqrt ((xy.x - tri.a.first.x) * (xy.x - tri.a.first.x) +
+                      (xy.y - tri.a.first.x) * (xy.y - tri.a.first.y));
+      len_ab = sqrt ((tri.b.first.x - tri.a.first.x) * (tri.b.first.x - tri.a.first.x) +
+                     (tri.b.first.y - tri.a.first.y) * (tri.b.first.y - tri.a.first.y));
+      return f[tri.a.second] + len_axy / len_ab * (f[tri.b.second] - f[tri.a.second]);
+    }
+
   double alpha1 = f[tri.a.second], alpha2 = f[tri.b.second],
          alpha3 = f[tri.c.second];
   double x1 = tri.a.first.x, y1 = tri.a.first.y,
@@ -379,7 +389,7 @@ grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int 
             moveCB (B.x - C.x, B.y - C.y);
 
       desired.x = D.x + i * moveDC.x / n_ + (n - 1 - j) * moveCB.x / n_;
-      desired.y = D.y + i * moveDC.x / n_ + (n - 1 - j) * moveCB.y / n_;
+      desired.y = D.y + i * moveDC.y / n_ + (n - 1 - j) * moveCB.y / n_;
     }
 
 
