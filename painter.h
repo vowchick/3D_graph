@@ -3,6 +3,7 @@
 
 #include "surface.h"
 #include "QMouseEvent"
+#define COEFF 1.1
 
 class painter : public QGLWidget
 {
@@ -28,11 +29,14 @@ protected:
   QSize SizeHint() const;
   void mouseMoveEvent(QMouseEvent *event);
   void mousePressEvent(QMouseEvent *event);
+  void wheelEvent(QWheelEvent* pe);
 
 private:
   void set_gl();
   void draw_axes();
   void draw_surface ();
+  void scale_inc ();
+  void scale_dec ();
 
 private:
   std::unique_ptr<surface> surf_ptr;

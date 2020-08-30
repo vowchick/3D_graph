@@ -23,6 +23,28 @@ painter::minimumSizeHint() const
     return QSize(500, 500);
 }
 
+void
+painter::wheelEvent(QWheelEvent* pe)
+{
+  if ((pe->delta()) > 0)
+    scale_inc ();
+  else if ((pe->delta()) < 0)
+    scale_dec ();
+  updateGL();
+}
+
+void
+painter::scale_inc()
+{
+  scale *= COEFF;
+}
+
+void
+painter::scale_dec()
+{
+  scale /= COEFF;
+}
+
 QSize
 painter::SizeHint() const
 {
