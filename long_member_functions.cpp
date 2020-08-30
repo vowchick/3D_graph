@@ -202,7 +202,7 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     abort ();
     return -1000;
 }
-double
+/*double
 system_builder::fill_rhs_at (int k)
 {
   int i, j, trapeze_num;
@@ -356,8 +356,8 @@ system_builder::fill_rhs_at (int k)
       return ans / 12.;
     }
   abort ();
-}
-/*double
+}*/
+double
 system_builder::fill_rhs_at (int k)
 {
     int i, j, trapeze_num, n2 = 2 * n - 1;
@@ -369,12 +369,12 @@ system_builder::fill_rhs_at (int k)
     if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
       {
         double tr1, tr2;
-        if (i + j < n)
+        if (i + j < n - 1)
           {
             tr1 = tr2 = J.get_J (0, trapeze_num);
 
           }
-        else if (i + j == n)
+        else if (i + j == n - 1)
           {
             tr1 = J.get_J (0, trapeze_num);
             tr2 = J.get_J (1, trapeze_num);
@@ -479,8 +479,8 @@ system_builder::fill_rhs_at (int k)
 
         ans = tr *
                (
-                 20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
-                 2  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
+                 10 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
+                 1  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
                  4 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 1, trapeze_num, n2) +
 
                  20 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 1, trapeze_num, n2) +
@@ -491,10 +491,10 @@ system_builder::fill_rhs_at (int k)
                  2  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 2, trapeze_num, n2) +
                  4 * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 1, trapeze_num, n2) +
 
-                 20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 0, trapeze_num, n2) +
-                 2  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 0, trapeze_num, n2) +
+                 10 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 0, trapeze_num, n2) +
+                 1  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 0, trapeze_num, n2) +
 
-                 36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
+                 18 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                );
         return ans / 192.;
       }
@@ -506,8 +506,8 @@ system_builder::fill_rhs_at (int k)
 
         ans = tr *
                 (
-                  20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
-                  2  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
+                  10 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
+                  1  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
                   4  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j - 1, trapeze_num, n2) +
 
                   20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j - 1, trapeze_num, n2) +
@@ -518,10 +518,10 @@ system_builder::fill_rhs_at (int k)
                   2  * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j - 2, trapeze_num, n2) +
                   4  * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j - 1, trapeze_num, n2) +
 
-                  20 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 0, trapeze_num, n2) +
-                  2  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 0, trapeze_num, n2) +
+                  10 * gr->get_f_value_by_ijtr (f, 2 * i - 1, 2 * j + 0, trapeze_num, n2) +
+                  1  * gr->get_f_value_by_ijtr (f, 2 * i - 2, 2 * j + 0, trapeze_num, n2) +
 
-                  36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
+                  18 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
         return ans / 192.;
       }
@@ -536,8 +536,8 @@ system_builder::fill_rhs_at (int k)
 
         ans = tr1 *
                (
-                 20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
-                 2  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
+                 10 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
+                 1  * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
                  4  * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 1, trapeze_num, n2)
                );
         ans += ((tr1 + tr2) / 2) *
@@ -557,12 +557,12 @@ system_builder::fill_rhs_at (int k)
         ans += tr3 *
                 (
                   20 * gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 1, trapeze_prev, n2) +
-                  2  * gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 0, trapeze_prev, n2) +
-                  4  * gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j + 0, trapeze_prev, n2)
+                  1  * gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 0, trapeze_prev, n2) +
+                  2  * gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j + 0, trapeze_prev, n2)
                 );
         ans += ((tr1 + tr2 + tr3) / 3) *
                 (
-                  36 * gr->get_f_value_by_ijtr (f, 0, 0, trapeze_num, n2)
+                  18 * gr->get_f_value_by_ijtr (f, 0, 0, trapeze_num, n2)
                 );
         return ans / 192.;
       }
@@ -577,8 +577,8 @@ system_builder::fill_rhs_at (int k)
 
         ans = tr1 *
                (
-                 20 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
-                 2 * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
+                 10 * gr->get_f_value_by_ijtr (f, 2 * i + 1, 2 * j + 0, trapeze_num, n2) +
+                 1 * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j + 0, trapeze_num, n2) +
                  4 * gr->get_f_value_by_ijtr (f, 2 * i + 2, 2 * j - 1, trapeze_num, n2)
                );
         ans += ((tr1 + tr2) / 2) *
@@ -598,16 +598,15 @@ system_builder::fill_rhs_at (int k)
         ans += tr3 *
                 (
                   20 * gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j - 1, trapeze_prev, n2) +
-                  2 *  gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 0, trapeze_prev, n2) +
-                  4 *  gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j + 0, trapeze_prev, n2)
+                  1 *  gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 0, trapeze_prev, n2) +
+                  2 *  gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j + 0, trapeze_prev, n2)
                 );
         ans += ((tr1 + tr2 + tr3) / 2) *
                 (
-                  36 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
+                  18 * gr->get_f_value_by_ijtr (f, 2 * i + 0, 2 * j + 0, trapeze_num, n2)
                 );
 
         return ans / 192.;
       }
     abort ();
 }
-*/
