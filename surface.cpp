@@ -266,6 +266,7 @@ surface::change_state ()
       set_error ();
       break;
     }
+  find_ranges ();
 }
 void
 surface::set_error ()
