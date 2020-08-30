@@ -14,6 +14,7 @@ public:
   void update_surface (grid *gr);
   void set_f (std::function<double (double, double)> f);
   void change_state ();
+  void update_surface_coeffs ();
 
 public slots:
   void setXRotation(int angle);

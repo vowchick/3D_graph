@@ -32,6 +32,11 @@ surface::update (grid *gr)
   this->gr = gr;
   int n = gr->get_n ();
   f_coeffs.resize (4 * n * (n - 1));
+}
+
+void
+surface::update_coeffs ()
+{
   update_f_coeffs ();
   find_ranges ();
 }

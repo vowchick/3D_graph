@@ -203,7 +203,7 @@ void
 Window::after_calculation ()
 {
   calculating = false;
-  update_surface ();
+  update_surface_coeffs ();
   drawer->updateGL();
 }
 
@@ -225,6 +225,11 @@ Window::update_surface ()
   drawer->update_surface (gr.get ());
 }
 
+void
+Window::update_surface_coeffs ()
+{
+  drawer->update_surface_coeffs ();
+}
 void
 Window::before_calculation ()
 {

@@ -28,6 +28,8 @@ void
 initialize (polygon *pol_, int n_,
             int p_, double eps_,
             int func_ind);
+
+void update_surface_coeffs ();
 void
 set_f ();
 void
