@@ -560,7 +560,7 @@ system_builder::fill_rhs_at (int k)
                   1  * gr->get_f_value_by_ijtr (f, n2 - 3, 2 * j + 0, trapeze_prev, n2) +
                   10  * gr->get_f_value_by_ijtr (f, n2 - 2, 2 * j + 0, trapeze_prev, n2)
                 );
-        ans += ((tr1 + tr2 + tr3) / 3) *
+        ans += ((tr1 + tr2 + tr3) / 3.) *
                 (
                   18 * gr->get_f_value_by_ijtr (f, 0, 0, trapeze_num, n2)
                 );
