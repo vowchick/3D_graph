@@ -203,6 +203,7 @@ void
 Window::after_calculation ()
 {
   calculating = false;
+  update_surface ();
   drawer->updateGL();
 }
 
@@ -236,7 +237,6 @@ void
 Window::set_f ()
 {
   drawer->set_f (f);
-
 }
 void
 Window::erase ()

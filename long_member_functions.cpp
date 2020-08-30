@@ -277,7 +277,7 @@ system_builder::fill_rhs_at (int k)
 
       ans = tr *
              (
-               10
+               6
              );
       return ans / 12.;
     }
@@ -289,7 +289,7 @@ system_builder::fill_rhs_at (int k)
 
       ans = tr *
               (
-                10
+                6
               );
       return ans / 12.;
     }
@@ -304,7 +304,7 @@ system_builder::fill_rhs_at (int k)
 
       ans = tr1 *
              (
-               1
+               1./2.
              );
       ans += ((tr1 + tr2) / 2) *
               (
@@ -316,11 +316,11 @@ system_builder::fill_rhs_at (int k)
               );
       ans += tr3 *
               (
-                1
+                1./2.
               );
       ans += ((tr1 + tr2 + tr3) / 3.) *
               (
-                6
+                3
               );
       return ans / 12.;
     }
@@ -335,7 +335,7 @@ system_builder::fill_rhs_at (int k)
 
       ans = tr1 *
              (
-               1
+               1./2.
              );
       ans += ((tr1 + tr2) / 2) *
               (
@@ -347,11 +347,11 @@ system_builder::fill_rhs_at (int k)
               );
       ans += tr3 *
               (
-                1
+                1./2.
               );
       ans += ((tr1 + tr2 + tr3) / 3.) *
               (
-                6
+                3
               );
       return ans / 12.;
     }
