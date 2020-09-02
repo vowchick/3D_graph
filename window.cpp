@@ -134,6 +134,7 @@ Window::change_state ()
       drawer->updateGL ();
     }
 }
+
 void
 Window::initialize_info ()
 {
@@ -205,6 +206,25 @@ Window::after_calculation ()
   calculating = false;
   update_surface_coeffs ();
   drawer->updateGL();
+}
+
+
+void
+Window::closeEvent(QCloseEvent *event)
+{
+  if (calculating)
+    event->ignore ();
+  else
+    {
+      for (int i = 0; i < threads_num; i++)
+        {
+          info[i].proceed = false;
+        }
+      p_out++;
+      pthread_cond_broadcast (&cond);
+      event->accept ();
+    }
+
 }
 
 void

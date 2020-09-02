@@ -243,3 +243,4 @@ painter::update_surface_coeffs ()
 {
   surf->update_coeffs ();
 }
+

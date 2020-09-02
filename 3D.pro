@@ -6,6 +6,7 @@ HEADERS       = helper_functions.h \
                 defines.h \
                 grid.h \
                 io.h \
+                mainwindow.h \
                 matrix_operations.h \
                 painter.h \
                 structs_and_stuff.h \
@@ -19,6 +20,7 @@ SOURCES       = main.cpp \
                 helper_functions.cpp \
     io.cpp \
     long_member_functions.cpp \
+    mainwindow.cpp \
     matrix_operations.cpp \
     painter.cpp \
     surface.cpp \

@@ -57,6 +57,7 @@ SOURCES       = main.cpp \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
+		mainwindow.cpp \
 		matrix_operations.cpp \
 		painter.cpp \
 		surface.cpp \
@@ -71,6 +72,7 @@ OBJECTS       = main.o \
 		helper_functions.o \
 		io.o \
 		long_member_functions.o \
+		mainwindow.o \
 		matrix_operations.o \
 		painter.o \
 		surface.o \
@@ -161,6 +163,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		defines.h \
 		grid.h \
 		io.h \
+		mainwindow.h \
 		matrix_operations.h \
 		painter.h \
 		structs_and_stuff.h \
@@ -173,6 +176,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		helper_functions.cpp \
 		io.cpp \
 		long_member_functions.cpp \
+		mainwindow.cpp \
 		matrix_operations.cpp \
 		painter.cpp \
 		surface.cpp \
@@ -363,8 +367,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h matrix_operations.h painter.h structs_and_stuff.h surface.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp matrix_operations.cpp painter.cpp surface.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h mainwindow.h matrix_operations.h painter.h structs_and_stuff.h surface.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp mainwindow.cpp matrix_operations.cpp painter.cpp surface.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -436,6 +440,7 @@ main.o: main.cpp system_builder.h \
 		system_solver.h \
 		matrix_operations.h \
 		io.h \
+		mainwindow.h \
 		window.h \
 		thread_info.h \
 		painter.h \
@@ -465,6 +470,9 @@ long_member_functions.o: long_member_functions.cpp system_builder.h \
 		defines.h \
 		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o long_member_functions.o long_member_functions.cpp
+
+mainwindow.o: mainwindow.cpp mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 matrix_operations.o: matrix_operations.cpp matrix_operations.h \
 		helper_functions.h \

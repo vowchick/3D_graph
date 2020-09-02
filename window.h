@@ -6,8 +6,7 @@
 #include "thread_info.h"
 #include "painter.h"
 #include <QHBoxLayout>
-
-
+#include <QtWidgets/QtWidgets>
 class Window : public QWidget
 {
   Q_OBJECT
@@ -48,6 +47,7 @@ void
 initialize_vectors ();
 void
 start_threads ();
+void closeEvent(QCloseEvent *event) override;
 std::string
 int_to_str (int f);
 
