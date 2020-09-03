@@ -19,6 +19,7 @@ public:
   void emit_calculation_completed ();
   void set_approx (double *approx);
   void update_surface ();
+  void closeEvent(QCloseEvent *event) override;
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
 
@@ -47,7 +48,6 @@ void
 initialize_vectors ();
 void
 start_threads ();
-void closeEvent(QCloseEvent *event) override;
 std::string
 int_to_str (int f);
 

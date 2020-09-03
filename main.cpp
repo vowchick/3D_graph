@@ -41,6 +41,7 @@ int main (int argc, char *argv[])
    MainWindow *window = new MainWindow;
    QMenuBar *tool_bar = new QMenuBar (window);
    Window *graph_area = new Window (&pol, n, in.p, in.eps, in.k - 1, window);
+   window->set_window (graph_area);
    QAction *action;
 
    action = tool_bar->addAction ("&Double n", graph_area, SLOT (double_n ()));
