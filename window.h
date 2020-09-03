@@ -7,6 +7,7 @@
 #include "painter.h"
 #include <QHBoxLayout>
 #include <QtWidgets/QtWidgets>
+#include <string>
 class Window : public QWidget
 {
   Q_OBJECT
@@ -29,6 +30,8 @@ initialize (polygon *pol_, int n_,
             int p_, double eps_,
             int func_ind);
 
+void change_n_label ();
+void change_func_label ();
 void update_surface_coeffs ();
 void
 set_f ();
@@ -50,6 +53,8 @@ void
 start_threads ();
 std::string
 int_to_str (int f);
+void
+set_gui ();
 
 private:
   int n = 0;
@@ -68,6 +73,11 @@ private:
   int p_out;
   painter *drawer;
   state st = given_function;
+
+//labels
+private:
+  QLabel *number_of_points_label;
+  QLabel *function_name_label;
 
 
 

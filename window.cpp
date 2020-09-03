@@ -9,9 +9,7 @@ Window::Window(polygon *pol_, int n_,
 
   initialize (pol_, n_, p_, eps_, func_ind);
   allocate_memory ();
-  drawer = new painter (gr.get (), f, this);
-  QHBoxLayout *h_layout = new QHBoxLayout (this);
-  h_layout->addWidget (drawer);
+  set_gui ();
   initialize_vectors ();
   initialize_barrier_and_cond ();
   allocate_info ();
@@ -66,6 +64,7 @@ Window::double_n ()
   if (!calculating)
     {
       n *= 2;
+      change_n_label ();
       calculating = true;
       before_calculation ();
       p_out++;
@@ -82,6 +81,7 @@ Window::undouble_n ()
       if (n > 6)
         {
           n /= 2;
+          change_n_label ();
           calculating = true;
           before_calculation ();
           p_out++;
@@ -100,6 +100,7 @@ Window::change_function ()
       func_ind %= 8;
       f = int_to_f (func_ind);
       func_name = int_to_str (func_ind);
+      change_func_label ();
       set_f();
       calculating = true;
       before_calculation ();

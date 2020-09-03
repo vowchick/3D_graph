@@ -471,7 +471,15 @@ long_member_functions.o: long_member_functions.cpp system_builder.h \
 		grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o long_member_functions.o long_member_functions.cpp
 
-mainwindow.o: mainwindow.cpp mainwindow.h
+mainwindow.o: mainwindow.cpp mainwindow.h \
+		window.h \
+		helper_functions.h \
+		structs_and_stuff.h \
+		defines.h \
+		grid.h \
+		thread_info.h \
+		painter.h \
+		surface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 matrix_operations.o: matrix_operations.cpp matrix_operations.h \

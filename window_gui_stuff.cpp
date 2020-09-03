@@ -103,3 +103,43 @@ get_f (int f_)
     }
   return f;
 }
+void
+Window::set_gui ()
+{
+  drawer = new painter (gr.get (), f, this);
+  QHBoxLayout *h_layout = new QHBoxLayout (this);
+  QVBoxLayout *labels_layout = new QVBoxLayout (this);
+  QVBoxLayout *drawer_layout = new QVBoxLayout (this);
+
+  number_of_points_label = new QLabel (this);
+  change_n_label ();
+
+  function_name_label = new QLabel (this);
+  change_func_label ();
+
+  drawer_layout->addWidget (drawer);
+  labels_layout->setAlignment (Qt::AlignTop);
+  labels_layout->addWidget (number_of_points_label);
+  labels_layout->addWidget (function_name_label);
+
+  h_layout->addLayout (labels_layout);
+  h_layout->addLayout (drawer_layout);
+
+
+  h_layout->setStretchFactor (labels_layout, 1);
+  h_layout->setStretchFactor (drawer_layout, 5);
+}
+
+void
+Window::change_n_label ()
+{
+  QString s = NUMBER_OF_SPLITS + QString::number (n);
+  number_of_points_label->setText (s);
+}
+
+void
+Window::change_func_label ()
+{
+  QString s = FUNCTION_NAME + QString::fromStdString (func_name);
+  function_name_label->setText (s);
+}
