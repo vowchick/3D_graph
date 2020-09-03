@@ -107,7 +107,7 @@ void
 Window::set_gui ()
 {
   drawer = new painter (gr.get (), f, this);
-  QHBoxLayout *h_layout = new QHBoxLayout (this);
+  QVBoxLayout *v_layout = new QVBoxLayout (this);
   QVBoxLayout *labels_layout = new QVBoxLayout (this);
   QVBoxLayout *drawer_layout = new QVBoxLayout (this);
 
@@ -122,12 +122,12 @@ Window::set_gui ()
   labels_layout->addWidget (number_of_points_label);
   labels_layout->addWidget (function_name_label);
 
-  h_layout->addLayout (labels_layout);
-  h_layout->addLayout (drawer_layout);
+  v_layout->addLayout (labels_layout);
+  v_layout->addLayout (drawer_layout);
 
 
-  h_layout->setStretchFactor (labels_layout, 1);
-  h_layout->setStretchFactor (drawer_layout, 5);
+//  v_layout->setStretchFactor (labels_layout, 1);
+//  v_layout->setStretchFactor (drawer_layout, 5);
 }
 
 void
