@@ -33,18 +33,13 @@ pthread_func (void *arg)
 
         pthread_barrier_wait (info->barrier);
 
-//        if (idx == 0)
-//          {
-//            print_matrix (4 * n * (n ), matrix, I);
-//          }
-        int res = check_matrix (matrix, I, allocation_size(n), p, idx);
-        FIX_UNUSED(res);
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
 
         pthread_barrier_wait (info->barrier);
         if (idx == 0)
           {
+            window->update_surface ();
             window->set_approx (x);
           }
 

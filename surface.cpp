@@ -27,9 +27,10 @@ surface::find_ranges ()
   f_range.min = min;
 }
 void
-surface::update (grid *gr)
+surface::update (std::unique_ptr<grid> &grid_ptr)
 {
-  this->gr = gr;
+  this->grid_ptr.swap (grid_ptr);
+  gr = this->grid_ptr.get ();
   int n = gr->get_n ();
   f_coeffs.resize (4 * n * (n - 1));
 }

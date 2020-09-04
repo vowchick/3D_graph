@@ -106,6 +106,7 @@ get_f (int f_)
 void
 Window::set_gui ()
 {
+  gr.reset (new grid (pol, n));
   drawer = new painter (gr.get (), f, this);
   QVBoxLayout *v_layout = new QVBoxLayout (this);
   QVBoxLayout *labels_layout = new QVBoxLayout (this);

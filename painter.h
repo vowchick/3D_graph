@@ -11,7 +11,7 @@ public:
   painter(grid *gr, std::function<double (double, double)> f, QWidget *parent = nullptr);
  ~painter ();
   void set_approx (std::vector<double> f_coeffs);
-  void update_surface (grid *gr);
+  void update_surface (std::unique_ptr<grid> &grid_ptr);
   void set_f (std::function<double (double, double)> f);
   void change_state ();
   void update_surface_coeffs ();

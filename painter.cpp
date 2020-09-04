@@ -224,9 +224,9 @@ painter::set_approx (std::vector<double> approx)
 }
 
 void
-painter::update_surface (grid *gr)
+painter::update_surface (std::unique_ptr<grid> &grid_ptr)
 {
-  surf->update (gr);
+  surf->update (grid_ptr);
 }
 void
 painter::set_f (std::function<double (double, double)> f)

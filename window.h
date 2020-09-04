@@ -62,6 +62,7 @@ private:
   double eps = 0.;
   polygon *pol;
   std::unique_ptr<grid> gr;
+  std::unique_ptr<grid> working_gr;
   std::function<double (double, double)> f;
   int func_ind;
   std::string func_name;

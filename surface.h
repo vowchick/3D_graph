@@ -17,7 +17,7 @@ public:
 
   void set_approx (std::vector<double> approx);
   void set_f (std::function <double (double, double)> f);
-  void update (grid *gr_);
+  void update (std::unique_ptr<grid> &grid_ptr);
   void change_state ();
   double get_value (double x, double y, int trapeze_num, int odd);
   void draw ();
@@ -35,6 +35,7 @@ private:
 
 private:
   grid *gr = nullptr;
+  std::unique_ptr<grid> grid_ptr;
   std::function<double (double, double)> f;
   std::vector<double> f_coeffs;
   std::vector<double> given_func;

@@ -147,7 +147,7 @@ Window::initialize_info ()
       info[i].eps = eps;
       info[i].idx = i;
       info[i].barrier = &barrier;
-      info[i].gr = gr.get ();
+      info[i].gr = working_gr.get ();
       info[i].proceed = true;
       info[i].data = &data;
       info[i].window = this;
@@ -192,7 +192,7 @@ Window::allocate_memory ()
   data.rhs.reset (new double[diag_length]);
   data.x.reset (new double[diag_length]);
 
-  gr.reset (new grid (pol, n));
+  working_gr.reset (new grid (pol, n));
 
   data.u.reset (new double[diag_length]);
   data.r.reset (new double[diag_length]);
@@ -243,7 +243,7 @@ Window::set_approx (double *approx)
 void
 Window::update_surface ()
 {
-  drawer->update_surface (gr.get ());
+  drawer->update_surface (working_gr);
 }
 
 void
@@ -255,7 +255,6 @@ void
 Window::before_calculation ()
 {
   allocate_memory ();
-  update_surface ();
   initialize_vectors ();
   initialize_info ();
 }
