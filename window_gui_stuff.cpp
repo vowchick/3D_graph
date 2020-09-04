@@ -103,13 +103,34 @@ get_f (int f_)
     }
   return f;
 }
+
+QString
+Window::state_to_string ()
+{
+  switch (st)
+    {
+      case given_function:
+        return "Given function";
+      case approximation:
+        return "Approximation";
+      case error:
+        return "Residual";
+    }
+  abort ();
+  return "";
+}
+
 void
 Window::set_gui ()
 {
   gr.reset (new grid (pol, n));
   drawer = new painter (gr.get (), f, this);
   QVBoxLayout *v_layout = new QVBoxLayout (this);
-  QVBoxLayout *labels_layout = new QVBoxLayout (this);
+
+  QHBoxLayout *labels_layout = new QHBoxLayout (this);
+  QVBoxLayout *labels_layout1 = new QVBoxLayout (this);
+  QVBoxLayout *labels_layout2 = new QVBoxLayout (this);
+
   QVBoxLayout *drawer_layout = new QVBoxLayout (this);
 
   number_of_points_label = new QLabel (this);
@@ -118,17 +139,29 @@ Window::set_gui ()
   function_name_label = new QLabel (this);
   change_func_label ();
 
+  state_label = new QLabel (this);
+  change_state_label ();
+
+  fabs_max_label = new QLabel (this);
+  change_fabs_max_label ();
+
   drawer_layout->addWidget (drawer);
-  labels_layout->setAlignment (Qt::AlignTop);
-  labels_layout->addWidget (number_of_points_label);
-  labels_layout->addWidget (function_name_label);
+
+  labels_layout->setAlignment (Qt::AlignLeft);
+  labels_layout1->addWidget (number_of_points_label);
+  labels_layout1->addWidget (function_name_label);
+  labels_layout1->addWidget (fabs_max_label);
+  labels_layout2->addWidget (state_label);
+
+  labels_layout->addLayout (labels_layout1);
+  labels_layout->addLayout (labels_layout2);
 
   v_layout->addLayout (labels_layout);
   v_layout->addLayout (drawer_layout);
 
 
-//  v_layout->setStretchFactor (labels_layout, 1);
-//  v_layout->setStretchFactor (drawer_layout, 5);
+  v_layout->setStretchFactor (labels_layout, 1);
+  v_layout->setStretchFactor (drawer_layout, 8);
 }
 
 void
@@ -144,3 +177,18 @@ Window::change_func_label ()
   QString s = FUNCTION_NAME + QString::fromStdString (func_name);
   function_name_label->setText (s);
 }
+
+void
+Window::change_state_label ()
+{
+  QString s = "Current state: " + state_to_string ();
+  state_label->setText (s);
+}
+
+void
+Window::change_fabs_max_label ()
+{
+  QString s = "max |f| = " + QString::number (drawer->get_fabs_max ());
+  fabs_max_label->setText (s);
+}
+

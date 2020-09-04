@@ -65,6 +65,13 @@ Window::double_n ()
     {
       n *= 2;
       change_n_label ();
+      if (static_cast<state> (st) == given_function)
+        {
+          working_gr.reset (new grid (pol, n));
+          update_surface ();
+          after_calculation ();
+          return;
+        }
       calculating = true;
       before_calculation ();
       p_out++;
@@ -82,6 +89,13 @@ Window::undouble_n ()
         {
           n /= 2;
           change_n_label ();
+          if (static_cast<state> (st) == given_function)
+            {
+              working_gr.reset (new grid (pol, n));
+              update_surface ();
+              after_calculation ();
+              return;
+            }
           calculating = true;
           before_calculation ();
           p_out++;
@@ -102,6 +116,13 @@ Window::change_function ()
       func_name = int_to_str (func_ind);
       change_func_label ();
       set_f();
+      if (static_cast<state> (st) == given_function)
+        {
+          working_gr.reset (new grid (pol, n));
+          update_surface ();
+          after_calculation ();
+          return;
+        }
       calculating = true;
       before_calculation ();
       p_out++;
@@ -116,6 +137,7 @@ Window::change_state ()
   if (!calculating)
     {
       st = static_cast<state> ((st + 1) % 3);
+      change_state_label ();
       switch (st)
         {
         case given_function:
@@ -132,6 +154,7 @@ Window::change_state ()
           break;
         }
       drawer->change_state ();
+      change_fabs_max_label ();
       drawer->updateGL ();
     }
 }
@@ -206,6 +229,7 @@ Window::after_calculation ()
 {
   calculating = false;
   update_surface_coeffs ();
+  change_fabs_max_label ();
   drawer->updateGL();
 }
 

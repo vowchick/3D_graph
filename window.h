@@ -32,6 +32,8 @@ initialize (polygon *pol_, int n_,
 
 void change_n_label ();
 void change_func_label ();
+void change_state_label ();
+void change_fabs_max_label ();
 void update_surface_coeffs ();
 void
 set_f ();
@@ -55,6 +57,8 @@ std::string
 int_to_str (int f);
 void
 set_gui ();
+QString
+state_to_string ();
 
 private:
   int n = 0;
@@ -78,7 +82,9 @@ private:
 //labels
 private:
   QLabel *number_of_points_label;
+  QLabel *state_label;
   QLabel *function_name_label;
+  QLabel *fabs_max_label;
 
 
 

@@ -244,3 +244,8 @@ painter::update_surface_coeffs ()
   surf->update_coeffs ();
 }
 
+double
+painter::get_fabs_max ()
+{
+  return std::max (fabs (surf->get_max ()), fabs (surf->get_min ()));
+}
