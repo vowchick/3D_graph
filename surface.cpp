@@ -64,13 +64,14 @@ surface::update_f_coeffs ()
 void
 surface::set_approx (std::vector<double> approx)
 {
-  int n = gr->get_n ();
-  int diag_length = 4 * n * (n - 1);
-  this->approx.resize (diag_length);
-  for (int i = 0; i < diag_length; i++)
-    {
-      this->approx[i] = approx[i];
-    }
+//  int n = gr->get_n ();
+//  int diag_length = 4 * n * (n - 1);
+//  this->approx.resize (diag_length);
+//  for (int i = 0; i < diag_length; i++)
+//    {
+//      this->approx[i] = approx[i];
+//    }
+  this->approx = approx;
 }
 
 void
@@ -278,7 +279,6 @@ void
 surface::set_f(std::function <double (double, double)> f)
 {
   this->f = f;
-  update_f_coeffs ();
 }
 void
 surface::change_state ()

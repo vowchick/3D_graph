@@ -265,6 +265,8 @@ void
 Window::after_calculation ()
 {
   calculating = false;
+  update_surface ();
+  drawer->set_approx (appro);
   update_surface_coeffs ();
   change_fabs_max_label ();
   drawer->updateGL();
@@ -293,12 +295,10 @@ void
 Window::set_approx (double *approx)
 {
   int diag_length = 4 * n * (n - 1);
-  std::vector<double> approxim (diag_length);
+  appro.resize (diag_length);
 
   for (int i = 0; i < diag_length; i++)
-    approxim[i] = approx[i];
-
-  drawer->set_approx (approxim);
+    appro[i] = approx[i];
 }
 
 void

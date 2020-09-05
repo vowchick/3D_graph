@@ -80,6 +80,7 @@ private:
   int p_out;
   painter *drawer;
   state st = given_function;
+  std::vector<double> appro;
 
 //labels
 private:
