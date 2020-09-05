@@ -1,5 +1,5 @@
 #include "painter.h"
-
+#include "io.h"
 painter::painter(grid *gr, std::function<double (double, double)> f, QWidget *parent)
   :QGLWidget (parent)
 {
@@ -168,15 +168,22 @@ painter::paintGL()
 
     glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+
+    glDisable (GL_CULL_FACE);
+    draw_axes ();
+
+    point center;
+    find_middle(*gr->get_polygon (), &center);
+    glTranslated (-scale * center.x , -scale * center.y, 0);
     glScaled (scale / max_w, scale / max_h, 1);
+    glTranslated (center.x * max_w , center.y * max_h, 0);
+
     glEnableClientState (GL_VERTEX_ARRAY);
     glEnableClientState (GL_NORMAL_ARRAY);
 
     glColorMaterial (GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     glEnable (GL_COLOR_MATERIAL);
 
-    glDisable (GL_CULL_FACE);
-    draw_axes ();
     qglColor (Qt::red);
     draw_surface ();
     draw_shadow ();
