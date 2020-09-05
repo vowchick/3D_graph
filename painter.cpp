@@ -63,6 +63,7 @@ void
 painter::clockwise ()
 {
   yRot += 240;
+  yRot %= 5760;
   updateGL();
 }
 
@@ -70,6 +71,7 @@ void
 painter::unclockwise ()
 {
   yRot -= 240;
+  yRot %= 5760;
   updateGL();
 }
 
@@ -86,12 +88,12 @@ painter::initializeGL()
 
   glEnable (GL_DEPTH_TEST);
   glEnable (GL_CULL_FACE);
-  glShadeModel (GL_SMOOTH);
-  glEnable (GL_LIGHTING);
-  glEnable (GL_LIGHT0);
-  glEnable (GL_MULTISAMPLE);
-  GLfloat lightPosition0[4] = {0, 0, static_cast <float> (surf->get_max ()) + 1, 1.0};
-  glLightfv (GL_LIGHT0, GL_POSITION, lightPosition0);
+//  glShadeModel (GL_SMOOTH);
+//  glEnable (GL_LIGHTING);
+//  glEnable (GL_LIGHT0);
+//  glEnable (GL_MULTISAMPLE);
+//  GLfloat lightPosition0[4] = {0, 0, static_cast <float> (surf->get_max ()) + 1, 1.0};
+//  glLightfv (GL_LIGHT0, GL_POSITION, lightPosition0);
 }
 
 void
@@ -105,17 +107,12 @@ painter::resizeGL(int width, int height)
 void
 painter::set_gl ()
 {
-  double depth = surf->get_max () - surf->get_min ();
-  if (depth < 1e-64)
-    {
-      depth = 1;
-    }
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 #ifdef QT_OPENGL_ES_1
   glOrtho(-2, 2, -1, 1, -1, 1);
 #else
-  glOrtho(-2, 2, -2, 2, -2, 100);
+  glOrtho(-2, 2, -2, 2, -2, 2);
 #endif
   glMatrixMode(GL_MODELVIEW);
 }
@@ -125,9 +122,6 @@ painter::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    double max_z = fabs (surf-> get_max ());
-    if (fabs (surf->get_min ()) > max_z)
-      max_z = fabs (surf->get_min ());
 
     grid *gr;
     gr = surf->get_grid();
@@ -139,12 +133,11 @@ painter::paintGL()
     {
         if (fabs (max) < 1e-16)
           {
-            max = 1;
+            max = 1e-16;
           }
       };
     replace_max (max_w);
     replace_max (max_h);
-    replace_max (max_z);
 
     glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);

@@ -91,6 +91,15 @@ surface::draw ()
 {
   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
+  max_z = fabs (get_max ());
+  if (fabs (get_min ()) > max_z)
+    max_z = fabs (get_min ());
+
+  if (fabs (max_z) < 1e-16)
+    {
+      max_z = 1e-16;
+    }
+
   for (int k = 0; k < 4; k++)
     {
       point A, B, C, D;
@@ -233,9 +242,9 @@ surface::draw_triangle (point xy, point second, point third, int k1, int k2, int
   val3 = gr->get_value (f_coeffs, third.x, third.y, k3, odd3);
 
   glBegin(GL_TRIANGLES);
-      glVertex3d(xy.x, xy.y, val1);
-      glVertex3d(second.x, second.y, val2);
-      glVertex3d(third.x, third.y, val3);
+      glVertex3d(xy.x, xy.y, val1 / max_z);
+      glVertex3d(second.x, second.y, val2 / max_z);
+      glVertex3d(third.x, third.y, val3 / max_z);
   glEnd();
 }
 double

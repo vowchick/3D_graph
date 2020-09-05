@@ -42,6 +42,7 @@ private:
   std::vector<double> approx;
   state st = given_function;
   ranges f_range = {1, -1}; //temporarily
+  double max_z = 0.;
 };
 
 #endif // SURFACE_H
