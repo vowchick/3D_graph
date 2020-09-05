@@ -24,6 +24,7 @@ public:
   void perturb ();
   void unperturb ();
   int get_perturbation ();
+  int get_s ();
 
 public slots:
   void setXRotation(int angle);
@@ -57,7 +58,7 @@ private:
   int yRot = 0;
   int zRot = 0;
 
-  double scale = 1.;
+  int scale = 0;
   QPoint lastPos;
 };
 

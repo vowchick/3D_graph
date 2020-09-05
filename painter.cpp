@@ -43,26 +43,26 @@ painter::wheelEvent(QWheelEvent* pe)
 void
 painter::scale_inc()
 {
-  scale *= COEFF;
+  scale++;
 }
 
 void
 painter::scale_dec()
 {
-  scale /= COEFF;
+  scale--;
 }
 
 void
 painter::increase()
 {
-  scale *= COEFF2;
+  scale++;
   updateGL();
 }
 
 void
 painter::decrease ()
 {
-  scale /= COEFF2;
+  scale--;
   updateGL();
 }
 
@@ -101,6 +101,11 @@ int
 painter::get_perturbation ()
 {
   return surf->get_perturbation ();
+}
+int
+painter::get_s ()
+{
+  return scale;
 }
 QSize
 painter::SizeHint() const
@@ -173,9 +178,10 @@ painter::paintGL()
     draw_axes ();
 
     point center;
+    double s = std::pow (2, scale);
     find_middle(*gr->get_polygon (), &center);
-    glTranslated (-scale * center.x , -scale * center.y, 0);
-    glScaled (scale / max_w, scale / max_h, 1);
+    glTranslated (-s * center.x , -s * center.y, 0);
+    glScaled (s / max_w, s / max_h, 1);
     glTranslated (center.x * max_w , center.y * max_h, 0);
 
     glEnableClientState (GL_VERTEX_ARRAY);

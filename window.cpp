@@ -62,11 +62,13 @@ void
 Window::increase ()
 {
   drawer->increase ();
+  change_s_label ();
 }
 
 void
 Window::decrease ()
 {
+  change_s_label ();
   drawer->decrease ();
 }
 

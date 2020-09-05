@@ -148,6 +148,9 @@ Window::set_gui ()
   perturbation_label = new QLabel (this);
   change_perturbation_label ();
 
+  s_label = new QLabel (this);
+  change_s_label ();
+
   drawer_layout->addWidget (drawer);
 
   labels_layout->setAlignment (Qt::AlignLeft);
@@ -156,6 +159,7 @@ Window::set_gui ()
   labels_layout1->addWidget (fabs_max_label);
   labels_layout1->addWidget (perturbation_label);
   labels_layout2->addWidget (state_label);
+  labels_layout1->addWidget (s_label);
   labels_layout2->setAlignment(Qt::AlignTop);
 
   labels_layout->addLayout (labels_layout1);
@@ -207,3 +211,9 @@ Window::change_perturbation_label ()
   perturbation_label->setText (s);
 }
 
+void
+Window::change_s_label ()
+{
+  QString s = "s = " + QString::number (drawer->get_s ());
+  s_label->setText (s);
+}

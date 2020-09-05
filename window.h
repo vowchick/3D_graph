@@ -36,6 +36,7 @@ void change_func_label ();
 void change_state_label ();
 void change_fabs_max_label ();
 void change_perturbation_label ();
+void change_s_label ();
 void update_surface_coeffs ();
 void given_func_case ();
 void
@@ -91,6 +92,7 @@ private:
   QLabel *function_name_label;
   QLabel *fabs_max_label;
   QLabel *perturbation_label;
+  QLabel *s_label;
 
 
 
