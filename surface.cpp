@@ -14,7 +14,7 @@ surface::find_ranges ()
 {
   int n = gr->get_n ();
   int diag_lenght = 4 * n * (n - 1);
-  double max = f_coeffs[0], min = f_coeffs[1];
+  double max = f_coeffs[0], min = f_coeffs[0];
   for (int i = 1; i < diag_lenght; i++)
     {
       if (max < f_coeffs[i])

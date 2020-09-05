@@ -37,6 +37,7 @@ void change_state_label ();
 void change_fabs_max_label ();
 void change_perturbation_label ();
 void update_surface_coeffs ();
+void given_func_case ();
 void
 set_f ();
 void
@@ -81,6 +82,7 @@ private:
   painter *drawer;
   state st = given_function;
   std::vector<double> appro;
+  bool state_changed_flag = false;
 
 //labels
 private:

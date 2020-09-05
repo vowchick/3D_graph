@@ -103,9 +103,7 @@ Window::double_n ()
       change_n_label ();
       if (static_cast<state> (st) == given_function)
         {
-          working_gr.reset (new grid (pol, n));
-          update_surface ();
-          after_calculation ();
+          given_func_case ();
           return;
         }
       calculating = true;
@@ -127,9 +125,7 @@ Window::undouble_n ()
           change_n_label ();
           if (static_cast<state> (st) == given_function)
             {
-              working_gr.reset (new grid (pol, n));
-              update_surface ();
-              after_calculation ();
+              given_func_case ();
               return;
             }
           calculating = true;
@@ -140,7 +136,12 @@ Window::undouble_n ()
     }
 
 }
-
+void
+Window::given_func_case ()
+{
+  working_gr.reset (new grid (pol, n));
+  after_calculation ();
+}
 void
 Window::change_function ()
 {
@@ -151,12 +152,10 @@ Window::change_function ()
       f = int_to_f (func_ind);
       func_name = int_to_str (func_ind);
       change_func_label ();
-      set_f();
+      set_f ();
       if (static_cast<state> (st) == given_function)
         {
-          working_gr.reset (new grid (pol, n));
-          update_surface ();
-          after_calculation ();
+          given_func_case ();
           return;
         }
       calculating = true;
@@ -178,8 +177,10 @@ Window::change_state ()
         {
         case given_function:
         case error:
+          drawer->change_state ();
           break;
         case approximation:
+          state_changed_flag = true;
           if (!calculating)
             {
               calculating = true;
@@ -189,7 +190,6 @@ Window::change_state ()
             }
           break;
         }
-      drawer->change_state ();
       change_fabs_max_label ();
       update_surface_coeffs ();
       drawer->updateGL ();
@@ -265,6 +265,11 @@ void
 Window::after_calculation ()
 {
   calculating = false;
+  if (state_changed_flag)
+    {
+      state_changed_flag = false;
+      drawer->change_state ();
+    }
   update_surface ();
   drawer->set_approx (appro);
   update_surface_coeffs ();
