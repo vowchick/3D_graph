@@ -94,6 +94,8 @@ public slots:
   void change_function ();
   void after_calculation ();
   void change_state ();
+  void increase ();
+  void decrease ();
 signals:
   void calculation_completed ();
 };

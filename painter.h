@@ -3,7 +3,8 @@
 
 #include "surface.h"
 #include "QMouseEvent"
-#define COEFF 1.1
+#define COEFF 1.2
+#define COEFF2 2
 
 class painter : public QGLWidget
 {
@@ -16,6 +17,8 @@ public:
   void change_state ();
   void update_surface_coeffs ();
   double get_fabs_max ();
+  void increase ();
+  void decrease ();
 
 public slots:
   void setXRotation(int angle);

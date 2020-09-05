@@ -188,7 +188,7 @@ Window::change_state_label ()
 void
 Window::change_fabs_max_label ()
 {
-  QString s = "max |f| = " + QString::number (drawer->get_fabs_max ());
+  QString s = "max |f| = " + QString::number (drawer->get_fabs_max (), 'e', 4);
   fabs_max_label->setText (s);
 }
 

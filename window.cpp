@@ -59,6 +59,18 @@ Window::initialize_vectors ()
 }
 
 void
+Window::increase ()
+{
+  drawer->increase ();
+}
+
+void
+Window::decrease ()
+{
+  drawer->decrease ();
+}
+
+void
 Window::double_n ()
 {
   if (!calculating)

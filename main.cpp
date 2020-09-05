@@ -56,6 +56,15 @@ int main (int argc, char *argv[])
    action = tool_bar->addAction ("&Change state", graph_area, SLOT (change_state ()));
    action->setShortcut (QString ("1"));
 
+   action = tool_bar->addAction ("&Increase", graph_area, SLOT (increase ()));
+   action->setShortcut (QString ("2"));
+
+   action = tool_bar->addAction ("&Decrease", graph_area, SLOT (decrease ()));
+   action->setShortcut (QString ("3"));
+
+
+
+
    tool_bar->setMaximumHeight (30);
 
    window->setMenuBar (tool_bar);

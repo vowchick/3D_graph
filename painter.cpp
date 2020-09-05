@@ -45,6 +45,20 @@ painter::scale_dec()
   scale /= COEFF;
 }
 
+void
+painter::increase()
+{
+  scale *= COEFF2;
+  updateGL();
+}
+
+void
+painter::decrease ()
+{
+  scale /= COEFF2;
+  updateGL();
+}
+
 QSize
 painter::SizeHint() const
 {
@@ -87,7 +101,7 @@ painter::set_gl ()
 #ifdef QT_OPENGL_ES_1
   glOrtho(-2, 2, -1, 1, -1, 1);
 #else
-  glOrtho(-2, 2, -2, 2, -2, 2);
+  glOrtho(-2, 2, -2, 2, -2, 100);
 #endif
   glMatrixMode(GL_MODELVIEW);
 }
@@ -120,7 +134,7 @@ painter::paintGL()
 
     glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
     glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-    glScaled (scale / max_w, scale / max_h, scale / max_z);
+    glScaled (scale / max_w, scale / max_h, 1);
     glEnableClientState (GL_VERTEX_ARRAY);
     glEnableClientState (GL_NORMAL_ARRAY);
 
