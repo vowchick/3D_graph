@@ -145,13 +145,18 @@ Window::set_gui ()
   fabs_max_label = new QLabel (this);
   change_fabs_max_label ();
 
+  perturbation_label = new QLabel (this);
+  change_perturbation_label ();
+
   drawer_layout->addWidget (drawer);
 
   labels_layout->setAlignment (Qt::AlignLeft);
   labels_layout1->addWidget (number_of_points_label);
   labels_layout1->addWidget (function_name_label);
   labels_layout1->addWidget (fabs_max_label);
+  labels_layout1->addWidget (perturbation_label);
   labels_layout2->addWidget (state_label);
+  labels_layout2->setAlignment(Qt::AlignTop);
 
   labels_layout->addLayout (labels_layout1);
   labels_layout->addLayout (labels_layout2);
@@ -190,5 +195,12 @@ Window::change_fabs_max_label ()
 {
   QString s = "max |f| = " + QString::number (drawer->get_fabs_max (), 'e', 4);
   fabs_max_label->setText (s);
+}
+
+void
+Window::change_perturbation_label ()
+{
+  QString s = "p = " + QString::number (drawer->get_perturbation ());
+  perturbation_label->setText (s);
 }
 

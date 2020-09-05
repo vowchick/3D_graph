@@ -34,6 +34,7 @@ void change_n_label ();
 void change_func_label ();
 void change_state_label ();
 void change_fabs_max_label ();
+void change_perturbation_label ();
 void update_surface_coeffs ();
 void
 set_f ();
@@ -85,6 +86,7 @@ private:
   QLabel *state_label;
   QLabel *function_name_label;
   QLabel *fabs_max_label;
+  QLabel *perturbation_label;
 
 
 
@@ -98,6 +100,8 @@ public slots:
   void decrease ();
   void clockwise ();
   void unclockwise ();
+  void perturb ();
+  void unperturb ();
 signals:
   void calculation_completed ();
 };

@@ -68,6 +68,12 @@ int main (int argc, char *argv[])
    action = tool_bar->addAction ("&Anticlockwise", graph_area, SLOT (unclockwise ()));
    action->setShortcut (QString ("9"));
 
+   action = tool_bar->addAction ("&Add perturbation", graph_area, SLOT (perturb ()));
+   action->setShortcut (QString ("6"));
+
+   action = tool_bar->addAction ("&Subtract perturbation", graph_area, SLOT (unperturb ()));
+   action->setShortcut (QString ("7"));
+
    tool_bar->setMaximumHeight (30);
 
    window->setMenuBar (tool_bar);

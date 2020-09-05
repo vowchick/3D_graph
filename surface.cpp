@@ -40,6 +40,8 @@ surface::update_coeffs ()
 {
   update_f_coeffs ();
   find_ranges ();
+  int n = gr->get_n (), diag_length = 4 * n * (n - 1);
+  f_coeffs[diag_length>>1] += perturbation / 10. * f_range.max;
 }
 void
 surface::update_f_coeffs ()
@@ -286,4 +288,19 @@ surface::set_error ()
     {
       f_coeffs[i] = fabs (given_func[i] - approx[i]);
     }
+}
+
+void
+surface::change_perturbation (int n)
+{
+  if (n == 0)
+    perturbation++;
+  else
+    perturbation--;
+}
+
+int
+surface::get_perturbation ()
+{
+  return perturbation;
 }

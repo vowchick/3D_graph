@@ -81,6 +81,19 @@ Window::unclockwise ()
 {
   drawer->unclockwise ();
 }
+
+void
+Window::perturb ()
+{
+  drawer->perturb ();
+  change_perturbation_label ();
+}
+void
+Window::unperturb ()
+{
+  drawer->unperturb ();
+  change_perturbation_label ();
+}
 void
 Window::double_n ()
 {
@@ -178,6 +191,7 @@ Window::change_state ()
         }
       drawer->change_state ();
       change_fabs_max_label ();
+      update_surface_coeffs ();
       drawer->updateGL ();
     }
 }

@@ -23,6 +23,9 @@ public:
   void draw ();
   void update_f_coeffs ();
   void update_coeffs ();
+  void change_perturbation (int n);
+  int get_perturbation ();
+
 
 private:
   void find_ranges ();
@@ -43,6 +46,7 @@ private:
   state st = given_function;
   ranges f_range = {1, -1}; //temporarily
   double max_z = 0.;
+  double perturbation = 0.;
 };
 
 #endif // SURFACE_H

@@ -21,6 +21,9 @@ public:
   void decrease ();
   void clockwise ();
   void unclockwise ();
+  void perturb ();
+  void unperturb ();
+  int get_perturbation ();
 
 public slots:
   void setXRotation(int angle);

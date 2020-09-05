@@ -75,6 +75,26 @@ painter::unclockwise ()
   updateGL();
 }
 
+void
+painter::perturb ()
+{
+  surf->change_perturbation (0);
+  update_surface_coeffs();
+  updateGL();
+}
+void
+painter::unperturb()
+{
+  surf->change_perturbation (1);
+  update_surface_coeffs();
+  updateGL();
+}
+
+int
+painter::get_perturbation ()
+{
+  return surf->get_perturbation ();
+}
 QSize
 painter::SizeHint() const
 {
