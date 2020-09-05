@@ -21,6 +21,7 @@ public:
   void set_approx (double *approx);
   void update_surface ();
   void closeEvent(QCloseEvent *event) override;
+  void ultimate_update (double *x);
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
 

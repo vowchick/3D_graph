@@ -302,6 +302,12 @@ Window::set_approx (double *approx)
 }
 
 void
+Window::ultimate_update (double *x)
+{
+  update_surface ();
+  set_approx (x);
+}
+void
 Window::update_surface ()
 {
   drawer->update_surface (working_gr);

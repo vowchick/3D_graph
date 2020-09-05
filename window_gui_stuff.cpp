@@ -174,6 +174,7 @@ Window::change_n_label ()
 {
   QString s = NUMBER_OF_SPLITS + QString::number (n);
   number_of_points_label->setText (s);
+  printf ("n = %d\n", n);
 }
 
 void
@@ -193,8 +194,10 @@ Window::change_state_label ()
 void
 Window::change_fabs_max_label ()
 {
-  QString s = "max |f| = " + QString::number (drawer->get_fabs_max (), 'e', 4);
+  double ans = drawer->get_fabs_max ();
+  QString s = "max |f| = " + QString::number (ans, 'e', 4);
   fabs_max_label->setText (s);
+  printf ("max |f| = %e\n", ans);
 }
 
 void

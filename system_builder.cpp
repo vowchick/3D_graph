@@ -59,8 +59,6 @@ system_builder::carcass ()
       }
     assert (s == nz);
     assert (I[N] == len);
-    printf ("Here!: %d %d\n", s, nz);
-    printf ("%d %d\n", I[N], len);
 }
 
 void
@@ -80,7 +78,6 @@ system_builder::fill_MSR_matrix (int p, int k)
       sum += s;
     }
   reduce_sum (p, &sum, 1);
-  printf ("%d %d\n", N + 1 + sum, I[N]);
   assert (N + 1 + sum == I[N]);
 }
 

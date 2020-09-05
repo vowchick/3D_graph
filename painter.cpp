@@ -71,7 +71,7 @@ painter::clockwise ()
 {
   yRot -= 240;
   yRot %= 5760;
-  updateGL();
+  update();
 }
 
 void
@@ -79,7 +79,7 @@ painter::unclockwise ()
 {
   yRot += 240;
   yRot %= 5760;
-  updateGL();
+  update();
 }
 
 void

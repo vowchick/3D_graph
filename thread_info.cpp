@@ -39,8 +39,7 @@ pthread_func (void *arg)
         pthread_barrier_wait (info->barrier);
         if (idx == 0)
           {
-            window->update_surface ();
-            window->set_approx (x);
+            window->ultimate_update (x);
           }
 
         synchronize (p, window, *(info->cond), *(info->p_out));

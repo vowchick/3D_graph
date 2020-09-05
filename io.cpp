@@ -118,10 +118,6 @@ print_polygon (polygon P)
     printf ("b = (%lf, %lf)\n", P.b.x, P.b.y);
     printf ("c = (%lf, %lf)\n", P.c.x, P.c.y);
     printf ("d = (%lf, %lf)\n", P.d.x, P.d.y);
-//    printf ("A1 = (%lf, %lf)\n", P.A1.x, P.A1.y);
-//    printf ("B1 = (%lf, %lf)\n", P.B1.x, P.B1.y);
-//    printf ("C1 = (%lf, %lf)\n", P.C1.x, P.C1.y);
-//    printf ("D1 = (%lf, %lf)\n", P.D1.x, P.D1.y);
     printf ("k = %lf\n", P.k);
 }
 int

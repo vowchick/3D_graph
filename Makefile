@@ -493,7 +493,8 @@ painter.o: painter.cpp painter.h \
 		grid.h \
 		structs_and_stuff.h \
 		defines.h \
-		helper_functions.h
+		helper_functions.h \
+		io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o painter.o painter.cpp
 
 surface.o: surface.cpp surface.h \
