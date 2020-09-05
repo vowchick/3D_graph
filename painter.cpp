@@ -59,6 +59,20 @@ painter::decrease ()
   updateGL();
 }
 
+void
+painter::clockwise ()
+{
+  yRot += 240;
+  updateGL();
+}
+
+void
+painter::unclockwise ()
+{
+  yRot -= 240;
+  updateGL();
+}
+
 QSize
 painter::SizeHint() const
 {
@@ -91,8 +105,8 @@ painter::resizeGL(int width, int height)
 void
 painter::set_gl ()
 {
-  float depth = surf->get_max () - surf->get_min ();
-  if (depth < 1e-16)
+  double depth = surf->get_max () - surf->get_min ();
+  if (depth < 1e-64)
     {
       depth = 1;
     }

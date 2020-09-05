@@ -96,6 +96,8 @@ public slots:
   void change_state ();
   void increase ();
   void decrease ();
+  void clockwise ();
+  void unclockwise ();
 signals:
   void calculation_completed ();
 };

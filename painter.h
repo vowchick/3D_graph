@@ -19,6 +19,8 @@ public:
   double get_fabs_max ();
   void increase ();
   void decrease ();
+  void clockwise ();
+  void unclockwise ();
 
 public slots:
   void setXRotation(int angle);

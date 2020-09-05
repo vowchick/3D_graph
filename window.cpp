@@ -71,6 +71,17 @@ Window::decrease ()
 }
 
 void
+Window::clockwise ()
+{
+  drawer->clockwise ();
+}
+
+void
+Window::unclockwise ()
+{
+  drawer->unclockwise ();
+}
+void
 Window::double_n ()
 {
   if (!calculating)

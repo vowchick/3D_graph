@@ -62,8 +62,11 @@ int main (int argc, char *argv[])
    action = tool_bar->addAction ("&Decrease", graph_area, SLOT (decrease ()));
    action->setShortcut (QString ("3"));
 
+   action = tool_bar->addAction ("&Clockwise", graph_area, SLOT (clockwise ()));
+   action->setShortcut (QString ("8"));
 
-
+   action = tool_bar->addAction ("&Anticlockwise", graph_area, SLOT (unclockwise ()));
+   action->setShortcut (QString ("9"));
 
    tool_bar->setMaximumHeight (30);
 
