@@ -1,12 +1,14 @@
 #include "thread_info.h"
 #include "system_builder.h"
 #include "system_solver.h"
+#include "mytime.h"
 void *
 pthread_func (void *arg)
 {
     thread_info *info = static_cast<thread_info *> (arg);
     while (info->proceed)
       {
+        double t = get_time ();
         auto d  = info->data;
         int idx = info->idx, p = info->p;
         int n = info->n;
@@ -30,12 +32,11 @@ pthread_func (void *arg)
 
         builder.fill_MSR_matrix (p, idx);
         builder.fill_rhs (p, idx);
-
         pthread_barrier_wait (info->barrier);
 
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
-
+        t = (get_time() - t) / CLOCKS_PER_SEC;
         pthread_barrier_wait (info->barrier);
         if (idx == 0)
           {

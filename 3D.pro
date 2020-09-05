@@ -8,6 +8,7 @@ HEADERS       = helper_functions.h \
                 io.h \
                 mainwindow.h \
                 matrix_operations.h \
+                mytime.h \
                 painter.h \
                 structs_and_stuff.h \
                 surface.h \
@@ -22,6 +23,7 @@ SOURCES       = main.cpp \
     long_member_functions.cpp \
     mainwindow.cpp \
     matrix_operations.cpp \
+    mytime.cpp \
     painter.cpp \
     surface.cpp \
     system_builder.cpp \

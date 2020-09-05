@@ -59,6 +59,7 @@ SOURCES       = main.cpp \
 		long_member_functions.cpp \
 		mainwindow.cpp \
 		matrix_operations.cpp \
+		mytime.cpp \
 		painter.cpp \
 		surface.cpp \
 		system_builder.cpp \
@@ -74,6 +75,7 @@ OBJECTS       = main.o \
 		long_member_functions.o \
 		mainwindow.o \
 		matrix_operations.o \
+		mytime.o \
 		painter.o \
 		surface.o \
 		system_builder.o \
@@ -165,6 +167,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		io.h \
 		mainwindow.h \
 		matrix_operations.h \
+		mytime.h \
 		painter.h \
 		structs_and_stuff.h \
 		surface.h \
@@ -178,6 +181,7 @@ DIST          = /../lib64/qt5/mkspecs/features/spec_pre.prf \
 		long_member_functions.cpp \
 		mainwindow.cpp \
 		matrix_operations.cpp \
+		mytime.cpp \
 		painter.cpp \
 		surface.cpp \
 		system_builder.cpp \
@@ -367,8 +371,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /../lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h mainwindow.h matrix_operations.h painter.h structs_and_stuff.h surface.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp mainwindow.cpp matrix_operations.cpp painter.cpp surface.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents helper_functions.h defines.h grid.h io.h mainwindow.h matrix_operations.h mytime.h painter.h structs_and_stuff.h surface.h system_builder.h system_solver.h thread_info.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp grid.cpp helper_functions.cpp io.cpp long_member_functions.cpp mainwindow.cpp matrix_operations.cpp mytime.cpp painter.cpp surface.cpp system_builder.cpp system_solver.cpp thread_info.cpp trapfpe.cpp window.cpp window_gui_stuff.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -488,6 +492,9 @@ matrix_operations.o: matrix_operations.cpp matrix_operations.h \
 		defines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrix_operations.o matrix_operations.cpp
 
+mytime.o: mytime.cpp mytime.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mytime.o mytime.cpp
+
 painter.o: painter.cpp painter.h \
 		surface.h \
 		grid.h \
@@ -528,7 +535,8 @@ thread_info.o: thread_info.cpp thread_info.h \
 		surface.h \
 		system_builder.h \
 		system_solver.h \
-		matrix_operations.h
+		matrix_operations.h \
+		mytime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o thread_info.o thread_info.cpp
 
 trapfpe.o: trapfpe.cpp 
