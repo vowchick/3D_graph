@@ -17,6 +17,13 @@ void painter::draw_surface ()
   surf->draw ();
 }
 
+void
+painter::draw_shadow ()
+{
+  qglColor (Qt::lightGray);
+  surf->draw_shadow ();
+}
+
 QSize
 painter::minimumSizeHint() const
 {
@@ -62,7 +69,7 @@ painter::decrease ()
 void
 painter::clockwise ()
 {
-  yRot += 240;
+  yRot -= 240;
   yRot %= 5760;
   updateGL();
 }
@@ -70,7 +77,7 @@ painter::clockwise ()
 void
 painter::unclockwise ()
 {
-  yRot -= 240;
+  yRot += 240;
   yRot %= 5760;
   updateGL();
 }
@@ -108,7 +115,7 @@ painter::initializeGL()
 
   glEnable (GL_DEPTH_TEST);
   glEnable (GL_CULL_FACE);
-//  glShadeModel (GL_SMOOTH);
+  glShadeModel (GL_SMOOTH);
 //  glEnable (GL_LIGHTING);
 //  glEnable (GL_LIGHT0);
 //  glEnable (GL_MULTISAMPLE);
@@ -172,6 +179,7 @@ painter::paintGL()
     draw_axes ();
     qglColor (Qt::red);
     draw_surface ();
+    draw_shadow ();
 
     glDisableClientState (GL_VERTEX_ARRAY);
     glDisableClientState (GL_NORMAL_ARRAY);

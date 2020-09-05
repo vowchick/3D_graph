@@ -25,7 +25,7 @@ public:
   void update_coeffs ();
   void change_perturbation (int n);
   int get_perturbation ();
-
+  void draw_shadow ();
 
 private:
   void find_ranges ();

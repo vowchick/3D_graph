@@ -45,6 +45,7 @@ private:
   void set_gl();
   void draw_axes();
   void draw_surface ();
+  void draw_shadow ();
   void scale_inc ();
   void scale_dec ();
 

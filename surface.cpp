@@ -114,6 +114,26 @@ surface::draw ()
 }
 
 void
+surface::draw_shadow ()
+{
+
+  auto draw_trapeze = [this] (int trapeze)
+  {
+      point A, B, C, D;
+      this->gr->fill_points (A, B, C, D, trapeze);
+      glBegin(GL_POLYGON);
+          glVertex3d(A.x, A.y, 0.);
+          glVertex3d(B.x, B.y, 0.);
+          glVertex3d(C.x, C.y, 0.);
+          glVertex3d(D.x, D.y, 0.);
+      glEnd();
+    };
+  for (int i = 0; i < 4; i++)
+    {
+      draw_trapeze (i);
+    }
+}
+void
 surface::draw_bottom_triangle (Trapeze trap, int k)
 {
   point A = trap.A, B = trap.B, D = trap.D;
