@@ -202,165 +202,10 @@ system_builder::get_off_diag (int k, double *a_diag, double *a,
     abort ();
     return -1000;
 }
-/*double
-system_builder::fill_rhs_at (int k)
-{
-  int i, j, trapeze_num;
-  Js J = gr->get_J ();
-
-  get_ijtrapeze (&i, &j, &trapeze_num, k, n);
-  //расписываем случаи
-  //полностью внутри
-  if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
-    {
-      double tr1, tr2;
-      if (i + j < n - 1)
-        {
-          tr1 = tr2 = J.get_J (0, trapeze_num);
-
-        }
-      else if (i + j == n - 1)
-        {
-          tr1 = J.get_J (0, trapeze_num);
-          tr2 = J.get_J (1, trapeze_num);
-        }
-      else
-        {
-          tr1 = tr2 = J.get_J (1, trapeze_num);
-        }
-      double ans = 0;
-      ans = tr1 *
-              (
-                2
-              );
-      ans += tr2 *
-              (
-                 2
-               );
-      ans += ((tr1 + tr2) / 2.) *
-              (
-                8
-              );
-
-      return ans / 12.;
-    }
-  //правая сторона трапеции
-  else if (i == 0 && j > 0 && j < n - 1)
-    {
-      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-      double tr1 = J.get_J (0, trapeze_num),
-             tr2 = J.get_J (1, trapeze_prev);
-
-      double ans = 0;
-
-      ans = tr1 *
-             (
-               2
-             );
-      ans += tr2 *
-              (
-                 2
-              );
-      ans += ((tr1 + tr2) / 2) *
-              (
-                  8
-              );
-
-      return ans / 12.;
-    }
-  //нижняя сторона трапеции
-  else if (j == 0 && i > 0 && i < n - 1)
-    {
-      double tr = J.get_J (0, trapeze_num);
-
-      double ans = 0;
-
-      ans = tr *
-             (
-               6
-             );
-      return ans / 12.;
-    }
-  //верхняя сторона трапеции
-  else if (j == n - 1 && i > 0 && i < n - 1)
-    {
-      double tr = J.get_J (1, trapeze_num);
-      double ans = 0;
-
-      ans = tr *
-              (
-                6
-              );
-      return ans / 12.;
-    }
-  //правый нижний угол
-  else if (j == 0 && i == 0)
-    {
-      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-      double tr1 = J.get_J (0, trapeze_num),
-             tr2 = J.get_J (1, trapeze_prev),
-             tr3 = J.get_J (0, trapeze_prev);
-      double ans = 0;
-
-      ans = tr1 *
-             (
-               1./2.
-             );
-      ans += ((tr1 + tr2) / 2) *
-              (
-                1
-              );
-      ans += ((tr2 + tr3) / 2) *
-              (
-                1
-              );
-      ans += tr3 *
-              (
-                1./2.
-              );
-      ans += ((tr1 + tr2 + tr3) / 3.) *
-              (
-                3
-              );
-      return ans / 12.;
-    }
-  //правый верхний угол
-  else if (j == n - 1 && i == 0)
-    {
-      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
-      double tr1 = J.get_J (1, trapeze_num),
-             tr2 = J.get_J (0, trapeze_num),
-             tr3 = J.get_J (1, trapeze_prev);
-      double ans = 0;
-
-      ans = tr1 *
-             (
-               1./2.
-             );
-      ans += ((tr1 + tr2) / 2) *
-              (
-                1
-              );
-      ans += ((tr2 + tr3) / 2) *
-              (
-                 1
-              );
-      ans += tr3 *
-              (
-                1./2.
-              );
-      ans += ((tr1 + tr2 + tr3) / 3.) *
-              (
-                3
-              );
-      return ans / 12.;
-    }
-  abort ();
-}*/
 double
 system_builder::fill_rhs_at (int k)
 {
-    int i, j, trapeze_num, n2 = 2 * n - 2;
+    int i, j, trapeze_num, n2 = 2 * n - 1;
     Js J = gr->get_J ();
 
     get_ijtrapeze (&i, &j, &trapeze_num, k, n);
@@ -608,3 +453,159 @@ system_builder::fill_rhs_at (int k)
       }
     abort ();
 }
+
+/*double
+system_builder::fill_rhs_at (int k)
+{
+  int i, j, trapeze_num;
+  Js J = gr->get_J ();
+
+  get_ijtrapeze (&i, &j, &trapeze_num, k, n);
+  //расписываем случаи
+  //полностью внутри
+  if (j > 0 && j < n - 1 && i > 0 && i < n - 1)
+    {
+      double tr1, tr2;
+      if (i + j < n - 1)
+        {
+          tr1 = tr2 = J.get_J (0, trapeze_num);
+
+        }
+      else if (i + j == n - 1)
+        {
+          tr1 = J.get_J (0, trapeze_num);
+          tr2 = J.get_J (1, trapeze_num);
+        }
+      else
+        {
+          tr1 = tr2 = J.get_J (1, trapeze_num);
+        }
+      double ans = 0;
+      ans = tr1 *
+              (
+                2
+              );
+      ans += tr2 *
+              (
+                 2
+               );
+      ans += ((tr1 + tr2) / 2.) *
+              (
+                8
+              );
+
+      return ans / 12.;
+    }
+  //правая сторона трапеции
+  else if (i == 0 && j > 0 && j < n - 1)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (0, trapeze_num),
+             tr2 = J.get_J (1, trapeze_prev);
+
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               2
+             );
+      ans += tr2 *
+              (
+                 2
+              );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                  8
+              );
+
+      return ans / 12.;
+    }
+  //нижняя сторона трапеции
+  else if (j == 0 && i > 0 && i < n - 1)
+    {
+      double tr = J.get_J (0, trapeze_num);
+
+      double ans = 0;
+
+      ans = tr *
+             (
+               6
+             );
+      return ans / 12.;
+    }
+  //верхняя сторона трапеции
+  else if (j == n - 1 && i > 0 && i < n - 1)
+    {
+      double tr = J.get_J (1, trapeze_num);
+      double ans = 0;
+
+      ans = tr *
+              (
+                6
+              );
+      return ans / 12.;
+    }
+  //правый нижний угол
+  else if (j == 0 && i == 0)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (0, trapeze_num),
+             tr2 = J.get_J (1, trapeze_prev),
+             tr3 = J.get_J (0, trapeze_prev);
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               1./2.
+             );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                1
+              );
+      ans += ((tr2 + tr3) / 2) *
+              (
+                1
+              );
+      ans += tr3 *
+              (
+                1./2.
+              );
+      ans += ((tr1 + tr2 + tr3) / 3.) *
+              (
+                3
+              );
+      return ans / 12.;
+    }
+  //правый верхний угол
+  else if (j == n - 1 && i == 0)
+    {
+      int trapeze_prev = (trapeze_num == 0 ? 3 : trapeze_num - 1);
+      double tr1 = J.get_J (1, trapeze_num),
+             tr2 = J.get_J (0, trapeze_num),
+             tr3 = J.get_J (1, trapeze_prev);
+      double ans = 0;
+
+      ans = tr1 *
+             (
+               1./2.
+             );
+      ans += ((tr1 + tr2) / 2) *
+              (
+                1
+              );
+      ans += ((tr2 + tr3) / 2) *
+              (
+                 1
+              );
+      ans += tr3 *
+              (
+                1./2.
+              );
+      ans += ((tr1 + tr2 + tr3) / 3.) *
+              (
+                3
+              );
+      return ans / 12.;
+    }
+  abort ();
+}*/
