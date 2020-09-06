@@ -33,11 +33,11 @@ pthread_func (void *arg)
         builder.fill_MSR_matrix (p, idx);
         builder.fill_rhs (p, idx);
         pthread_barrier_wait (info->barrier);
-
         system_solver solver (matrix, I, x, rhs, diag_length, u, r, v, buf, info->barrier, p, info->eps);
         solver.solve (MAX_IT, idx);
-        t = (get_time() - t) / CLOCKS_PER_SEC;
+        t = (get_time() - t);
         pthread_barrier_wait (info->barrier);
+        printf ("%.2f\n", t);
         if (idx == 0)
           {
             window->set_approx (x);

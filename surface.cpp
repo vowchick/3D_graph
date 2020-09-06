@@ -62,7 +62,7 @@ surface::update_f_coeffs ()
     }
 }
 void
-surface::set_approx (std::vector<double> approx)
+surface::set_approx (std::vector<double> &approx)
 {
 //  int n = gr->get_n ();
 //  int diag_length = 4 * n * (n - 1);
@@ -71,7 +71,7 @@ surface::set_approx (std::vector<double> approx)
 //    {
 //      this->approx[i] = approx[i];
 //    }
-  this->approx = approx;
+  this->approx.swap (approx);
 }
 
 void
@@ -135,7 +135,7 @@ surface::draw_shadow ()
     }
 }
 void
-surface::draw_bottom_triangle (Trapeze trap, int k)
+surface::draw_bottom_triangle (Trapeze &trap, int k)
 {
   point A = trap.A, B = trap.B, D = trap.D;
   int size = PAINT_SIZE, size_ = size - 1;
@@ -187,7 +187,7 @@ surface::draw_bottom_triangle (Trapeze trap, int k)
 }
 
 void
-surface::draw_top_triangle (Trapeze trap, int k)
+surface::draw_top_triangle (Trapeze &trap, int k)
 {
   point B = trap.B, C = trap.C, D = trap.D;
   int size = PAINT_SIZE, size_ = size - 1;
@@ -256,7 +256,7 @@ surface::draw_top_triangle (Trapeze trap, int k)
 }
 
 void
-surface::draw_triangle (point xy, point second, point third, int k1, int k2, int k3,
+surface::draw_triangle (point &xy, point &second, point &third, int k1, int k2, int k3,
                         int odd1, int odd2, int odd3)
 {
   double val1, val2, val3;

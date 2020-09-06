@@ -14,9 +14,9 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -Og -ggdb3 -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format -O0 -ggdb3 -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+DEFINES       = -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -O3 -ffast-math -O2 -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtOpenGL -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I/../lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
@@ -39,7 +39,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = a.out1.0.0
 DISTDIR = /home/vowchicke/programms/3D_graph/.tmp/a.out1.0.0
 LINK          = g++
-LFLAGS        = 
+LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib64/libQt5OpenGL.so /usr/lib64/libQt5Widgets.so /usr/lib64/libQt5Gui.so /usr/lib64/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
@@ -402,7 +402,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /../lib64/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -Og -ggdb3 -mfpmath=sse -fstack-protector-all -W -Wall -Wextra -Wunused -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format -O0 -ggdb3 -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -O3 -ffast-math -O2 -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /../lib64/qt5/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_window.cpp
 compiler_moc_header_clean:
@@ -416,6 +416,7 @@ moc_window.cpp: window.h \
 		window.h \
 		painter.h \
 		surface.h \
+		mytime.h \
 		moc_predefs.h \
 		/../lib64/qt5/bin/moc
 	/../lib64/qt5/bin/moc $(DEFINES) --include /home/vowchicke/programms/3D_graph/moc_predefs.h -I/../lib64/qt5/mkspecs/linux-g++ -I/home/vowchicke/programms/3D_graph -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/10 -I/usr/include/c++/10/x86_64-redhat-linux -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-redhat-linux/10/include -I/usr/local/include -I/usr/include window.h -o moc_window.cpp
@@ -448,7 +449,8 @@ main.o: main.cpp system_builder.h \
 		window.h \
 		thread_info.h \
 		painter.h \
-		surface.h
+		surface.h \
+		mytime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 grid.o: grid.cpp grid.h \
@@ -483,7 +485,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		grid.h \
 		thread_info.h \
 		painter.h \
-		surface.h
+		surface.h \
+		mytime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 matrix_operations.o: matrix_operations.cpp matrix_operations.h \
@@ -533,10 +536,10 @@ thread_info.o: thread_info.cpp thread_info.h \
 		grid.h \
 		painter.h \
 		surface.h \
+		mytime.h \
 		system_builder.h \
 		system_solver.h \
-		matrix_operations.h \
-		mytime.h
+		matrix_operations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o thread_info.o thread_info.cpp
 
 trapfpe.o: trapfpe.cpp 
@@ -549,7 +552,8 @@ window.o: window.cpp window.h \
 		grid.h \
 		thread_info.h \
 		painter.h \
-		surface.h
+		surface.h \
+		mytime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cpp
 
 window_gui_stuff.o: window_gui_stuff.cpp window.h \
@@ -559,7 +563,8 @@ window_gui_stuff.o: window_gui_stuff.cpp window.h \
 		grid.h \
 		thread_info.h \
 		painter.h \
-		surface.h
+		surface.h \
+		mytime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window_gui_stuff.o window_gui_stuff.cpp
 
 moc_window.o: moc_window.cpp 

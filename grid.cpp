@@ -239,7 +239,7 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
 }
 
 triangle
-grid::which_triangle (point xy, triangle one, triangle two)
+grid::which_triangle (point &xy, triangle &one, triangle &two)
 {
   //probably works, isn't that hard
   if (!one.filled && two.filled)
@@ -261,7 +261,7 @@ grid::which_triangle (point xy, triangle one, triangle two)
 }
 
 double
-grid::interpolate (std::vector<double> &f, triangle tri, point xy)
+grid::interpolate (std::vector<double> &f, triangle &tri, point &xy)
 {
   if (tri.singular)
     {
@@ -337,7 +337,7 @@ grid::interpolate (std::vector<double> &f, triangle tri, point xy)
 }*/
 
 int
-grid::find_index (point a, point b, point moveac, point movebc, point xy, point second_point_for_line)
+grid::find_index (point &a, point &b, point &moveac, point &movebc, point &xy, point &second_point_for_line)
 {
   double start = which_side (xy, a, second_point_for_line);
   point e, f;
@@ -365,7 +365,7 @@ grid::find_index (point a, point b, point moveac, point movebc, point xy, point 
 }
 
 double
-grid::get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze, int n)
+grid::get_f_value_by_ijtr (std::function<double (double, double)> &f, int i, int j, int trapeze, int n)
 {
 
   int n_ = n - 1;

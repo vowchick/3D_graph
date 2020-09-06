@@ -5,7 +5,7 @@
 #define __ATOMIC_ACQUIRE 2
 #define __FLT128_MAX_10_EXP__ 4932
 #define __FLT_MIN__ 1.17549435082228750796873653722224568e-38F
-#define __GCC_IEC_559_COMPLEX 2
+#define __GCC_IEC_559_COMPLEX 0
 #define __cpp_aggregate_nsdmi 201304L
 #define __UINT_LEAST8_TYPE__ unsigned char
 #define __SIZEOF_FLOAT80__ 16
@@ -25,7 +25,7 @@
 #define __DBL_DENORM_MIN__ double(4.94065645841246544176568792868221372e-324L)
 #define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 1
 #define __GCC_ATOMIC_CHAR_LOCK_FREE 2
-#define __GCC_IEC_559 2
+#define __GCC_IEC_559 0
 #define __FLT32X_DECIMAL_DIG__ 17
 #define __FLT_EVAL_METHOD__ 0
 #define __cpp_binary_literals 201304L
@@ -36,7 +36,7 @@
 #define __UINT_FAST64_MAX__ 0xffffffffffffffffUL
 #define __SIG_ATOMIC_TYPE__ int
 #define __DBL_MIN_10_EXP__ (-307)
-#define __FINITE_MATH_ONLY__ 0
+#define __FINITE_MATH_ONLY__ 1
 #define __cpp_variable_templates 201304L
 #define __FLT32X_MAX_EXP__ 1024
 #define __FLT32_HAS_DENORM__ 1
@@ -61,6 +61,7 @@
 #define __linux 1
 #define __DEC32_EPSILON__ 1E-6DF
 #define __FLT_EVAL_METHOD_TS_18661_3__ 0
+#define __OPTIMIZE__ 1
 #define __unix 1
 #define __UINT32_MAX__ 0xffffffffU
 #define __GXX_EXPERIMENTAL_CXX0X__ 1
@@ -80,6 +81,7 @@
 #define __FLT32_MAX_10_EXP__ 38
 #define __FLT64X_EPSILON__ 1.08420217248550443400745280086994171e-19F64x
 #define __STDC_HOSTED__ 1
+#define __NO_MATH_ERRNO__ 1
 #define __DEC64_MIN_EXP__ (-382)
 #define __cpp_decltype_auto 201304L
 #define __DBL_DIG__ 15
@@ -97,11 +99,9 @@
 #define __unix__ 1
 #define __INT_WIDTH__ 32
 #define __SIZEOF_LONG__ 8
-#define __STDC_IEC_559__ 1
 #define __STDC_ISO_10646__ 201706L
 #define __UINT16_C(c) c
 #define __DECIMAL_DIG__ 21
-#define __STDC_IEC_559_COMPLEX__ 1
 #define __FLT64_EPSILON__ 2.22044604925031308084726333618164062e-16F64
 #define __gnu_linux__ 1
 #define __INT16_MAX__ 0x7fff
@@ -185,7 +185,6 @@
 #define __FLT32_MIN__ 1.17549435082228750796873653722224568e-38F32
 #define __UINT8_TYPE__ unsigned char
 #define __FLT_DIG__ 6
-#define __NO_INLINE__ 1
 #define __DEC_EVAL_METHOD__ 2
 #define __DEC128_MAX__ 9.999999999999999999999999999999999E6144DL
 #define __FLT_MANT_DIG__ 24
@@ -258,6 +257,7 @@
 #define __INT64_MAX__ 0x7fffffffffffffffL
 #define __SEG_GS 1
 #define __FLT32_DENORM_MIN__ 1.40129846432481707092372958328991613e-45F32
+#define __FAST_MATH__ 1
 #define __SIG_ATOMIC_WIDTH__ 32
 #define __INT_LEAST64_TYPE__ long int
 #define __INT16_TYPE__ short int

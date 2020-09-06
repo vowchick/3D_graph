@@ -101,6 +101,7 @@ Window::double_n ()
 {
   if (!calculating)
     {
+      Time = get_time();
       n *= 2;
       change_n_label ();
       if (static_cast<state> (st) == given_function)
@@ -266,6 +267,7 @@ Window::allocate_memory ()
 void
 Window::after_calculation ()
 {
+  Time = (get_time () - Time);
   calculating = false;
   if (state_changed_flag)
     {

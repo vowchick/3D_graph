@@ -11,13 +11,13 @@ triangle_to_right_triangle_jacob (
     return fabs (J);
 }
 
-double which_side (point a, point b, point c)
+double which_side (point &a, point &b, point &c)
 {
     return (a.x - c.x) * (b.y - c.y) -
            (b.x - c.x) * (a.y - c.y);
 }
 
-bool is_in_triangle (point pt, point a, point b, point c)
+bool is_in_triangle (point &pt, point &a, point &b, point &c)
 {
     double d1, d2, d3;
     bool neg, pos;

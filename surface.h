@@ -15,7 +15,7 @@ public:
   ranges get_range () const {return f_range;}
   grid *get_grid () const {return gr;}
 
-  void set_approx (std::vector<double> approx);
+  void set_approx (std::vector<double> &approx);
   void set_f (std::function <double (double, double)> f);
   void update (std::unique_ptr<grid> &grid_ptr);
   void change_state ();
@@ -31,10 +31,10 @@ private:
   void find_ranges ();
   void fill_f ();
   void set_error ();
-  void draw_triangle (point xy, point second, point third, int k1, int k2, int k3,
+  void draw_triangle (point &xy, point &second, point &third, int k1, int k2, int k3,
                       int odd1, int odd2, int odd3);
-  void draw_bottom_triangle (Trapeze trap, int k);
-  void draw_top_triangle (Trapeze trap, int k);
+  void draw_bottom_triangle (Trapeze &trap, int k);
+  void draw_top_triangle (Trapeze &trap, int k);
 
 private:
   grid *gr = nullptr;

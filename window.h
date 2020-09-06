@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QtWidgets/QtWidgets>
 #include <string>
+#include "mytime.h"
 class Window : public QWidget
 {
   Q_OBJECT
@@ -84,6 +85,7 @@ private:
   state st = given_function;
   std::vector<double> appro;
   bool state_changed_flag = false;
+  double Time = 0.;
 
 //labels
 private:

@@ -280,7 +280,7 @@ painter::mouseMoveEvent(QMouseEvent *event)
 }
 
 void
-painter::set_approx (std::vector<double> approx)
+painter::set_approx (std::vector<double> &approx)
 {
   surf->set_approx (approx);
 }
