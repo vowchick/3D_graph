@@ -37,6 +37,7 @@ painter::wheelEvent(QWheelEvent* pe)
     scale_inc ();
   else if ((pe->delta()) < 0)
     scale_dec ();
+  window->update_s_label ();
   updateGL();
 }
 
@@ -113,6 +114,11 @@ painter::SizeHint() const
     return QSize(1000, 1000);
 }
 
+void
+painter::set_Window(Window *window)
+{
+  this->window = window;
+}
 void
 painter::initializeGL()
 {

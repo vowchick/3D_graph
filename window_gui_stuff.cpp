@@ -116,6 +116,7 @@ Window::set_gui ()
 {
   gr.reset (new grid (pol, n));
   drawer = new painter (gr.get (), f, this);
+  drawer->set_Window (this);
   QVBoxLayout *v_layout = new QVBoxLayout (this);
 
   QHBoxLayout *labels_layout = new QHBoxLayout (this);

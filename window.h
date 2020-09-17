@@ -9,6 +9,7 @@
 #include <QtWidgets/QtWidgets>
 #include <string>
 #include "mytime.h"
+class painter;
 class Window : public QWidget
 {
   Q_OBJECT
@@ -23,6 +24,7 @@ public:
   void update_surface ();
   void closeEvent(QCloseEvent *event) override;
   void ultimate_update (double *x);
+  void update_s_label () {change_s_label ();};
 //  QSize minimumSizeHint () const;
 //  QSize sizeHint () const;
 

@@ -75,7 +75,6 @@ void synchronize (int p, Window *window, pthread_cond_t &c_out, int &t_out)
     {
       t_in = 0;
       window->emit_calculation_completed ();
-      //pthread_cond_broadcast (&c_out);
     }
 
   while (t_out <= p)

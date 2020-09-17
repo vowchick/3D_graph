@@ -126,7 +126,6 @@ grid::get_value (std::vector <double> &f, double x, double y, int trapeze_num, i
 void
 grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_num, Trapeze &tr)
 {
-  //needs to be thouroughly checked. but probably works
   one.a.second = two.a.second = get_k (i, j, trapeze_num, n);
 
   int n = this->n - 1;
@@ -241,7 +240,6 @@ grid::fill_triangles (triangle &one, triangle &two, int i, int j, int trapeze_nu
 triangle
 grid::which_triangle (point &xy, triangle &one, triangle &two)
 {
-  //probably works, isn't that hard
   if (!one.filled && two.filled)
     return two;
   if (!two.filled && one.filled)

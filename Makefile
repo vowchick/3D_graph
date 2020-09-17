@@ -504,6 +504,9 @@ painter.o: painter.cpp painter.h \
 		structs_and_stuff.h \
 		defines.h \
 		helper_functions.h \
+		window.h \
+		thread_info.h \
+		mytime.h \
 		io.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o painter.o painter.cpp
 

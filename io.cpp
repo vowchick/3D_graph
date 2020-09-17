@@ -7,7 +7,7 @@ int process_input (char *argv[], input &in, polygon &pol)
   in.k = atoi (argv[4]);
   in.eps = atof (argv[5]);
   in.p = atoi (argv[6]);
-  if (in.nx <= 0 || in.ny <= 0. || in.k <= 0 || in.p <= 0 || in.eps <= 0)
+  if (in.nx <= 0 || in.ny <= 0 || in.k <= 0 || in.p <= 0 || in.eps <= 0)
     {
       printf ("nx, ny, k, p and eps should be greater than zero\n");
       return -1;
@@ -16,7 +16,7 @@ int process_input (char *argv[], input &in, polygon &pol)
   if (in.nx != in.ny)
     {
       printf ("I will assume that nx == ny\n");
-      return -2;
+      in.ny = in.nx;
     }
 
   int res = read_polygon_from_file (in.file_name, pol);

@@ -5,6 +5,8 @@
 #include "QMouseEvent"
 #define COEFF 1.2
 #define COEFF2 2
+#include "window.h"
+class Window;
 
 class painter : public QGLWidget
 {
@@ -25,6 +27,7 @@ public:
   void unperturb ();
   int get_perturbation ();
   int get_s ();
+  void set_Window (Window *window);
 
 public slots:
   void setXRotation(int angle);
@@ -54,12 +57,13 @@ private:
   std::unique_ptr<surface> surf_ptr;
   surface *surf;
 
-  int xRot = 0;
-  int yRot = 0;
+  int xRot = 200;
+  int yRot = 200;
   int zRot = 0;
 
   int scale = 0;
   QPoint lastPos;
+  Window *window;
 };
 
 #endif // PAINTER_H
