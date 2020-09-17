@@ -8,7 +8,7 @@ grid::grid (polygon *p_, int n_)
 {
   p = p_;
   n = n_;
-  fill_js (p, n);
+  fill_js (p);
   fill_us();
   fill_u2s ();
   find_width ();
@@ -428,47 +428,47 @@ grid::fill_points (point &A, point &B, point &C, point &D, int trapeze)
   abort ();
 }
 void
-grid::fill_js (polygon *p, int n)
+grid::fill_js (polygon *p)
 {
     J.AaB = triangle_to_right_triangle_jacob(
                 p->A.x, p->A.y,
                 p->a.x, p->a.y,
-                p->B.x, p->B.y, n
+                p->B.x, p->B.y
                 );
     J.Bab = triangle_to_right_triangle_jacob(
                 p->B.x, p->B.y,
                 p->a.x, p->a.y,
-                p->b.x, p->b.y, n
+                p->b.x, p->b.y
                 );
     J.BbC = triangle_to_right_triangle_jacob(
                 p->b.x, p->b.y,
                 p->C.x, p->C.y,
-                p->B.x, p->B.y, n
+                p->B.x, p->B.y
                 );
     J.Cbc = triangle_to_right_triangle_jacob(
                 p->C.x, p->C.y,
                 p->b.x, p->b.y,
-                p->c.x, p->c.y, n
+                p->c.x, p->c.y
                 );
     J.CcD = triangle_to_right_triangle_jacob(
                 p->C.x, p->C.y,
                 p->c.x, p->c.y,
-                p->D.x, p->D.y, n
+                p->D.x, p->D.y
                 );
     J.Dcd = triangle_to_right_triangle_jacob(
                 p->D.x, p->D.y,
                 p->c.x, p->c.y,
-                p->d.x, p->d.y, n
+                p->d.x, p->d.y
                 );
     J.DdA = triangle_to_right_triangle_jacob(
                 p->D.x, p->D.y,
                 p->d.x, p->d.y,
-                p->A.x, p->A.y, n
+                p->A.x, p->A.y
                 );
     J.Ada = triangle_to_right_triangle_jacob(
                 p->A.x, p->A.y,
                 p->a.x, p->a.y,
-                p->d.x, p->d.y, n
+                p->d.x, p->d.y
                 );
 }
 #if (0)

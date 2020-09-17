@@ -116,16 +116,11 @@ painter::SizeHint() const
 void
 painter::initializeGL()
 {
-  qglClearColor(Qt::white); //clear Color buffer
+  qglClearColor(Qt::white);
 
   glEnable (GL_DEPTH_TEST);
   glEnable (GL_CULL_FACE);
   glShadeModel (GL_SMOOTH);
-//  glEnable (GL_LIGHTING);
-//  glEnable (GL_LIGHT0);
-//  glEnable (GL_MULTISAMPLE);
-//  GLfloat lightPosition0[4] = {0, 0, static_cast <float> (surf->get_max ()) + 1, 1.0};
-//  glLightfv (GL_LIGHT0, GL_POSITION, lightPosition0);
 }
 
 void

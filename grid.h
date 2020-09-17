@@ -18,7 +18,7 @@ public:
     void fill_us ();
     void fill_u2s ();
 
-    void fill_js (polygon *p, int n);
+    void fill_js (polygon *p);
 //    double get_f_value_by_ijtr (std::function<double (double, double)> f, int i, int j, int trapeze);
     double get_f_value_by_ijtr (std::function<double (double, double)> &f, int i, int j, int trapeze, int n);
     double get_value (std::vector<double> &f, double x, double y, int trapeze_num, int odd);

@@ -2,7 +2,7 @@
 #define HELPER_FUNCTIONS_H
 #include "structs_and_stuff.h"
 
-void fill_js (Js &J, polygon *p, int n);
+void fill_js (Js &J, polygon *p);
 int get_k (int i, int j, int trapeze_num, int n);
 void get_ijtrapeze (int *i, int *j, int *trapeze_num, int k, int n);
 
@@ -14,8 +14,7 @@ int find_ABCD1_points (polygon *p);
 double triangle_to_right_triangle_jacob (
         double x1, double y1,     // ->(0, 1)
         double x2, double y2,     // -> (0, 0)
-        double x3, double y3,
-        int n);    // -> (1, 0)
+        double x3, double y3);    // -> (1, 0)
 
 double ultimate_scalar_counter (double J,
                          double f1, double f2, double f3,

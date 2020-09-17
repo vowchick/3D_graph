@@ -39,64 +39,55 @@ get_f (int f_)
   std::function<double (double, double)> f =
       [] (double x, double y)
   {
-    FIX_UNUSED (x, y);
-    return 0;
+    return 0 + x * 0 + y * 0;
     };;
   switch (f_)
     {
     case 0:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return 1;
+        return 1 + x * 0 + y * 0;
         };
       return f;
     case 1:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return x;
+        return x + y * 0;
         };
       return f;
     case 2:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return y;
+        return y + x * 0;
         };
       return f;
     case 3:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return x + y;
         };
-      return f;;
+      return f;
     case 4:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return sqrt (x * x + y * y);
         };
       return f;
     case 5:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return x * x + y * y;
         };
       return f;
     case 6:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return exp (x * x - y * y);
         };
       return f;
     case 7:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return 1. / (25 * (x * x + y * y) + 1);
         };
       return f;
@@ -169,8 +160,8 @@ Window::set_gui ()
   v_layout->addLayout (drawer_layout);
 
 
-  v_layout->setStretchFactor (labels_layout, 1);
-  v_layout->setStretchFactor (drawer_layout, 8);
+  v_layout->setStretchFactor (labels_layout, 0);
+  v_layout->setStretchFactor (drawer_layout, 1);
 }
 
 void

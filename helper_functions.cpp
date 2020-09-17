@@ -3,11 +3,9 @@ double
 triangle_to_right_triangle_jacob (
         double x1, double y1,     // ->(0, 1)
         double x2, double y2,     // -> (0, 0)
-        double x3, double y3,
-        int n)     // -> (1, 0)
+        double x3, double y3)     // -> (1, 0)
 {
     double J = (x3 - x2) * (y1 - y2) - (x1 - x2) * (y3 - y2);
-    FIX_UNUSED(n);
     return fabs (J);
 }
 
@@ -93,64 +91,56 @@ int_to_f (int f_)
   std::function<double (double, double)> f =
       [] (double x, double y)
   {
-    FIX_UNUSED (x, y);
-    return 0;
+
+    return 0 + x * 0 + y * 0;
     };;
   switch (f_)
     {
     case 0:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return 1;
+        return 1 + x * 0 + y * 0;
         };
       return f;
     case 1:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return x;
+        return x + y * 0;
         };
       return f;
     case 2:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
-        return y;
+        return y + x * 0;
         };
       return f;
     case 3:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return x + y;
         };
       return f;;
     case 4:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return sqrt (x * x + y * y);
         };
       return f;
     case 5:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return x * x + y * y;
         };
       return f;
     case 6:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return exp (x * x - y * y);
         };
       return f;
     case 7:
       f = [] (double x, double y)
       {
-        FIX_UNUSED (x, y);
         return 1. / (25 * (x * x + y * y) + 1);
         };
       return f;
@@ -171,47 +161,47 @@ ultimate_scalar_counter (double J,
     return integral * J / 24.;
 }
 void
-fill_js (Js &J, polygon *p, int n)
+fill_js (Js &J, polygon *p)
 {
     J.AaB = triangle_to_right_triangle_jacob(
                 p->A.x, p->A.y,
                 p->a.x, p->a.y,
-                p->B.x, p->B.y, n
+                p->B.x, p->B.y
                 );
     J.Bab = triangle_to_right_triangle_jacob(
                 p->B.x, p->B.y,
                 p->a.x, p->a.y,
-                p->a.x, p->a.y, n
+                p->a.x, p->a.y
                 );
     J.BbC = triangle_to_right_triangle_jacob(
                 p->b.x, p->b.y,
                 p->c.x, p->c.y,
-                p->B.x, p->B.y, n
+                p->B.x, p->B.y
                 );
     J.Cbc = triangle_to_right_triangle_jacob(
                 p->C.x, p->C.y,
                 p->b.x, p->b.y,
-                p->c.x, p->c.y, n
+                p->c.x, p->c.y
                 );
     J.CcD = triangle_to_right_triangle_jacob(
                 p->C.x, p->C.y,
                 p->c.x, p->c.y,
-                p->D.x, p->D.y, n
+                p->D.x, p->D.y
                 );
     J.Dcd = triangle_to_right_triangle_jacob(
                 p->D.x, p->D.y,
                 p->c.x, p->c.y,
-                p->d.x, p->d.y, n
+                p->d.x, p->d.y
                 );
     J.DdA = triangle_to_right_triangle_jacob(
                 p->D.x, p->D.y,
                 p->d.x, p->d.y,
-                p->A.x, p->A.y, n
+                p->A.x, p->A.y
                 );
     J.Ada = triangle_to_right_triangle_jacob(
                 p->A.x, p->A.y,
                 p->a.x, p->a.y,
-                p->d.x, p->d.y, n
+                p->d.x, p->d.y
                 );
 }
 void reduce_sum (int p, int *a, int n)
