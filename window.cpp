@@ -175,7 +175,6 @@ Window::change_state ()
   if (!calculating)
     {
       st = static_cast<state> ((st + 1) % 3);
-      change_state_label ();
       switch (st)
         {
         case given_function:
@@ -194,6 +193,7 @@ Window::change_state ()
           break;
         }
       change_fabs_max_label ();
+      change_state_label ();
       update_surface_coeffs ();
       drawer->updateGL ();
     }
